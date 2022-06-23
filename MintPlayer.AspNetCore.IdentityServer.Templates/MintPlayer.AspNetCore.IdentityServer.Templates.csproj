@@ -13,6 +13,8 @@
 		<Company>MintPlayer</Company>
 		<Description>Templates for single-sign-on functionality</Description>
 		<PackageTags>IdentityServer;Templates</PackageTags>
+		<RepositoryType>Git</RepositoryType>
+		<RepositoryUrl>https://github.com/MintPlayer/MintPlayer.AspNetCore.Templates</RepositoryUrl>
 
 		<IncludeContentInPack>true</IncludeContentInPack>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
