@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<PackageType>Template</PackageType>
+		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
+		<PackageVersion>1.0.0</PackageVersion>
+		<Title>IdentityServer templates</Title>
+		<Authors>Pieterjan De Clippel</Authors>
+		<Company>MintPlayer</Company>
+		<Description>Templates for single-sign-on functionality</Description>
+		<PackageTags>IdentityServer;Templates</PackageTags>
+
+		<IncludeContentInPack>true</IncludeContentInPack>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<ContentTargetFolders>content</ContentTargetFolders>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="Templates\**\*" Exclude="Templates\**\bin\**;Templates\**\obj\**" />
+		<Compile Remove="**\*" />
+	</ItemGroup>
+	
+</Project>

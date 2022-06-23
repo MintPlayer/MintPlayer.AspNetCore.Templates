@@ -1,0 +1,8 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "MintPlayer",
+  "classifications": [ "IdentityServer", "Provider" ],
+  "identity": "MintPlayer.AspNetCore.IdentityServer.Templates.IdentityProvider.CSharp",
+  "name": "MintPlayer IdentityServer Provider Template",
+  "shortName": "id-provider"
+}
