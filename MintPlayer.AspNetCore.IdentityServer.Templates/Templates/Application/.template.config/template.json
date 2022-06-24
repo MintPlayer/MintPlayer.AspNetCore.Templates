@@ -3,7 +3,7 @@
   "author": "MintPlayer",
   "classifications": [ "IdentityServer", "Application" ],
   "identity": "MintPlayer.AspNetCore.IdentityServer.Templates.Application.CSharp",
-  "groupIdentity": "MintPlayer.AspNetCore.IdentityServer",
+  "groupIdentity": "MintPlayer.AspNetCore.IdentityServer.Application",
   "shortName": "id-application",
   "name": "IdentityServer Application",
   "description": "ASP.NET Core Identity Application",

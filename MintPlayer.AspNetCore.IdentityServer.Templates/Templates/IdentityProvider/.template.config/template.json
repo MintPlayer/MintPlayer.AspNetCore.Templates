@@ -3,7 +3,7 @@
   "author": "MintPlayer",
   "classifications": [ "IdentityServer", "Provider" ],
   "identity": "MintPlayer.AspNetCore.IdentityServer.Templates.IdentityProvider.CSharp",
-  "groupIdentity": "MintPlayer.AspNetCore.IdentityServer",
+  "groupIdentity": "MintPlayer.AspNetCore.IdentityServer.Provider",
   "shortName": "id-provider",
   "name": "IdentityServer Provider",
   "description": "ASP.NET Core Identity provider using IdentityServer",
