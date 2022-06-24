@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>1.1.0</PackageVersion>
+		<PackageVersion>1.2.0</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -24,6 +24,10 @@
 	<ItemGroup>
 		<Content Include="Templates\**\*" Exclude="Templates\**\bin\**;Templates\**\obj\**" />
 		<Compile Remove="**\*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Templates\Application\Web\" />
 	</ItemGroup>
 	
 </Project>
