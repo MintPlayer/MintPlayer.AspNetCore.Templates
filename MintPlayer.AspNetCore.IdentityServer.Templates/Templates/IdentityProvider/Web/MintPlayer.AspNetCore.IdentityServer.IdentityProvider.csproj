@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data\MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.csproj" />
+		<ProjectReference Include="..\Data\MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.csproj" />
 	</ItemGroup>
 
 </Project>
