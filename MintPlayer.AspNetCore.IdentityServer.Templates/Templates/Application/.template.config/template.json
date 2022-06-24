@@ -4,5 +4,6 @@
   "classifications": [ "IdentityServer", "Application" ],
   "identity": "MintPlayer.AspNetCore.IdentityServer.Templates.Application.CSharp",
   "name": "MintPlayer IdentityServer Application Template",
-  "shortName": "id-application"
+  "shortName": "id-application",
+  "sourceName": "MintPlayer.AspNetCore.IdentityServer"
 }
