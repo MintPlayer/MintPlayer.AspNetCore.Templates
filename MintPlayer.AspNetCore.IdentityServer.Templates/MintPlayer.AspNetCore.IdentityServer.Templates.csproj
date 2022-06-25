@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>1.2.1</PackageVersion>
+		<PackageVersion>1.2.2</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -19,15 +19,21 @@
 		<IncludeContentInPack>true</IncludeContentInPack>
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<ContentTargetFolders>content</ContentTargetFolders>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<Compile Include="Templates\**\*.cs" Exclude="Templates\**\bin\**;Templates\**\obj\**;Templates\*\.template.config\**" />
+		<Content Include="Templates\**\*" Exclude="Templates\**\bin\**;Templates\**\obj\**;Templates\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(Configuration)' == 'Release' ">
 		<Content Include="Templates\**\*" Exclude="Templates\**\bin\**;Templates\**\obj\**" />
 		<Compile Remove="**\*" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Templates\Application\Web\" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
 	</ItemGroup>
-	
+		
 </Project>

@@ -11,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Data.Abstractions\MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.csproj" />
+		<ProjectReference Include="..\Dtos\MintPlayer.AspNetCore.IdentityServer.Application.Dtos.csproj" />
 	</ItemGroup>
 
 </Project>
