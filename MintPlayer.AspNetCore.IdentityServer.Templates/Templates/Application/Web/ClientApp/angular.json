@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@mintplayer/ng-bootstrap/_bootstrap.scss",
               "src/styles.scss"
             ],
             "scripts": []
@@ -96,6 +97,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@mintplayer/ng-bootstrap/_bootstrap.scss",
               "src/styles.scss"
             ],
             "scripts": []
