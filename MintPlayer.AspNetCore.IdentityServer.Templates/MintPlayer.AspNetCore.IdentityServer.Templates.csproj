@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>1.2.4</PackageVersion>
+		<PackageVersion>1.2.5</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -46,13 +46,17 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.3" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.3" />
+		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.0" />
+		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Folder Include="Templates\Application\Web\Server\Controllers\" />
 	  <Folder Include="Templates\Application\Web\Server\ViewModels\" />
 	  <Folder Include="Templates\Application\Web\Server\Views\" />
+	  <Folder Include="Templates\IdentityProvider\Web\ClientApp\src\app\services\" />
 	  <Folder Include="Templates\IdentityProvider\Web\Server\Controllers\" />
 	  <Folder Include="Templates\IdentityProvider\Web\Server\ViewModels\" />
 	  <Folder Include="Templates\IdentityProvider\Web\Server\Views\" />
