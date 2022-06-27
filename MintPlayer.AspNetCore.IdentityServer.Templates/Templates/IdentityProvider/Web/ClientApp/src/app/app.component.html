@@ -3,16 +3,21 @@
     <bs-navbar-toggler [state]="state" [toggleOnClick]="false"></bs-navbar-toggler>
   </ng-template>
   <bs-navbar-brand [routerLink]='["/"]'>
-    <span class="brand d-block px-3 pb-3 pt-3">
+    <span class="brand d-block p-1">
       Identity provider
     </span>
   </bs-navbar-brand>
   <bs-navbar-nav [collapse]="true">
     <bs-navbar-item>
-      <a [routerLink]='["/account", "login"]'>Login</a>
-    </bs-navbar-item>
-    <bs-navbar-item>
-      <a [routerLink]='["/account", "register"]'>Register</a>
+      <a [routerLink]='[]'>Account</a>
+      <bs-navbar-dropdown>
+        <bs-navbar-item>
+          <a [routerLink]='["/account", "login"]'>Login</a>
+        </bs-navbar-item>
+        <bs-navbar-item>
+          <a [routerLink]='["/account", "register"]'>Register</a>
+        </bs-navbar-item>
+      </bs-navbar-dropdown>
     </bs-navbar-item>
   </bs-navbar-nav>
 </bs-navbar>
