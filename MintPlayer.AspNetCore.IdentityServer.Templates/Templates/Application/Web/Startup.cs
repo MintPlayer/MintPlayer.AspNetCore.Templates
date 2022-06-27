@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Extensions;
 using MintPlayer.AspNetCore.SubDirectoryViews;
 
-namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web;
+namespace MintPlayer.AspNetCore.IdentityServer.Application.Web;
 
 public class Startup
 {
@@ -27,7 +27,7 @@ public class Startup
 
 		services.AddSso(options =>
 		{
-			options.ConnectionString = Configuration.GetConnectionString("Sso");
+			options.ConnectionString = Configuration.GetConnectionString("Application");
 			options.Environment = Environment;
 		});
 	}
