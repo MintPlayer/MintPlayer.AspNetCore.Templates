@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MintPlayer.AspNetCore.Hsts;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Extensions;
+using MintPlayer.AspNetCore.NoSniff;
 using MintPlayer.AspNetCore.SubDirectoryViews;
 using MintPlayer.AspNetCore.XsrfForSpas;
 
@@ -61,6 +62,7 @@ public class Startup
 		// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 		app.UseImprovedHsts();
 		app.UseHttpsRedirection();
+		app.UseNoSniff();
 		app.UseAntiforgery();
 		app.UseStaticFiles();
 
