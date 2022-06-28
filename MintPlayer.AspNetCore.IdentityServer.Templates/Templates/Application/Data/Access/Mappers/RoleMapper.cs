@@ -1,5 +1,3 @@
-using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Mappers;
-
 namespace MintPlayer.AspNetCore.IdentityServer.Application.Data.Access.Mappers;
 
 internal class RoleMapper : IRoleMapper

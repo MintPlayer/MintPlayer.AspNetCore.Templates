@@ -1,5 +1,3 @@
-using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Mappers;
-
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Mappers;
 
 internal class UserMapper : IUserMapper

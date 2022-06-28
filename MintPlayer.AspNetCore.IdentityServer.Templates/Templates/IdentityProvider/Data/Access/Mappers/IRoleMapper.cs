@@ -1,4 +1,4 @@
-namespace MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Mappers;
+namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Mappers;
 
 internal interface IRoleMapper
 {
