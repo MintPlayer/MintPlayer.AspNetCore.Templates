@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Mappers;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Mappers;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;

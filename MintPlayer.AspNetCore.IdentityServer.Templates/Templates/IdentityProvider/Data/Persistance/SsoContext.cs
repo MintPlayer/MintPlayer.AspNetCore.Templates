@@ -10,10 +10,10 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance;
 internal class SsoContext : IdentityDbContext<User, Role, Guid>, IPersistedGrantDbContext, IConfigurationDbContext
 {
     #region Constructor
-    private readonly IConfiguration configuration;
+    private readonly IConfiguration? configuration;
     public SsoContext()
     {
-        this.configuration = null!;
+        this.configuration = null;
     }
     public SsoContext(IConfiguration configuration)
     {
