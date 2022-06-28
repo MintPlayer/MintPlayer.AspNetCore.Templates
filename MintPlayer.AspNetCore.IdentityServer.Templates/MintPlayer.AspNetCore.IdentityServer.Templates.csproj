@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>1.2.9</PackageVersion>
+		<PackageVersion>1.2.10</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -40,17 +40,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.0.4" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.0.4" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.1" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.6" />
 		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.AspNetCore.NoSniff" Version="6.0.2" />
 		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />
+		<PackageReference Include="MintPlayer.Extensions.OrderBy" Version="6.0.0" />
+		<PackageReference Include="MintPlayer.Pagination" Version="1.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -59,7 +62,7 @@
 	  <Folder Include="Templates\Application\Web\Server\Views\" />
 	  <Folder Include="Templates\IdentityProvider\Web\ClientApp\src\app\services\" />
 	  <Folder Include="Templates\IdentityProvider\Web\Server\Controllers\" />
-	  <Folder Include="Templates\IdentityProvider\Web\Server\ViewModels\" />
+	  <Folder Include="Templates\IdentityProvider\Web\Server\ViewModels\Account\" />
 	  <Folder Include="Templates\IdentityProvider\Web\Server\Views\" />
 	</ItemGroup>
 
@@ -81,6 +84,21 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<DependentUpon>Templates/IdentityProvider/Web/appsettings.json</DependentUpon>
 		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Templates\IdentityProvider\Data.Abstractions\NewFolder\**" />
+	  <Compile Remove="Templates\IdentityProvider\Data\Access\NewFolder\**" />
+	  <Compile Remove="Templates\IdentityProvider\Data\Exceptions\NewFolder\**" />
+	  <Content Remove="Templates\IdentityProvider\Data.Abstractions\NewFolder\**" />
+	  <Content Remove="Templates\IdentityProvider\Data\Access\NewFolder\**" />
+	  <Content Remove="Templates\IdentityProvider\Data\Exceptions\NewFolder\**" />
+	  <EmbeddedResource Remove="Templates\IdentityProvider\Data.Abstractions\NewFolder\**" />
+	  <EmbeddedResource Remove="Templates\IdentityProvider\Data\Access\NewFolder\**" />
+	  <EmbeddedResource Remove="Templates\IdentityProvider\Data\Exceptions\NewFolder\**" />
+	  <None Remove="Templates\IdentityProvider\Data.Abstractions\NewFolder\**" />
+	  <None Remove="Templates\IdentityProvider\Data\Access\NewFolder\**" />
+	  <None Remove="Templates\IdentityProvider\Data\Exceptions\NewFolder\**" />
 	</ItemGroup>
 	
 </Project>

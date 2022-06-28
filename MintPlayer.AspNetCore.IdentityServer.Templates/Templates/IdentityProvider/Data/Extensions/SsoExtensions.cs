@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Mappers;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Mappers;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Services;
 
@@ -19,8 +21,10 @@ public static class SsoExtensions
             .AddDbContext<Persistance.SsoContext>(options => options.UseSqlServer(op.ConnectionString))
             .AddScoped<IAccountRepository, AccountRepository>()
             .AddScoped<IAccountService, AccountService>()
+            .AddScoped<IUserMapper, UserMapper>()
             .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<IRoleService, RoleService>();
+            .AddScoped<IRoleService, RoleService>()
+            .AddScoped<IRoleMapper, RoleMapper>();
 
         services
             .AddIdentity<Persistance.Entities.User, Persistance.Entities.Role>()

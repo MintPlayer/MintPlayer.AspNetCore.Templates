@@ -68,7 +68,6 @@ public class Startup
 
 		app.UseAuthentication();
 		app.UseRouting();
-		app.UseIdentityServer();
 		app.UseAuthorization();
 		app.UseEndpoints(endpoints =>
 		{

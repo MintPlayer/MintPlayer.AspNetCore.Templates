@@ -30,6 +30,7 @@ internal class SsoContext : IdentityDbContext<User, Role, Guid>, IPersistedGrant
     public DbSet<ApiResource> ApiResources { get; set; } = null!;
     public DbSet<ApiScope> ApiScopes { get; set; } = null!;
     public DbSet<IdentityProvider> IdentityProviders { get; set; } = null!;
+    public DbSet<ServerSideSession> ServerSideSessions { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

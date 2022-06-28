@@ -5,10 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MintPlayer.AspNetCore.Hsts;
-using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Extensions;
 using MintPlayer.AspNetCore.NoSniff;
 using MintPlayer.AspNetCore.SubDirectoryViews;
 using MintPlayer.AspNetCore.XsrfForSpas;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Extensions;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Services;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Services;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web;
 
@@ -39,6 +41,7 @@ public class Startup
 			options.ConnectionString = Configuration.GetConnectionString("Sso");
 			options.Environment = Environment;
 		});
+		services.AddScoped<IMailService, MailService>();
 
 		// In production, the Angular files will be served from this directory
 		services.AddSpaStaticFiles(configuration =>

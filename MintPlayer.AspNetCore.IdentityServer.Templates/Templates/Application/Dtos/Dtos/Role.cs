@@ -1,5 +1,7 @@
-﻿namespace MintPlayer.AspNetCore.IdentityServer.Dtos.Dtos;
+﻿namespace MintPlayer.AspNetCore.IdentityServer.Application.Dtos.Dtos;
 
-internal class Role
+public class Role
 {
+    public Guid Id { get; set; }
+    public string Name { get; set; }
 }

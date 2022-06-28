@@ -11,9 +11,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.0.4" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.0.4" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.1" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
+		<PackageReference Include="MintPlayer.Extensions.OrderBy" Version="6.0.0" />
 	</ItemGroup>
 
 </Project>
