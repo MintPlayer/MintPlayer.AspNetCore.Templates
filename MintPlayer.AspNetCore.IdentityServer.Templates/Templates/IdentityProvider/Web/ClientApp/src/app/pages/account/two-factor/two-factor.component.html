@@ -1,0 +1,35 @@
+<body>
+    <form class="container" (submit)="verifyCode()">
+        <div class="row mb-3" *ngIf="(errorMessages$ | async) as errorMessages">
+            <div class="col-md-12">
+                <bs-alert *ngFor="let errorMessage of errorMessages" [type]="errorMessage.color" (afterOpenedOrClosed)="removeErrorMessage(errorMessage, $event)">
+                    {{ errorMessage.message }}
+                    <bs-alert-close></bs-alert-close>
+                </bs-alert>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12 text-center">
+                <label class="col-form-label" [bsFor]="txtverificationcode">Open your authenticator app and generate a code for WebApplication1 in the box below:</label>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <input type="text" [(ngModel)]="verificationCode" name="verificationCode" #txtverificationcode autocomplete="off" class="form-control" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-12 text-center">
+                <label>
+                    <input type="checkbox" [(ngModel)]="remember" name="remember" #chkremember />
+                    Remeber this device
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </div>
+    </form>
+</body>

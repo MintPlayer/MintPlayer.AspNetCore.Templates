@@ -12,6 +12,11 @@ public interface IAccountRepository
     Task<User> GetCurrentUser();
     Task<IEnumerable<string>> GetRoles();
     Task Logout();
+    Task<bool> HasPassword();
+    Task ChangePassword(string? currentPassword, string newPassword, string newPasswordConfirmation);
     Task<string> GenerateTwoFactorRegistrationCode();
     Task SetEnableTwoFactor(bool enable, string verificationCode);
+    Task<int> GetRemainingRecoveryCodes();
+    Task SetBypassTwoFactor(bool bypass, string verificationCode);
+    Task<IEnumerable<string>> GenerateNewTwoFactorRecoveryCodes(string verificationCode);
 }

@@ -1,0 +1,174 @@
+<div class="container">
+    <div class="form-group row mb-3">
+        <div class="col-12">
+            <h1 class="d-inline-block">Update profile</h1>
+        </div>
+    </div>
+    <div class="d-block mb-3">
+        <bs-card *ngIf="(user$ | async) as user">
+            <bs-card-header>
+                <i class="fa fa-user"></i> Profile
+            </bs-card-header>
+            <div class="container p-3">
+                <div class="row mb-3">
+                    <div class="col-md-6">Username</div>
+                    <div class="col-md-6">{{ user.userName }}</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">Email address</div>
+                    <div class="col-md-6">{{ user.email }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">Password</div>
+                    <div class="col-md-6">
+                        <button class="btn btn-default" (click)="isChangingPassword = true">
+                            <i class="fa fa-edit"></i>
+                            Change
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </bs-card>
+    </div>
+    <div class="d-block mb-3">
+        <bs-card *ngIf="(user$ | async) as user">
+            <bs-card-header>
+                <i class="fa fa-key"></i>
+                2-factor authentication
+            </bs-card-header>
+            <div class="container p-3" *ngIf="!user.isTwoFactorEnabled">
+                <div class="row mb-3">
+                    <div class="col-xl-12">
+                        <span class="d-block text-center h2">Enable 2-factor authentication</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 text-center">
+                        <label>Open your Authenticator app, scan the following QR-code</label>
+                    </div>
+                    <div class="col-xl-6 text-center" *ngIf="(twoFaRegistrationUrl$ | async) as twoFaRegistrationUrl">
+                        <qr-code [value]="twoFaRegistrationUrl" [size]="200" errorCorrectionLevel="M"></qr-code>
+                        <br />
+                        <a [href]="twoFaRegistrationUrlSanitized$ | async" title="Or open the authenticator app">Or open the authenticator app</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 text-center">
+                        <button (click)="setEnableTwoFactor(true)" class="btn btn-default">
+                            <i class="fa fa-key"></i>
+                            Enable 2-factor authentication
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="container p-3" *ngIf="user.isTwoFactorEnabled">
+                <div class="row mb-3">
+                    <div class="col-xl-6 py-2">
+                        2-factor authentication is enabled
+                    </div>
+                    <div class="col-xl-6 text-center text-xl-end">
+                        <button (click)="setEnableTwoFactor(false)" class="btn btn-default">
+                            <i class="fa fa-key"></i>
+                            Disable 2-factor authentication
+                        </button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-xl-6">
+                        <label>Bypass 2-factor authentication for external logins</label>
+                    </div>
+                    <div class="col-xl-6 text-center text-xl-end">
+                        <div class="btn-group rounded">
+                            <button (click)="setBypass2faForExternalLogin(true)" class="btn" [class.btn-primary]="user.bypass2faForExternalLogin" [class.btn-secondary]="!user.bypass2faForExternalLogin" [attr.disabled]="user.bypass2faForExternalLogin ? true : null">Enable</button>
+                            <button (click)="setBypass2faForExternalLogin(false)" class="btn" [class.btn-primary]="!user.bypass2faForExternalLogin" [class.btn-secondary]="user.bypass2faForExternalLogin" [attr.disabled]="user.bypass2faForExternalLogin ? null : true">Disable</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3" *ngIf="{ count: numberOfRecoveryCodesLeft$ | async } as recoveryCodesLeft">
+                    <div class="col-xl-6 py-2">
+                        <label>
+                            You have {{ recoveryCodesLeft.count }} recovery codes left.
+                            Generate new recovery codes before you run out of them
+                        </label>
+                    </div>
+                    <div class="col-xl-6 text-center text-xl-end">
+                        <button (click)="generateNewRecoveryCodes()" class="btn btn-default">
+                            <i class="fa fa-refresh"></i>
+                            Generate new recovery codes
+                        </button>
+                    </div>
+                </div>
+                <div class="row mb-3" *ngIf="(backupCodes$ | async) as backupCodes">
+                    <div class="col-md-12">
+                        <p>Write down these backup codes</p>
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let backupCode of backupCodes">{{ backupCode }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </bs-card>
+    </div>
+</div>
+<bs-modal [(isOpen)]="isChangingPassword">
+    <form *bsModal cdkTrapFocus (submit)="updatePassword()">
+        <div bsModalHeader>
+            <h5 class="modal-title">Change password</h5>
+        </div>
+        <div bsModalBody class="text-nowrap p-2 d-flex flex-row align-items-center justify-content-between">
+            <div class="container">
+                <div class="form-group row mb-3" *ngIf="hasPassword$ | async">
+                    <div [bsFor]="txtCurrentPassword" class="col-md-6 col-form-label">Current password</div>
+                    <div class="col-md-6">
+                        <input type="password" [(ngModel)]="currentPassword" autofocus name="currentPassword" #txtCurrentPassword class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <div [bsFor]="txtNewPassword" class="col-md-6 col-form-label">Enter new password</div>
+                    <div class="col-md-6">
+                        <input type="password" [(ngModel)]="newPassword" name="newPassword" #txtNewPassword class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row mb-3">
+                    <div [bsFor]="txtNewPasswordConfirmation" class="col-md-6 col-form-label">Confirm new password</div>
+                    <div class="col-md-6">
+                        <input type="password" [(ngModel)]="newPasswordConfirmation" name="newPasswordConfirmation" #txtNewPasswordConfirmation class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div bsModalFooter>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary" aria-label="Update password">Update password</button>
+                <button type="button" bsModalClose class="btn btn-secondary" aria-label="Cancel">Cancel</button>
+            </div>
+        </div>
+    </form>
+</bs-modal>
+<bs-modal [(isOpen)]="isRequestingTwoFactorCode">
+    <form *bsModal cdkTrapFocus (submit)="twoFactorCodeEntered()">
+        <div bsModalHeader>
+            <h5 class="modal-title">Enter verification code</h5>
+        </div>
+        <div bsModalBody class="text-nowrap p-2">
+            <div class="container">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        Enter a code from your authenticator app
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="text" [(ngModel)]="verificationCode" name="txtVerificationCode" autofocus autocomplete="off" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div bsModalFooter>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary" aria-label="Enable/disable 2-factor authentication">Enable/disable</button>
+                <button type="button" (click)="dismissTwoFactorModal()" bsModalClose class="btn btn-secondary" aria-label="Cancel">Cancel</button>
+            </div>
+        </div>
+    </form>
+</bs-modal>

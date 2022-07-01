@@ -1,4 +1,4 @@
-﻿namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Viewmodels.Account;
+﻿namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Account;
 
 public class LoginVM
 {

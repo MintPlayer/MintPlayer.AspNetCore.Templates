@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Repositories;
@@ -19,22 +20,25 @@ internal class AccountService : IAccountService
     private readonly IHttpContextAccessor httpContextAccessor;
     private readonly IMailService mailService;
     private readonly IOptions<SmtpOptions> smtpOptions;
+    private readonly IOptions<IdentityOptions> identityOptions;
     public AccountService(
         IAccountRepository accountRepository,
         LinkGenerator linkGenerator,
         IHttpContextAccessor httpContextAccessor,
         IMailService mailService,
-        IOptions<Options.SmtpOptions> smtpOptions)
+        IOptions<Options.SmtpOptions> smtpOptions,
+        IOptions<IdentityOptions> identityOptions)
     {
         this.accountRepository = accountRepository;
         this.linkGenerator = linkGenerator;
         this.httpContextAccessor = httpContextAccessor;
         this.mailService = mailService;
         this.smtpOptions = smtpOptions;
+        this.identityOptions = identityOptions;
     }
     #endregion
 
-    public async Task<User> Register(User user, string password, string passwordConfirmation)
+    public async Task<RegisterResult> Register(User user, string password, string passwordConfirmation)
     {
         if (password != passwordConfirmation)
         {
@@ -42,7 +46,7 @@ internal class AccountService : IAccountService
         }
 
         var newUser = await accountRepository.Register(user, password);
-        return newUser;
+        return new RegisterResult { User = newUser, RequiresEmailConfirmation = identityOptions.Value.SignIn.RequireConfirmedEmail };
     }
 
     public async Task<string> GenerateEmailConfirmationToken(string email)
@@ -53,12 +57,15 @@ internal class AccountService : IAccountService
 
     public async Task SendConfirmationEmail(string email, string confirmationUrl)
     {
-        var html = $@"Please confirm your account by clicking <a href=""{confirmationUrl}"">here</a>.";
-        using (var client = await mailService.CreateSmtpClient())
-        using (var message = new MailMessage(smtpOptions.Value.DefaultFrom, email, "Confirm email address", html))
+        if (identityOptions.Value.SignIn.RequireConfirmedEmail)
         {
-            message.IsBodyHtml = true;
-            client.Send(message);
+            var html = $@"Please confirm your account by clicking <a href=""{confirmationUrl}"">here</a>.";
+            using (var client = await mailService.CreateSmtpClient())
+            using (var message = new MailMessage(smtpOptions.Value.DefaultFrom, email, "Confirm email address", html))
+            {
+                message.IsBodyHtml = true;
+                client.Send(message);
+            }
         }
     }
 
@@ -97,6 +104,17 @@ internal class AccountService : IAccountService
         await accountRepository.Logout();
     }
 
+    public async Task<bool> HasPassword()
+    {
+        var hasPassword = await accountRepository.HasPassword();
+        return hasPassword;
+    }
+
+    public async Task ChangePassword(string? currentPassword, string newPassword, string newPasswordConfirmation)
+    {
+        await accountRepository.ChangePassword(currentPassword, newPassword, newPasswordConfirmation);
+    }
+
     public async Task<string> GenerateTwoFactorRegistrationCode()
     {
         var code = await accountRepository.GenerateTwoFactorRegistrationCode();
@@ -106,5 +124,22 @@ internal class AccountService : IAccountService
     public async Task SetEnableTwoFactor(bool enable, string verificationCode)
     {
         await accountRepository.SetEnableTwoFactor(enable, verificationCode);
+    }
+
+    public async Task<int> GetRemainingRecoveryCodes()
+    {
+        var count = await accountRepository.GetRemainingRecoveryCodes();
+        return count;
+    }
+
+    public async Task SetBypassTwoFactor(bool bypass, string verificationCode)
+    {
+        await accountRepository.SetBypassTwoFactor(bypass, verificationCode);
+    }
+
+    public async Task<IEnumerable<string>> GenerateNewTwoFactorRecoveryCodes(string verificationCode)
+    {
+        var recoveryCodes = await accountRepository.GenerateNewTwoFactorRecoveryCodes(verificationCode);
+        return recoveryCodes;
     }
 }

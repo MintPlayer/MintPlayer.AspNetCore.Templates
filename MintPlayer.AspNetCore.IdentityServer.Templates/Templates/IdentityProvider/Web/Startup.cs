@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using MintPlayer.AspNetCore.XsrfForSpas;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Extensions;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web;
 
@@ -48,6 +50,23 @@ public class Startup
 		{
 			configuration.RootPath = "ClientApp/dist/ClientApp";
 		});
+
+		services
+			.Configure<IdentityOptions>(options =>
+			{
+				options.SignIn.RequireConfirmedEmail = Configuration.GetValue<bool>("Account:RequireEmailConfirmation", true);
+			})
+			.ConfigureApplicationCookie(options =>
+			{
+				options.Cookie.HttpOnly = true;
+				options.SlidingExpiration = true;
+				options.ExpireTimeSpan = TimeSpan.FromDays(3);
+				options.Events.OnRedirectToLogin = (context) =>
+				{
+					context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+					return Task.CompletedTask;
+				};
+			});
 	}
 
 	// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

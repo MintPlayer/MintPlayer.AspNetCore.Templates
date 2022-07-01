@@ -14,6 +14,10 @@
 		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.1" />
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
 		<PackageReference Include="MintPlayer.Extensions.OrderBy" Version="6.0.0" />
 	</ItemGroup>

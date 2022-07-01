@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Mappers;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Repositories;
@@ -12,16 +14,22 @@ internal class AccountRepository : IAccountRepository
     #region Constructor
     private readonly UserManager<Persistance.Entities.User> userManager;
     private readonly SignInManager<Persistance.Entities.User> signinManager;
+    private readonly SsoContext ssoContext;
+    private readonly IOptions<IdentityOptions> identityOptions;
     private readonly IUserMapper userMapper;
     private readonly IHttpContextAccessor httpContextAccessor;
     public AccountRepository(
         UserManager<Persistance.Entities.User> userManager,
         SignInManager<Persistance.Entities.User> signinManager,
+        SsoContext ssoContext,
+        IOptions<IdentityOptions> identityOptions,
         IUserMapper userMapper,
         IHttpContextAccessor httpContextAccessor)
     {
         this.userManager = userManager;
         this.signinManager = signinManager;
+        this.ssoContext = ssoContext;
+        this.identityOptions = identityOptions;
         this.userMapper = userMapper;
         this.httpContextAccessor = httpContextAccessor;
     }
@@ -60,7 +68,7 @@ internal class AccountRepository : IAccountRepository
         }
     }
 
-    public async Task<Dtos.Dtos.User> Login(string email, string password, bool createCookie)
+    public async Task<User> Login(string email, string password, bool createCookie)
     {
         try
         {
@@ -73,7 +81,7 @@ internal class AccountRepository : IAccountRepository
                 if (!isPasswordCorrect) throw new InvalidPasswordException();
 
                 var isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);
-                if (!isEmailConfirmed) throw new EmailNotConfirmedException();
+                if (identityOptions.Value.SignIn.RequireConfirmedEmail && !isEmailConfirmed) throw new EmailNotConfirmedException();
 
                 var signinResult = await signinManager.PasswordSignInAsync(user, password, true, true);
                 if (signinResult.Succeeded)
@@ -164,6 +172,32 @@ internal class AccountRepository : IAccountRepository
         await signinManager.SignOutAsync();
     }
 
+    public async Task<bool> HasPassword()
+    {
+        var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext!.User);
+        if (user == null) throw new UnauthorizedAccessException();
+
+        var hasPassword = await userManager.HasPasswordAsync(user);
+        return hasPassword;
+    }
+
+    public async Task ChangePassword(string? currentPassword, string newPassword, string newPasswordConfirmation)
+    {
+        if (newPassword != newPasswordConfirmation)
+        {
+            throw new PasswordConfirmationException();
+        }
+
+        var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext!.User);
+        if (user == null) throw new UnauthorizedAccessException();
+
+        var result = await userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        if (!result.Succeeded)
+        {
+            throw new InvalidPasswordException();
+        }
+    }
+
     public async Task<string> GenerateTwoFactorRegistrationCode()
     {
         var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
@@ -191,5 +225,40 @@ internal class AccountRepository : IAccountRepository
         {
             throw new UnauthorizedAccessException();
         }
+    }
+
+    public async Task<int> GetRemainingRecoveryCodes()
+    {
+        var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
+        var count = await userManager.CountRecoveryCodesAsync(user);
+        return count;
+    }
+
+    public async Task SetBypassTwoFactor(bool bypass, string verificationCode)
+    {
+        var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
+
+        var is2faTokenValid = await userManager.VerifyTwoFactorTokenAsync(user, userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+        if (!is2faTokenValid)
+        {
+            throw new UnauthorizedAccessException();
+        }
+
+        user.Bypass2faForExternalLogin = bypass;
+        await ssoContext.SaveChangesAsync();
+    }
+
+    public async Task<IEnumerable<string>> GenerateNewTwoFactorRecoveryCodes(string verificationCode)
+    {
+        var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
+
+        var is2faTokenValid = await userManager.VerifyTwoFactorTokenAsync(user, userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+        if (!is2faTokenValid)
+        {
+            throw new UnauthorizedAccessException();
+        }
+
+        var recoveryCodes = await userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
+        return recoveryCodes;
     }
 }

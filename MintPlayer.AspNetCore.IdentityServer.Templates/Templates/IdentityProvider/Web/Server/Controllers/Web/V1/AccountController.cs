@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using System.Text.Encodings.Web;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
-using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Viewmodels.Account;
-using Microsoft.AspNetCore.Routing;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.Web.V1
 {
+    [Controller]
     [Route("Web/V1/[controller]")]
     public class AccountController : Controller
     {
@@ -29,7 +30,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
 
         [ValidateAntiForgeryToken]
         [HttpPost("Register", Name = "web-v1-account-register")]
-        public async Task<ActionResult<Dtos.Dtos.User>> Register([FromBody] RegisterVM registerVM)
+        public async Task<ActionResult<RegisterResult?>> Register([FromBody] RegisterVM registerVM)
         {
             try
             {
@@ -183,6 +184,37 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
         }
 
         [Authorize]
+        [HttpGet("Password")]
+        public async Task<ActionResult<bool>> HasPassword()
+        {
+            try
+            {
+                var hasPassword = await accountService.HasPassword();
+                return Ok(hasPassword);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPut("Password")]
+        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordVM changePasswordVM)
+        {
+            try
+            {
+                await accountService.ChangePassword(changePasswordVM.CurrentPassword, changePasswordVM.NewPassword, changePasswordVM.NewPasswordConfirmation);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Authorize]
         [HttpGet("Roles", Name = "web-v1-account-roles")]
         public async Task<ActionResult<IEnumerable<string>>> Roles()
         {
@@ -204,7 +236,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
         {
             try
             {
-                const string appName = "VehicleStudio";
+                const string appName = "WebApplication1";
                 var user = await accountService.GetCurrentUser();
                 var registrationCode = await accountService.GenerateTwoFactorRegistrationCode();
                 var registrationUrl = $"otpauth://totp/{urlEncoder.Encode(appName)}:{urlEncoder.Encode(user.Email)}?secret={registrationCode}&issuer={urlEncoder.Encode(appName)}&digits=8";
@@ -228,6 +260,57 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
             try
             {
                 await accountService.SetEnableTwoFactor(twoFactorEnableVM.Enable, twoFactorEnableVM.VerificationCode);
+                return Ok();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("TwoFactor/Recovery/RemainingCodes", Name = "web-v1-account-twofactor-recovery-remainingcodes")]
+        public async Task<ActionResult<int>> GetRemainingRecoveryCodes()
+        {
+            try
+            {
+                var count = await accountService.GetRemainingRecoveryCodes();
+                return Ok(count);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPut("TwoFactor/Recovery/RemainingCodes", Name = "web-v1-account-twofactor-recovery-remainingcodes-generate")]
+        public async Task<ActionResult<IEnumerable<string>>> GenerateNewRecoveryCodes([FromBody] TwoFactorGenerateCodesVM twoFactorGenerateCodesVM)
+        {
+            try
+            {
+                var recoveryCodes = await accountService.GenerateNewTwoFactorRecoveryCodes(twoFactorGenerateCodesVM.VerificationCode);
+                return Ok(recoveryCodes);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost("TwoFactor/Bypass", Name = "web-v1-account-twofactor-bypass")]
+        public async Task<ActionResult> SetBypassTwoFactorForExternallogins([FromBody] TwoFactorBypassVM twoFactorBypassVM)
+        {
+            try
+            {
+                await accountService.SetBypassTwoFactor(twoFactorBypassVM.Bypass, twoFactorBypassVM.VerificationCode);
                 return Ok();
             }
             catch (UnauthorizedAccessException)
