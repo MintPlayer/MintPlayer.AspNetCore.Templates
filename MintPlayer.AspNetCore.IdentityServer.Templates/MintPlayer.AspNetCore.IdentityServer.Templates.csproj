@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.0.3</PackageVersion>
+		<PackageVersion>6.0.4</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -20,6 +20,8 @@
 		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<ContentTargetFolders>content</ContentTargetFolders>
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	
+        <NoDefaultExcludes>true</NoDefaultExcludes>
 	</PropertyGroup>
 
 	<!--
