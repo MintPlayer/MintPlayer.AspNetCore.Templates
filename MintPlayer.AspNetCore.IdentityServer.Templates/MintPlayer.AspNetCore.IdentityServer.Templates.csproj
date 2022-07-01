@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.0.1</PackageVersion>
+		<PackageVersion>6.0.2</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -33,16 +33,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Templates\Application\Web\appsettings.Development.json" />
-	  <None Remove="Templates\Application\Web\appsettings.json" />
-	  <None Remove="Templates\Application\Web\appsettings.Production.json" />
-	  <None Remove="Templates\IdentityProvider\Web\.gitignore" />
-	  <None Remove="Templates\IdentityProvider\Web\appsettings.Development.json" />
-	  <None Remove="Templates\IdentityProvider\Web\appsettings.json" />
-	  <None Remove="Templates\IdentityProvider\Web\appsettings.Production.json" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.1" />
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
@@ -57,16 +47,6 @@
 		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.Extensions.OrderBy" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.Pagination" Version="1.0.3" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Templates\Application\Data.Abstractions\Access\Mappers\" />
-	  <Folder Include="Templates\Application\Web\Server\Controllers\" />
-	  <Folder Include="Templates\Application\Web\Server\ViewModels\" />
-	  <Folder Include="Templates\Application\Web\Server\Views\" />
-	  <Folder Include="Templates\IdentityProvider\Web\ClientApp\src\app\services\" />
-	  <Folder Include="Templates\IdentityProvider\Web\Server\Controllers\" />
-	  <Folder Include="Templates\IdentityProvider\Web\Server\Views\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -89,19 +69,4 @@
 		</Content>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Templates\IdentityProvider\Data.Abstractions\NewFolder\**" />
-	  <Compile Remove="Templates\IdentityProvider\Data\Access\NewFolder\**" />
-	  <Compile Remove="Templates\IdentityProvider\Data\Exceptions\NewFolder\**" />
-	  <Content Remove="Templates\IdentityProvider\Data.Abstractions\NewFolder\**" />
-	  <Content Remove="Templates\IdentityProvider\Data\Access\NewFolder\**" />
-	  <Content Remove="Templates\IdentityProvider\Data\Exceptions\NewFolder\**" />
-	  <EmbeddedResource Remove="Templates\IdentityProvider\Data.Abstractions\NewFolder\**" />
-	  <EmbeddedResource Remove="Templates\IdentityProvider\Data\Access\NewFolder\**" />
-	  <EmbeddedResource Remove="Templates\IdentityProvider\Data\Exceptions\NewFolder\**" />
-	  <None Remove="Templates\IdentityProvider\Data.Abstractions\NewFolder\**" />
-	  <None Remove="Templates\IdentityProvider\Data\Access\NewFolder\**" />
-	  <None Remove="Templates\IdentityProvider\Data\Exceptions\NewFolder\**" />
-	</ItemGroup>
-	
 </Project>
