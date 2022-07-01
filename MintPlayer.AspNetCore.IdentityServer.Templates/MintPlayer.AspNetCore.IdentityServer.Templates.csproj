@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.0.2</PackageVersion>
+		<PackageVersion>6.0.3</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -22,6 +22,8 @@
 		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 	</PropertyGroup>
 
+	<!--
+	
 	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
 		<Compile Include="Templates\**\*.cs" Exclude="Templates\**\bin\**;Templates\**\obj\**;Templates\*\.template.config\**" />
 		<Content Include="Templates\**\*" Exclude="Templates\**\bin\**;Templates\**\obj\**;Templates\**\*.cs" />
@@ -30,6 +32,18 @@
 	<ItemGroup Condition=" '$(Configuration)' == 'Release' ">
 		<Content Include="Templates\**\*" Exclude="Templates\**\bin\**;Templates\**\obj\**" />
 		<Compile Remove="**\*" />
+	</ItemGroup>
+	
+	-->
+
+	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<Compile Include="Templates\**\*.cs" Exclude="Templates\**\bin\**;Templates\**\obj\**;Templates\*\.template.config\**" />
+		<Content Include="Templates\**\*" Exclude="Templates\**\bin\**;Templates\**\obj\**;Templates\**\*.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+		<Content Include="Templates\**\*;Templates\**\.browserlistrc;Templates\**\.editorconfig;Templates\**\.gitignore" Exclude="Templates\**\node_modules\**\*;Templates\**\bin\**\*;Templates\**\obj\**\*" />
+		<None Remove="Templates\**\node_modules\**\*;Templates\**\bin\**\*;Templates\**\obj\**\*" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -47,26 +61,6 @@
 		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.Extensions.OrderBy" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.Pagination" Version="1.0.3" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="Templates/Application/Web/appsettings.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Templates/Application/Web/appsettings.*.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<DependentUpon>Templates/Application/Web/appsettings.json</DependentUpon>
-		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="Templates/IdentityProvider/Web/appsettings.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Templates/IdentityProvider/Web/appsettings.*.json">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<DependentUpon>Templates/IdentityProvider/Web/appsettings.json</DependentUpon>
-		</Content>
 	</ItemGroup>
 
 </Project>
