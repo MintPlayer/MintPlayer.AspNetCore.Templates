@@ -8,7 +8,7 @@ This repository contains .NET templates with an initial IdentityServer setup.
 ## Updating the installed template packages
 You should be able to update the .NET templates using the following command:
 
-    dotnet new --update
+    dotnet new --update-apply
 
 ## Creating new projects
 Create a new folder and CD inside it
