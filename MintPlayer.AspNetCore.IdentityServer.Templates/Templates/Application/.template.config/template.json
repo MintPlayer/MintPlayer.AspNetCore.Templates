@@ -1,7 +1,7 @@
 ﻿{
   "$schema": "http://json.schemastore.org/template",
   "author": "MintPlayer",
-  "classifications": [ "IdentityServer", "Application" ],
+  "classifications": [ "Single sign-on" ],
   "identity": "MintPlayer.AspNetCore.IdentityServer.Templates.Application.CSharp",
   "groupIdentity": "MintPlayer.AspNetCore.IdentityServer.Application",
   "shortName": "id-application",

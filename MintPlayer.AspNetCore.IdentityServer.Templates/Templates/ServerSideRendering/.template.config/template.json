@@ -1,0 +1,16 @@
+﻿{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "MintPlayer",
+  "classifications": [ "Web", "Server-side rendering" ],
+  "identity": "MintPlayer.AspNetCore.Templates.ServerSideRendering.CSharp",
+  "groupIdentity": "MintPlayer.AspNetCore.ServerSideRendering.Angular",
+  "shortName": "web-ssr",
+  "name": "ASP.NET Core with Angular (SSR)",
+  "description": "ASP.NET Core application with Angular and Server-side rendering",
+  "sourceName": "MintPlayer.AspNetCore.ServerSideRendering",
+  "defaultName": "WebApplication1",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  }
+}
