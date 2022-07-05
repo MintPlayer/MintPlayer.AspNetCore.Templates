@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.0.8</PackageVersion>
+		<PackageVersion>6.0.9</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -46,6 +46,10 @@
 	<ItemGroup Condition=" '$(Configuration)' == 'Release' ">
 		<Content Include="Templates\**\*;Templates\**\.browserlistrc;Templates\**\.editorconfig;Templates\**\.gitignore" Exclude="Templates\**\node_modules\**\*;Templates\**\bin\**\*;Templates\**\obj\**\*" />
 		<None Remove="Templates\**\node_modules\**\*;Templates\**\bin\**\*;Templates\**\obj\**\*" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Templates\ServerSideRendering\Web\Properties\launchSettings.json" />
 	</ItemGroup>
 
 	<ItemGroup>
