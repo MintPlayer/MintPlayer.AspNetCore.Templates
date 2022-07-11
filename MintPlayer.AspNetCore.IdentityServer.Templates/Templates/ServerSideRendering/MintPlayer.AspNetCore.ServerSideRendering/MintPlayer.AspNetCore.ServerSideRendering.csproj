@@ -21,7 +21,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.6" />
 		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="6.0.0" />
-		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="6.0.6" />
+		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="6.1.1" />
 		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.1" />
 	</ItemGroup>
 

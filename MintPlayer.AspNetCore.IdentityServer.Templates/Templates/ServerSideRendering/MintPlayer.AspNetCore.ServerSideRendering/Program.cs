@@ -49,7 +49,7 @@ app.UseSpa(spa =>
 	spa.UseSpaPrerendering(options =>
 	{
         // Disable below line, and run "npm run build:ssr" or "npm run dev:ssr" manually for faster development.
-        options.BootModuleBuilder = app.Environment.IsDevelopment() ? new AngularCliBuilder(npmScript: "build:ssr") : null;
+        options.BootModuleBuilder = app.Environment.IsDevelopment() ? new AngularPrerendererBuilder(npmScript: "build:ssr") : null;
         options.BootModulePath = $"{spa.Options.SourcePath}/dist/ClientApp/server/main.js";
 		options.ExcludeUrls = new[] { "/sockjs-node" };
 	});
