@@ -8,15 +8,15 @@ import { RegisterComponent } from './register.component';
 
 
 @NgModule({
-  declarations: [
-    RegisterComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    BsAlertModule,
-    BsForModule,
-    RegisterRoutingModule
-  ]
+	declarations: [
+		RegisterComponent
+	],
+	imports: [
+		CommonModule,
+		FormsModule,
+		BsAlertModule,
+		BsForModule,
+		RegisterRoutingModule
+	]
 })
 export class RegisterModule { }

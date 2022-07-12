@@ -16,8 +16,9 @@ public interface IAccountService
     Task ChangePassword(string? currentPassword, string newPassword, string newPasswordConfirmation);
     Task<string> GenerateTwoFactorRegistrationCode();
     Task<User> TwoFactorLogin(string verificationCode, bool rememberDevice);
-    Task SetEnableTwoFactor(bool enable, string verificationCode);
+    Task SetEnableTwoFactor(bool enable, TwoFactorCode code);
     Task<int> GetRemainingRecoveryCodes();
     Task SetBypassTwoFactor(bool bypass, string verificationCode);
     Task<IEnumerable<string>> GenerateNewTwoFactorRecoveryCodes(string verificationCode);
+    Task<User> TwoFactorRecovery(string recoveryCode);
 }

@@ -2,8 +2,7 @@
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Account;
 
-public class TwoFactorEnableVM
+public class TwoFactorRecoveryVM
 {
-    public bool Enable { get; set; }
-    public TwoFactorCode Code { get; set; }
+    public string RecoveryCode { get; set; }
 }

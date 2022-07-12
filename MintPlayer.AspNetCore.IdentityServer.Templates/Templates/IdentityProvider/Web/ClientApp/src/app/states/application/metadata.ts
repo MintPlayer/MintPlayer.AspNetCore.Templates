@@ -1,3 +1,3 @@
 export class Metadata {
-    static readonly namespace = 'ApplicationState';
+	static readonly namespace = 'ApplicationState';
 }

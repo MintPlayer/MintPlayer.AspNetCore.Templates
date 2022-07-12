@@ -259,7 +259,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
         {
             try
             {
-                await accountService.SetEnableTwoFactor(twoFactorEnableVM.Enable, twoFactorEnableVM.VerificationCode);
+                await accountService.SetEnableTwoFactor(twoFactorEnableVM.Enable, twoFactorEnableVM.Code);
                 return Ok();
             }
             catch (UnauthorizedAccessException)
@@ -316,6 +316,21 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
             catch (UnauthorizedAccessException)
             {
                 return Unauthorized();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost("TwoFactor/Recovery", Name = "web-v1-account-twofactor-recovery")]
+        public async Task<ActionResult<User>> TwoFactorRecoveryCodeSignin([FromBody] TwoFactorRecoveryVM twoFactorRecoveryVM)
+        {
+            try
+            {
+                var user = await accountService.TwoFactorRecovery(twoFactorRecoveryVM.RecoveryCode);
+                return Ok(user);
             }
             catch (Exception)
             {

@@ -1,3 +1,3 @@
 export interface TwoFactorRegistrationInfo {
-  registrationUrl: string;
+	registrationUrl: string;
 }

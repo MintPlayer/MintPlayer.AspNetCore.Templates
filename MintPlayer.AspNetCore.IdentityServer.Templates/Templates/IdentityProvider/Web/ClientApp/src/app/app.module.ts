@@ -11,32 +11,32 @@ import { AppComponent } from './app.component';
 import { ApplicationManager } from './states/application/application.manager';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'XSRF-TOKEN',
-      headerName: 'X-XSRF-TOKEN'
-    }),
-    NgxsModule.forRoot([
-      ApplicationManager
-    ]),
-    AdvancedRouterModule,
-    BsNavbarModule,
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		BrowserModule,
+		BrowserAnimationsModule,
+		HttpClientModule,
+		HttpClientXsrfModule.withOptions({
+			cookieName: 'XSRF-TOKEN',
+			headerName: 'X-XSRF-TOKEN'
+		}),
+		NgxsModule.forRoot([
+			ApplicationManager
+		]),
+		AdvancedRouterModule,
+		BsNavbarModule,
 
-    AppRoutingModule
-  ],
-  providers: [{
-    provide: QUERY_PARAMS_CONFIG,
-    useValue: <QueryParamsConfig>{
-      lang: 'preserve',
-      return: ''
-    }
-  }],
-  bootstrap: [AppComponent]
+		AppRoutingModule
+	],
+	providers: [{
+		provide: QUERY_PARAMS_CONFIG,
+		useValue: <QueryParamsConfig>{
+			lang: 'preserve',
+			return: ''
+		}
+	}],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,9 +5,9 @@ import { AccountRoutingModule } from './account-routing.module';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    AccountRoutingModule
-  ]
+	imports: [
+		CommonModule,
+		AccountRoutingModule
+	]
 })
 export class AccountModule { }

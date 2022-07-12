@@ -6,6 +6,7 @@ using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Rep
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Enums;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Repositories;
 
@@ -18,13 +19,15 @@ internal class AccountRepository : IAccountRepository
     private readonly IOptions<IdentityOptions> identityOptions;
     private readonly IUserMapper userMapper;
     private readonly IHttpContextAccessor httpContextAccessor;
+    private readonly IServiceProvider serviceProvider;
     public AccountRepository(
         UserManager<Persistance.Entities.User> userManager,
         SignInManager<Persistance.Entities.User> signinManager,
         SsoContext ssoContext,
         IOptions<IdentityOptions> identityOptions,
         IUserMapper userMapper,
-        IHttpContextAccessor httpContextAccessor)
+        IHttpContextAccessor httpContextAccessor,
+        IServiceProvider serviceProvider)
     {
         this.userManager = userManager;
         this.signinManager = signinManager;
@@ -32,6 +35,7 @@ internal class AccountRepository : IAccountRepository
         this.identityOptions = identityOptions;
         this.userMapper = userMapper;
         this.httpContextAccessor = httpContextAccessor;
+        this.serviceProvider = serviceProvider;
     }
     #endregion
 
@@ -210,10 +214,25 @@ internal class AccountRepository : IAccountRepository
         return code;
     }
 
-    public async Task SetEnableTwoFactor(bool enable, string verificationCode)
+    private async Task<bool> CheckTwoFactorCode(Persistance.Entities.User user, TwoFactorCode code)
+    {
+        switch (code.CodeType)
+        {
+            case ECodeType.VerificationCode:
+                var isCodeCorrect = await userManager.VerifyTwoFactorTokenAsync(user, userManager.Options.Tokens.AuthenticatorTokenProvider, code.Code);
+                return isCodeCorrect;
+            case ECodeType.RecoveryCode:
+                var res = await userManager.RedeemTwoFactorRecoveryCodeAsync(user, code.Code);
+                return res.Succeeded;
+            default:
+                throw new Exception("Invalid code type");
+        }
+    }
+
+    public async Task SetEnableTwoFactor(bool enable, TwoFactorCode code)
     {
         var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
-        var isCodeCorrect = await userManager.VerifyTwoFactorTokenAsync(user, userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
+        var isCodeCorrect = await CheckTwoFactorCode(user, code);
 
         if (!isCodeCorrect)
         {
@@ -260,5 +279,20 @@ internal class AccountRepository : IAccountRepository
 
         var recoveryCodes = await userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
         return recoveryCodes;
+    }
+
+    public async Task<User> TwoFactorRecovery(string recoveryCode)
+    {
+        var result = await signinManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
+        if (result.Succeeded)
+        {
+            var user = await signinManager.GetTwoFactorAuthenticationUserAsync();
+            var dto = await userMapper.Entity2Dto(user);
+            return dto;
+        }
+        else
+        {
+            throw new LoginException();
+        }
     }
 }

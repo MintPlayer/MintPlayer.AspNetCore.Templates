@@ -11,19 +11,19 @@ import { ProfileComponent } from './profile.component';
 
 
 @NgModule({
-  declarations: [
-    ProfileComponent
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    BsForModule,
-    BsCardModule,
-    BsModalModule,
-    QrCodeModule,
-    A11yModule,
-    FocusOnLoadModule,
-    ProfileRoutingModule
-  ]
+	declarations: [
+		ProfileComponent
+	],
+	imports: [
+		CommonModule,
+		FormsModule,
+		BsForModule,
+		BsCardModule,
+		BsModalModule,
+		QrCodeModule,
+		A11yModule,
+		FocusOnLoadModule,
+		ProfileRoutingModule
+	]
 })
 export class ProfileModule { }

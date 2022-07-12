@@ -121,9 +121,9 @@ internal class AccountService : IAccountService
         return code;
     }
 
-    public async Task SetEnableTwoFactor(bool enable, string verificationCode)
+    public async Task SetEnableTwoFactor(bool enable, TwoFactorCode code)
     {
-        await accountRepository.SetEnableTwoFactor(enable, verificationCode);
+        await accountRepository.SetEnableTwoFactor(enable, code);
     }
 
     public async Task<int> GetRemainingRecoveryCodes()
@@ -141,5 +141,11 @@ internal class AccountService : IAccountService
     {
         var recoveryCodes = await accountRepository.GenerateNewTwoFactorRecoveryCodes(verificationCode);
         return recoveryCodes;
+    }
+
+    public async Task<User> TwoFactorRecovery(string recoveryCode)
+    {
+        var user = await accountRepository.TwoFactorRecovery(recoveryCode);
+        return user;
     }
 }
