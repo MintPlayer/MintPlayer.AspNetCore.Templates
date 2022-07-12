@@ -216,7 +216,7 @@ internal class AccountRepository : IAccountRepository
 
     private async Task<bool> CheckTwoFactorCode(Persistance.Entities.User user, TwoFactorCode code)
     {
-        switch (code.CodeType)
+        switch (code.Type)
         {
             case ECodeType.VerificationCode:
                 var isCodeCorrect = await userManager.VerifyTwoFactorTokenAsync(user, userManager.Options.Tokens.AuthenticatorTokenProvider, code.Code);

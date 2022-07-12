@@ -3,5 +3,5 @@
 public class TwoFactorCode
 {
     public string Code { get; set; }
-    public Enums.ECodeType CodeType { get; set; }
+    public Enums.ECodeType Type { get; set; }
 }
