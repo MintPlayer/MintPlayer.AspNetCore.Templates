@@ -9,6 +9,7 @@ import { ELoginStatus } from '../../../api/enums/login-status';
 import { AccountService } from '../../../api/services/account/account.service';
 import { SetUser } from '../../../states/application/actions/set-user';
 import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
+import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
 
 @Component({
 	selector: 'app-login',
@@ -22,6 +23,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.route.queryParams.pipe(takeUntil(this.destroyed$)).subscribe((params) => {
 			this.returnUrl = params['return'] || '/';
+		});
+		this.accountService.getExternalLoginProviders().subscribe({
+			next: (providers) => {
+				this.externalProviders$.next(providers);
+			}, error: (error) => {
+				this.errorMessages$.pipe(tap((errorMessages) => {
+					errorMessages.push({ message: 'Cannot get external providers', color: this.colors.danger });
+				})).subscribe();
+			}
 		});
 	}
 
@@ -72,6 +82,32 @@ export class LoginComponent implements OnInit, OnDestroy {
 				})).subscribe();
 			}
 		});
+	}
+
+	externalLoginSuccessOrFailed(result: ExternalLoginResult) {
+		console.log('externalLoginSuccessOrFailed', result);
+		switch (result.status) {
+			case ELoginStatus.success: {
+				// We can't rely on the user we receive from the popup.
+				this.accountService.currentUser().subscribe({
+					next: (user) => {
+						this.store.dispatch([
+							new SetUser(user)
+						]);
+						this.router.navigateByUrl(this.returnUrl);
+					}, error: (error) => {
+						this.errorMessages$.pipe(tap((errorMessages) => {
+							errorMessages.push({ message: 'Unable to fetch the current user', color: this.colors.danger });
+						})).subscribe();
+					}
+				})
+			} break;
+			default: {
+				this.errorMessages$.pipe(tap((errorMessages) => {
+					errorMessages.push({ message: result.errorDescription, color: this.colors.danger });
+				})).subscribe();
+			}
+		}
 	}
 
 	email = '';

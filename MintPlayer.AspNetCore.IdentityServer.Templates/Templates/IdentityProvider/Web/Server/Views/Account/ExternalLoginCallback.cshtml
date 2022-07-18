@@ -10,7 +10,7 @@
             error: "@Model.Error",
             errorDescription: "@Model.ErrorDescription"
         };
-        window.opener.postMessage(JSON.stringify(message), "https://example.com");
+        window.opener.postMessage(JSON.stringify(message), @(Model.TargetOrigin == null ? "undefined" : "\"" + Model.TargetOrigin + "\""));
 	</script>
 </head>
 <body>

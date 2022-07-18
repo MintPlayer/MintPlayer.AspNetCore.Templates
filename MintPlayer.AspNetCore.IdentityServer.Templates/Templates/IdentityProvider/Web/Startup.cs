@@ -38,10 +38,10 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services
-            .ConfigureViewsInSubfolder("Server")
             .AddControllersWithViews()
             .AddNewtonsoftJson();
 
+        services.ConfigureViewsInSubfolder("Server");
         services.AddDataProtection();
         services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 

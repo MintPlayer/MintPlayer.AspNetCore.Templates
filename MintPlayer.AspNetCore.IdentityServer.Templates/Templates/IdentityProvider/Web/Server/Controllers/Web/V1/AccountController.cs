@@ -20,16 +20,19 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
         private readonly UrlEncoder urlEncoder;
         private readonly LinkGenerator linkGenerator;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IServiceProvider serviceProvider;
         public AccountController(
             IAccountService accountService,
             UrlEncoder urlEncoder,
             LinkGenerator linkGenerator,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IServiceProvider serviceProvider)
         {
             this.accountService = accountService;
             this.urlEncoder = urlEncoder;
             this.linkGenerator = linkGenerator;
             this.webHostEnvironment = webHostEnvironment;
+            this.serviceProvider = serviceProvider;
         }
         #endregion
 
@@ -382,6 +385,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
                     case Dtos.Enums.ELoginStatus.Success:
                         var successModel = new ExternalLoginResult
                         {
+                            TargetOrigin = $"{Request.Scheme}://{Request.Host.Value.Replace("external.", string.Empty)}",
                             User = loginResult.User,
                             Status = loginResult.Status,
                             Provider = loginResult.Provider,
@@ -393,6 +397,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
                     default:
                         var failedModel = new ExternalLoginResult
                         {
+                            TargetOrigin = $"{Request.Scheme}://{Request.Host.Value.Replace("external.", string.Empty)}",
                             Status = loginResult.Status,
                             Provider = loginResult.Provider,
                             Error = loginResult.Error,
@@ -405,6 +410,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
             {
                 var model = new ExternalLoginResult
                 {
+                    TargetOrigin = $"{Request.Scheme}://{Request.Host.Value.Replace("external.", string.Empty)}",
                     Status = Dtos.Enums.ELoginStatus.Failed,
                     Provider = provider,
                     Error = "Could not login",
@@ -416,6 +422,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
             {
                 var model = new ExternalLoginResult
                 {
+                    TargetOrigin = $"{Request.Scheme}://{Request.Host.Value.Replace("external.", string.Empty)}",
                     Status = Dtos.Enums.ELoginStatus.Failed,
                     Provider = provider,
                     Error = "Could not login",
@@ -432,13 +439,24 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
         [ApiExplorerSettings(IgnoreApi = true)]
         public ActionResult ExternalLoginTwoFactor([FromRoute] string provider)
         {
-            var root = webHostEnvironment.ContentRootPath + "/ClientApp/dist";
-            var files = System.IO.Directory.GetFiles(root, "styles.*.css");
-            var angularStylesheet = files.Any() ? Url.Content($"~/{Path.GetFileName(files.First())}") : null;
+            var angularStylesheet = string.Empty;
+            if (webHostEnvironment.IsDevelopment())
+            {
+                angularStylesheet = "/styles.css";
+            }
+            else
+            {
+                var root = webHostEnvironment.ContentRootPath + "/ClientApp/dist";
+                angularStylesheet = Directory.GetFiles(root, "styles.*.css", SearchOption.AllDirectories)
+                    .Select(f => Path.GetFileName(f))
+                    .Select(f => Url.Content($"~/{f}"))
+                    .FirstOrDefault();
+            }
 
             var model = new ExternalLoginTwoFactorVM
             {
-                SubmitUrl = Url.Action(nameof(ExternalLoginTwoFactorCallback), new { provider }),
+                TargetOrigin = $"{Request.Scheme}://{Request.Host.Value.Replace("external.", string.Empty)}",
+                SubmitUrl = Url.Action(nameof(ExternalLoginTwoFactorCallback), new { provider })!,
                 StylesheetUrl = angularStylesheet
             };
             return View(model);
@@ -459,6 +477,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
 
                 var successModel = new ExternalLoginResult
                 {
+                    TargetOrigin = $"{Request.Scheme}://{Request.Host.Value.Replace("external.", string.Empty)}",
                     Status = Dtos.Enums.ELoginStatus.Success,
                     Provider = provider,
                     User = user,
@@ -498,6 +517,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
                 await accountService.AddExternalLogin();
                 var model = new ExternalLoginResult
                 {
+                    TargetOrigin = $"{Request.Scheme}://{Request.Host.Value.Replace("external.", string.Empty)}",
                     Status = Dtos.Enums.ELoginStatus.Success,
                     Provider = provider,
                     User = null,
@@ -508,6 +528,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
             {
                 var model = new ExternalLoginResult
                 { 
+                    TargetOrigin = $"{Request.Scheme}://{Request.Host.Value.Replace("external.", string.Empty)}",
                     Status = Dtos.Enums.ELoginStatus.Failed,
                     Provider = provider,
                     Error = "Could not login",

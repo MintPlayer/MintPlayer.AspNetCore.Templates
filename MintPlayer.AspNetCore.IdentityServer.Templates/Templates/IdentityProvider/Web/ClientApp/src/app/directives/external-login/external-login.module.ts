@@ -5,11 +5,14 @@ import { ExternalLoginDirective } from './external-login.directive';
 
 
 @NgModule({
-  declarations: [
-    ExternalLoginDirective
-  ],
-  imports: [
-    CommonModule
-  ]
+	declarations: [
+		ExternalLoginDirective
+	],
+	imports: [
+		CommonModule
+	],
+	exports: [
+		ExternalLoginDirective
+	]
 })
 export class ExternalLoginModule { }

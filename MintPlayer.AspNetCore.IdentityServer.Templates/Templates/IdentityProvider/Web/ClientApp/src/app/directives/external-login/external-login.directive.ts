@@ -1,6 +1,6 @@
 import { Directive, EventEmitter, HostBinding, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BaseUrlService } from '@mintplayer/ng-base-url';
-import { LoginResult } from '../../api/dtos/login-result';
+import { ExternalLoginResult } from '../../api/dtos/external-login-result';
 
 @Directive({
 	selector: '[externalLogin]'
@@ -17,7 +17,7 @@ export class ExternalLoginDirective implements OnInit, OnDestroy {
 
 	@Input() public action: 'add' | 'connect' = 'connect';
 	@Input('externalLogin') public provider: string | null = null;
-	@Output() public loginSuccessOrFailed = new EventEmitter<LoginResult>();
+	@Output() public loginSuccessOrFailed = new EventEmitter<ExternalLoginResult>();
 	@HostBinding('disabled') isOpen = false;
 
 	ngOnInit() {
@@ -59,8 +59,7 @@ export class ExternalLoginDirective implements OnInit, OnDestroy {
 		const message = event as MessageEvent;
 
 		// Only trust messages from the below origin.
-		const messageOrigin = message.origin.replace(/^https?\:/, '');
-		if (this.externalUrl && !this.externalUrl.startsWith(messageOrigin)) return;
+		if (this.externalUrl && !this.externalUrl.startsWith(message.origin)) return;
 
 		// Filter out Augury
 		if (message.data.messageSource != null)
@@ -68,7 +67,7 @@ export class ExternalLoginDirective implements OnInit, OnDestroy {
 		// Filter out any other trash
 		if (message.data == '' || message.data == null) return;
 
-		const result = <LoginResult>JSON.parse(message.data);
+		const result = <ExternalLoginResult>JSON.parse(message.data);
 		//var medium = this.pwaHelper.isPwa() ? 'pwa' : 'web';
 		if ((result.provider === this.provider) && this.authWindow) {
 			this.authWindow.close();

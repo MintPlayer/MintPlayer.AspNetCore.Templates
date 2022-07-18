@@ -6,14 +6,17 @@ internal static class ConfigurationExtensions
 {
     public static bool TryGetValue<T>(this IConfiguration configuration, string key, out T value)
     {
-        if (configuration[key] == null)
+        var config = Activator.CreateInstance<T>();
+        configuration.GetSection(key).Bind(config);
+
+        if (config == null)
         {
             value = default!;
             return false;
         }
         else
         {
-            value = configuration.GetValue<T>(key, default!);
+            value = config;
             return true;
         }
     }

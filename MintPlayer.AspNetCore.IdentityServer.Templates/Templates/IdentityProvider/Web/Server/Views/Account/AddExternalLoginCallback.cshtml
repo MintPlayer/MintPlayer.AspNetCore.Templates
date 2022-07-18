@@ -10,13 +10,13 @@
             error: "@Model.Error",
             errorDescription: "@Model.ErrorDescription"
         };
-        window.opener.postMessage(JSON.stringify(message), "https://example.com");
+        window.opener.postMessage(JSON.stringify(message), @(Model.TargetOrigin == null ? "undefined" : "\"" + Model.TargetOrigin + "\""));
     </script>
 </head>
 <body>
     <h1>Sign-in succeeded</h1>
     <p>
-        We&#39;ve successfully registered your @Model.Result.Provider login. If this window does not close automatically, you can safely close it now, and continue using the application.
+        We&#39;ve successfully registered your @Model.Provider login. If this window does not close automatically, you can safely close it now, and continue using the application.
     </p>
     <p>
         You are seeing this window because you&#39;re visiting the application through a web browser while the PWA is installed.

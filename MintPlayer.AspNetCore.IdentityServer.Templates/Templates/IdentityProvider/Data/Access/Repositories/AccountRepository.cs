@@ -328,7 +328,7 @@ internal class AccountRepository : IAccountRepository
 
             var newUser = new Persistance.Entities.User
             {
-                UserName = username,
+                UserName = username.Replace(" ", string.Empty),
                 Email = email,
                 EmailConfirmed = true,
             };
