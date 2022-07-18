@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Facebook;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -13,105 +14,170 @@ using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Extensions;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
+using MintPlayer.AspNetCore.IdentityServer.Templates.Templates.IdentityProvider.Web.Extensions;
+using Microsoft.AspNetCore.Authentication.Twitter;
+using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
+using Microsoft.AspNetCore.Authentication.Google;
+using AspNet.Security.OAuth.LinkedIn;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web;
 
 public class Startup
 {
-	public Startup(IConfiguration configuration, IHostEnvironment environment)
-	{
-		Configuration = configuration;
-		Environment = environment;
-	}
+    public Startup(IConfiguration configuration, IHostEnvironment environment)
+    {
+        Configuration = configuration;
+        Environment = environment;
+    }
 
-	public IConfiguration Configuration { get; }
-	public IHostEnvironment Environment { get; }
+    public IConfiguration Configuration { get; }
+    public IHostEnvironment Environment { get; }
 
-	// This method gets called by the runtime. Use this method to add services to the container.
-	public void ConfigureServices(IServiceCollection services)
-	{
-		services
-			.ConfigureViewsInSubfolder("Server")
-			.AddControllersWithViews()
-			.AddNewtonsoftJson();
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services
+            .ConfigureViewsInSubfolder("Server")
+            .AddControllersWithViews()
+            .AddNewtonsoftJson();
 
-		services.AddDataProtection();
-		services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+        services.AddDataProtection();
+        services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
-		services.AddSso(options =>
-		{
-			options.ConnectionString = Configuration.GetConnectionString("Sso");
-			options.Environment = Environment;
-		});
-		services.AddScoped<IMailService, MailService>();
+        var authenticationBuilder = services.AddAuthentication();
+        if (Configuration.TryGetValue("Authentication:Microsoft", out MicrosoftAccountOptions ms))
+        {
+            if ((ms.ClientId != null) && (ms.ClientSecret != null))
+            {
+                authenticationBuilder.AddMicrosoftAccount(options =>
+                {
+                    options.ClientId = ms.ClientId;
+                    options.ClientSecret = ms.ClientSecret;
+                });
+            }
+        }
+        if (Configuration.TryGetValue("Authentication:Google", out GoogleOptions g))
+        {
+            if ((g.ClientId != null) && (g.ClientSecret != null))
+            {
+                authenticationBuilder.AddGoogle(options =>
+                {
+                    options.ClientId = g.ClientId;
+                    options.ClientSecret = g.ClientSecret;
+                });
+            }
+        }
+        if (Configuration.TryGetValue("Authentication:Linkedin", out LinkedInAuthenticationOptions li))
+        {
+            if ((li.ClientId != null) && (li.ClientSecret != null))
+            {
+                authenticationBuilder.AddLinkedIn(options =>
+                {
+                    options.ClientId = li.ClientId;
+                    options.ClientSecret = li.ClientSecret;
+                    options.ReturnUrlParameter = "/signin-linkedin";
+                });
+            }
+        }
+        if (Configuration.TryGetValue("Authentication:Facebook", out FacebookOptions fb))
+        {
+            if ((fb.ClientId != null) && (fb.ClientSecret != null))
+            {
+                authenticationBuilder.AddFacebook(options =>
+                {
+                    options.AppId = fb.AppId;
+                    options.AppSecret = fb.AppSecret;
+                });
+            }
+        }
+        if (Configuration.TryGetValue("Authentication:Twitter", out TwitterOptions tw))
+        {
+            if ((tw.ConsumerKey != null) && (tw.ConsumerSecret != null))
+            {
+                authenticationBuilder.AddTwitter(options =>
+                {
+                    options.ConsumerKey = tw.ConsumerKey;
+                    options.ConsumerSecret = tw.ConsumerSecret;
+                    options.RetrieveUserDetails = true;
+                });
+            }
+        }
 
-		// In production, the Angular files will be served from this directory
-		services.AddSpaStaticFiles(configuration =>
-		{
-			configuration.RootPath = "ClientApp/dist/ClientApp";
-		});
+        services.AddSso(options =>
+        {
+            options.ConnectionString = Configuration.GetConnectionString("Sso");
+            options.Environment = Environment;
+        });
+        services.AddScoped<IMailService, MailService>();
 
-		services
-			.Configure<IdentityOptions>(options =>
-			{
-				options.SignIn.RequireConfirmedEmail = Configuration.GetValue<bool>("Account:RequireEmailConfirmation", true);
-			})
-			.ConfigureApplicationCookie(options =>
-			{
-				options.Cookie.HttpOnly = true;
-				options.SlidingExpiration = true;
-				options.ExpireTimeSpan = TimeSpan.FromDays(3);
-				options.Events.OnRedirectToLogin = (context) =>
-				{
-					context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-					return Task.CompletedTask;
-				};
-			});
-	}
+        // In production, the Angular files will be served from this directory
+        services.AddSpaStaticFiles(configuration =>
+        {
+            configuration.RootPath = "ClientApp/dist/ClientApp";
+        });
 
-	// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-	public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-	{
-		if (env.IsDevelopment())
-		{
-			app.UseDeveloperExceptionPage();
-		}
-		else
-		{
-			app.UseExceptionHandler("/Error");
-		}
+        services
+            .Configure<IdentityOptions>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = Configuration.GetValue<bool>("Account:RequireEmailConfirmation", true);
+            })
+            .ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(3);
+                options.Events.OnRedirectToLogin = (context) =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    return Task.CompletedTask;
+                };
+            });
+    }
 
-		// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-		app.UseImprovedHsts();
-		app.UseHttpsRedirection();
-		app.UseNoSniff();
-		app.UseAntiforgery();
-		app.UseStaticFiles();
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+        }
+        else
+        {
+            app.UseExceptionHandler("/Error");
+        }
 
-		app.UseAuthentication();
-		app.UseRouting();
-		app.UseIdentityServer();
-		app.UseAuthorization();
-		app.UseEndpoints(endpoints =>
-		{
-			endpoints.MapControllerRoute(
-				name: "default",
-				pattern: "{controller}/{action=Index}/{id?}");
-		});
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseImprovedHsts();
+        app.UseHttpsRedirection();
+        app.UseNoSniff();
+        app.UseAntiforgery();
+        app.UseStaticFiles();
 
-		if (!env.IsDevelopment())
-		{
-			app.UseSpaStaticFiles();
-		}
+        app.UseAuthentication();
+        app.UseRouting();
+        app.UseIdentityServer();
+        app.UseAuthorization();
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllerRoute(
+                name: "default",
+                pattern: "{controller}/{action=Index}/{id?}");
+        });
 
-		app.UseSpa(spa =>
-		{
-			spa.Options.SourcePath = "ClientApp";
+        if (!env.IsDevelopment())
+        {
+            app.UseSpaStaticFiles();
+        }
 
-			if (env.IsDevelopment())
-			{
-				spa.UseAngularCliServer(npmScript: "start");
-			}
-		});
-	}
+        app.UseSpa(spa =>
+        {
+            spa.Options.SourcePath = "ClientApp";
+
+            if (env.IsDevelopment())
+            {
+                spa.UseAngularCliServer(npmScript: "start");
+            }
+        });
+    }
 }

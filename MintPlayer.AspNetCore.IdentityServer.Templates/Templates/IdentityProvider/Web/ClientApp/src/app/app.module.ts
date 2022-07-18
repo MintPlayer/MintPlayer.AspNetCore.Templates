@@ -9,10 +9,12 @@ import { AdvancedRouterModule, QueryParamsConfig, QUERY_PARAMS_CONFIG } from '@m
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApplicationManager } from './states/application/application.manager';
+import { ExternalLoginComponent } from './components/external-login/external-login.component';
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
+  ExternalLoginComponent
 	],
 	imports: [
 		BrowserModule,

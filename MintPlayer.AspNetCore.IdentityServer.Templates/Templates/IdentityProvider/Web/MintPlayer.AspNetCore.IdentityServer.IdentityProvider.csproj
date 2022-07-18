@@ -14,6 +14,11 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.6" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="6.0.7" />
+		<PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="6.0.6" />
 		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.AspNetCore.NoSniff" Version="6.0.2" />
 		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.0" />

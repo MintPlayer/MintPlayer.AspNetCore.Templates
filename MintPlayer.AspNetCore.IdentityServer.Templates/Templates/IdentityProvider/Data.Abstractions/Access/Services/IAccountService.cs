@@ -1,4 +1,6 @@
-﻿using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
 
@@ -21,4 +23,10 @@ public interface IAccountService
     Task SetBypassTwoFactor(bool bypass, string verificationCode);
     Task<IEnumerable<string>> GenerateNewTwoFactorRecoveryCodes(string verificationCode);
     Task<User> TwoFactorRecovery(string recoveryCode);
+    Task<IEnumerable<AuthenticationScheme>> GetExternalLoginProviders();
+    Task<AuthenticationProperties> ConfigureExternalAuthenticationProperties(string provider, string redirectUrl);
+    Task<ExternalLoginResult> PerformExternalLogin();
+    Task<IEnumerable<UserLoginInfo>> GetExternalLogins();
+    Task AddExternalLogin();
+    Task RemoveExternalLogin(string provider);
 }

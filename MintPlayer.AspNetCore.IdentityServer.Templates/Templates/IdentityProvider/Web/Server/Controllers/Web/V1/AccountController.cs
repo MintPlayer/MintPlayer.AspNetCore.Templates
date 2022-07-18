@@ -6,6 +6,8 @@ using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Ser
 using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Hosting;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.Web.V1
 {
@@ -17,14 +19,17 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
         private readonly IAccountService accountService;
         private readonly UrlEncoder urlEncoder;
         private readonly LinkGenerator linkGenerator;
+        private readonly IWebHostEnvironment webHostEnvironment;
         public AccountController(
             IAccountService accountService,
             UrlEncoder urlEncoder,
-            LinkGenerator linkGenerator)
+            LinkGenerator linkGenerator,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.accountService = accountService;
             this.urlEncoder = urlEncoder;
             this.linkGenerator = linkGenerator;
+            this.webHostEnvironment = webHostEnvironment;
         }
         #endregion
 
@@ -100,7 +105,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
 
         [ValidateAntiForgeryToken]
         [HttpPost("Login", Name = "web-v1-account-login")]
-        public async Task<ActionResult> Login([FromBody] LoginVM loginVM)
+        public async Task<ActionResult<LoginResult>> Login([FromBody] LoginVM loginVM)
         {
             try
             {
@@ -336,6 +341,190 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
             {
                 return StatusCode(500);
             }
+        }
+
+        [HttpGet("ExternalLogin/Providers", Name = "web-v1-account-externallogin-providers")]
+        public async Task<ActionResult<IEnumerable<AuthenticationScheme>>> GetExternalLoginProviders()
+        {
+            try
+            {
+                var providers = await accountService.GetExternalLoginProviders();
+                return Ok(providers);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("ExternalLogin/Connect/{provider}", Name = "web-v1-account-externallogin-connect-challenge")]
+#if RELEASE
+        [Host("external.example.com")]
+#endif
+        public async Task<ActionResult> ExternalLogin([FromRoute] string provider)
+        {
+            var redirectUrl = Url.RouteUrl("web-v1-account-externallogin-connect-callback", new { provider });
+            var properties = await accountService.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        [HttpGet("ExternalLogin/Connect/{provider}/Callback", Name = "web-v1-account-externallogin-connect-callback")]
+#if RELEASE
+        [Host("external.example.com")]
+#endif
+        public async Task<ActionResult> ExternalLoginCallback([FromRoute] string provider)
+        {
+            try
+            {
+                var loginResult = await accountService.PerformExternalLogin();
+                switch (loginResult.Status)
+                {
+                    case Dtos.Enums.ELoginStatus.Success:
+                        var successModel = new ExternalLoginResult
+                        {
+                            User = loginResult.User,
+                            Status = loginResult.Status,
+                            Provider = loginResult.Provider,
+                        };
+                        return View(successModel);
+                    case Dtos.Enums.ELoginStatus.RequiresTwoFactor:
+                        // For external logins, show the two-factor input form in the popup.
+                        return RedirectToAction(nameof(ExternalLoginTwoFactor), new { provider = loginResult.Provider });
+                    default:
+                        var failedModel = new ExternalLoginResult
+                        {
+                            Status = loginResult.Status,
+                            Provider = loginResult.Provider,
+                            Error = loginResult.Error,
+                            ErrorDescription = loginResult.ErrorDescription
+                        };
+                        return View(failedModel);
+                }
+            }
+            catch (OtherAccountException otherAccountEx)
+            {
+                var model = new ExternalLoginResult
+                {
+                    Status = Dtos.Enums.ELoginStatus.Failed,
+                    Provider = provider,
+                    Error = "Could not login",
+                    ErrorDescription = otherAccountEx.Message
+                };
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                var model = new ExternalLoginResult
+                {
+                    Status = Dtos.Enums.ELoginStatus.Failed,
+                    Provider = provider,
+                    Error = "Could not login",
+                    ErrorDescription = "There was an error with your social login"
+                };
+                return View(model);
+            }
+        }
+
+#if RELEASE
+        [Host("external.example.com")]
+#endif
+        [HttpGet("ExternalLogin/TwoFactor/{provider}", Name = "web-v1-account-externallogin-twofactor")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public ActionResult ExternalLoginTwoFactor([FromRoute] string provider)
+        {
+            var root = webHostEnvironment.ContentRootPath + "/ClientApp/dist";
+            var files = System.IO.Directory.GetFiles(root, "styles.*.css");
+            var angularStylesheet = files.Any() ? Url.Content($"~/{Path.GetFileName(files.First())}") : null;
+
+            var model = new ExternalLoginTwoFactorVM
+            {
+                SubmitUrl = Url.Action(nameof(ExternalLoginTwoFactorCallback), new { provider }),
+                StylesheetUrl = angularStylesheet
+            };
+            return View(model);
+        }
+
+#if RELEASE
+        [Host("external.example.com")]
+#endif
+        [ValidateAntiForgeryToken]
+        [HttpPost("ExternalLogin/TwoFactor/{provider}", Name = "web-v1-account-externallogin-twofactor-callback")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<ActionResult> ExternalLoginTwoFactorCallback([FromRoute] string provider, [FromForm] ExternalLoginTwoFactorVM externalLoginTwoFactorVM)
+        {
+            try
+            {
+                var user = await accountService.TwoFactorLogin(externalLoginTwoFactorVM.Code, externalLoginTwoFactorVM.Remember);
+                if (user == null) throw new Exception();
+
+                var successModel = new ExternalLoginResult
+                {
+                    Status = Dtos.Enums.ELoginStatus.Success,
+                    Provider = provider,
+                    User = user,
+                };
+                return View(nameof(ExternalLoginCallback), successModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction(nameof(ExternalLoginTwoFactor), new { provider });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("ExternalLogin/Add/{provider}", Name = "web-v1-account-externallogin-add-challenge")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+#if RELEASE
+		[Host("external.example.com")]
+#endif
+        public async Task<ActionResult> AddExternalLogin([FromRoute] string provider)
+        {
+            var redirectUrl = Url.RouteUrl("web-v1-account-externallogin-add-callback", new { provider });
+            var properties = await accountService.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return Challenge(properties, provider);
+        }
+
+        [Authorize]
+        //[ValidateAntiForgeryToken]
+        [HttpGet("ExternalLogin/Add/{provider}/Callback", Name = "web-v1-account-externallogin-add-callback")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+#if RELEASE
+		[Host("external.example.com")]
+#endif
+        public async Task<ActionResult> AddExternalLoginCallback([FromRoute] string provider)
+        {
+            try
+            {
+                await accountService.AddExternalLogin();
+                var model = new ExternalLoginResult
+                {
+                    Status = Dtos.Enums.ELoginStatus.Success,
+                    Provider = provider,
+                    User = null,
+                };
+                return View(model);
+            }
+            catch (Exception)
+            {
+                var model = new ExternalLoginResult
+                { 
+                    Status = Dtos.Enums.ELoginStatus.Failed,
+                    Provider = provider,
+                    Error = "Could not login",
+                    ErrorDescription = "There was an error with your social login",
+                };
+                return View(model);
+            }
+        }
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpDelete("logins/{provider}", Name = "web-v1-account-externallogin-delete")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<ActionResult> DeleteLogin(string provider)
+        {
+            await accountService.RemoveExternalLogin(provider);
+            return Ok();
         }
 
         [Authorize]

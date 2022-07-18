@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
@@ -147,5 +148,39 @@ internal class AccountService : IAccountService
     {
         var user = await accountRepository.TwoFactorRecovery(recoveryCode);
         return user;
+    }
+
+    public async Task<IEnumerable<AuthenticationScheme>> GetExternalLoginProviders()
+    {
+        var providers = await accountRepository.GetExternalLoginProviders();
+        return providers;
+    }
+
+    public async Task<AuthenticationProperties> ConfigureExternalAuthenticationProperties(string provider, string redirectUrl)
+    {
+        var properties = await accountRepository.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        return properties;
+    }
+
+    public async Task<ExternalLoginResult> PerformExternalLogin()
+    {
+        var loginResult = await accountRepository.PerformExternalLogin();
+        return loginResult;
+    }
+
+    public async Task<IEnumerable<UserLoginInfo>> GetExternalLogins()
+    {
+        var userLogins = await accountRepository.GetExternalLogins();
+        return userLogins;
+    }
+
+    public async Task AddExternalLogin()
+    {
+        await accountRepository.AddExternalLogin();
+    }
+
+    public async Task RemoveExternalLogin(string provider)
+    {
+        await accountRepository.RemoveExternalLogin(provider);
     }
 }

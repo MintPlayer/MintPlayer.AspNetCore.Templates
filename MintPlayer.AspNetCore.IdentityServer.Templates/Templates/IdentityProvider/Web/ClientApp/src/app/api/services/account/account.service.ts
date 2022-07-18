@@ -6,6 +6,7 @@ import { LoginResult } from '../../dtos/login-result';
 import { TwoFactorRegistrationInfo } from '../../dtos/two-factor-registration-info';
 import { RegisterResult } from '../../dtos/register-result';
 import { TwoFactorCode } from '../../dtos/two-factor-code';
+import { AuthenticationScheme } from '../../dtos/authentication-scheme';
 
 @Injectable({
 	providedIn: 'root'
@@ -80,6 +81,10 @@ export class AccountService {
 
 	public twoFactorRecovery(recoveryCode: string) {
 		return this.httpClient.post<User>(`${this.baseUrl}/Web/V1/Account/TwoFactor/Recovery`, { recoveryCode });
+	}
+
+	public getExternalLoginProviders() {
+		return this.httpClient.get<AuthenticationScheme[]>(`${this.baseUrl}/Web/V1/Account/ExternalLogin/Providers`);
 	}
 
 }

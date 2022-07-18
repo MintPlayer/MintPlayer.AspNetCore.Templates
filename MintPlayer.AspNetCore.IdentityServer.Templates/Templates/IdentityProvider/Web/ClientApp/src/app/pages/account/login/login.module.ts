@@ -7,6 +7,7 @@ import { BsAlertModule, BsForModule } from '@mintplayer/ng-bootstrap';
 
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
+import { ExternalLoginModule } from '../../../directives/external-login/external-login.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { LoginComponent } from './login.component';
 		BsForModule,
 		BsAlertModule,
 		AdvancedRouterModule,
+		ExternalLoginModule,
 		LoginRoutingModule
 	]
 })

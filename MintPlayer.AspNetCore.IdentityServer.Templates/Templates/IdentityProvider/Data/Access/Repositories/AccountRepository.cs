@@ -7,6 +7,8 @@ using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Enums;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Repositories;
 
@@ -294,5 +296,139 @@ internal class AccountRepository : IAccountRepository
         {
             throw new LoginException();
         }
+    }
+
+    public async Task<IEnumerable<AuthenticationScheme>> GetExternalLoginProviders()
+    {
+        var providers = await signinManager.GetExternalAuthenticationSchemesAsync();
+        return providers;
+    }
+
+    public Task<AuthenticationProperties> ConfigureExternalAuthenticationProperties(string provider, string redirectUrl)
+    {
+        var properties = signinManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        return Task.FromResult(properties);
+    }
+
+    public async Task<ExternalLoginResult> PerformExternalLogin()
+    {
+        var info = await signinManager.GetExternalLoginInfoAsync();
+        if (info == null)
+        {
+            throw new UnauthorizedAccessException();
+        }
+
+        // Check if the login specified is already known by us
+        var user = await userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+        if (user == null)
+        {
+            // User doesn't exist yet in our database. Create it.
+            var username = info.Principal.FindFirstValue(ClaimTypes.Name);
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+
+            var newUser = new Persistance.Entities.User
+            {
+                UserName = username,
+                Email = email,
+                EmailConfirmed = true,
+            };
+
+            var idResult = await userManager.CreateAsync(newUser);
+            if (idResult.Succeeded)
+            {
+                user = newUser;
+            }
+            else
+            {
+                // User creation failed, probably because the email address is already present in the database
+                if (idResult.Errors.Any(e => e.Code == "DuplicateEmail"))
+                {
+                    var existing = await userManager.FindByEmailAsync(email);
+                    var existingLogins = await userManager.GetLoginsAsync(existing);
+
+                    if (existingLogins.Any())
+                    {
+                        throw new OtherAccountException(existingLogins);
+                    }
+                    else
+                    {
+                        throw new Exception("Could not create account from social profile");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Could not create account from social profile");
+                }
+            }
+            await userManager.AddLoginAsync(user, new UserLoginInfo(info.LoginProvider, info.ProviderKey, info.ProviderDisplayName));
+        }
+
+        var signinResult = await signinManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, true, user.Bypass2faForExternalLogin);
+        if (signinResult.Succeeded)
+        {
+            return new ExternalLoginResult
+            {
+                Status = ELoginStatus.Success,
+                Provider = info.LoginProvider,
+                User = await userMapper.Entity2Dto(user),
+            };
+        }
+        else if (signinResult.RequiresTwoFactor)
+        {
+            return new ExternalLoginResult
+            {
+                Status = ELoginStatus.RequiresTwoFactor,
+                Provider = info.LoginProvider,
+                User = await userMapper.Entity2Dto(user),
+            };
+        }
+        else
+        {
+            return new ExternalLoginResult
+            {
+                Status = ELoginStatus.Failed,
+                Error = "External login failed",
+                ErrorDescription = $"Something went wrong while signing in with {info.LoginProvider}",
+            };
+        }
+    }
+
+    public async Task<IEnumerable<UserLoginInfo>> GetExternalLogins()
+    {
+        // Get current user
+        var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
+        if (user == null) throw new UnauthorizedAccessException();
+
+        var user_logins = await userManager.GetLoginsAsync(user);
+        return user_logins;
+    }
+
+    public async Task AddExternalLogin()
+    {
+        // Get current user
+        var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
+        if (user == null) throw new UnauthorizedAccessException();
+
+        // Get login info
+        var info = await signinManager.GetExternalLoginInfoAsync();
+        if (info == null) throw new UnauthorizedAccessException();
+
+        var result = await userManager.AddLoginAsync(user, info);
+        if (!result.Succeeded) throw new Exception(string.Join(Environment.NewLine, result.Errors.Select(e => e.Description)));
+    }
+
+    public async Task RemoveExternalLogin(string provider)
+    {
+        // Get current user
+        var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
+        if (user == null) throw new UnauthorizedAccessException();
+
+        var user_logins = await userManager.GetLoginsAsync(user);
+        var login = user_logins.FirstOrDefault(l => l.LoginProvider == provider);
+
+        if (login == null) throw new InvalidOperationException($"Could not remove {provider} login");
+
+        var result = await userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
+        if (!result.Succeeded) throw new Exception($"Could not remove {provider} login");
     }
 }

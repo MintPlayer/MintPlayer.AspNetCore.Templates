@@ -8,6 +8,7 @@ import { ErrorMessage } from '../../../entities/error-message';
 import { ELoginStatus } from '../../../api/enums/login-status';
 import { AccountService } from '../../../api/services/account/account.service';
 import { SetUser } from '../../../states/application/actions/set-user';
+import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
 
 @Component({
 	selector: 'app-login',
@@ -79,6 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	private returnUrl = '';
 	private destroyed$ = new Subject();
 
+	externalProviders$ = new BehaviorSubject<AuthenticationScheme[]>([]);
 	errorMessages$ = new BehaviorSubject<ErrorMessage[]>([]);
 	removeErrorMessage(message: ErrorMessage, isVisible: boolean) {
 		if (!isVisible) {
