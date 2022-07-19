@@ -197,7 +197,17 @@ internal class AccountRepository : IAccountRepository
         var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext!.User);
         if (user == null) throw new UnauthorizedAccessException();
 
-        var result = await userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        var hasPassword = await userManager.HasPasswordAsync(user);
+        IdentityResult result;
+        if (!hasPassword && string.IsNullOrEmpty(currentPassword))
+        {
+            result = await userManager.AddPasswordAsync(user, newPassword);
+        }
+        else
+        {
+            result = await userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        }
+
         if (!result.Succeeded)
         {
             throw new InvalidPasswordException();
