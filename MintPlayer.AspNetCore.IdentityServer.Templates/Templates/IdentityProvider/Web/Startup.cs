@@ -141,10 +141,7 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            using (var scope = app.ApplicationServices.GetRequiredService<IServiceProvider>().CreateScope())
-            {
-                scope.ServiceProvider.GetRequiredService<IDatabaseService>().Migrate();
-            }
+            app.ApplicationServices.GetRequiredService<IDatabaseService>().Migrate();
         }
         else
         {

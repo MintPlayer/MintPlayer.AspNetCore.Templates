@@ -25,7 +25,7 @@ public static class SsoExtensions
 			.AddScoped<IRoleRepository, RoleRepository>()
 			.AddScoped<IRoleService, RoleService>()
 			.AddScoped<IRoleMapper, RoleMapper>()
-			.AddScoped<IDatabaseService, DatabaseService>();
+			.AddSingleton<IDatabaseService, DatabaseService>();
 
 		services
 			.AddIdentity<Persistance.Entities.User, Persistance.Entities.Role>()
