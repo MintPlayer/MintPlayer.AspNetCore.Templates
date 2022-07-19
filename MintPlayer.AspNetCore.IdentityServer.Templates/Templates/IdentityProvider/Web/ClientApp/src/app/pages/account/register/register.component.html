@@ -1,49 +1,56 @@
 <body>
-  <form class="container" (submit)="register()">
-    <div class="row mb-3">
-      <div class="col-md-12">
-        <bs-alert [type]="colors.danger" *ngIf="(errorMessage$ | async) as errorMessage">
-          {{ errorMessage }}
-          <bs-alert-close></bs-alert-close>
-        </bs-alert>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-md-3">
-        <label class="col-form-label" [bsFor]="email">Email</label>
-      </div>
-      <div class="col-md-9">
-        <input type="email" [(ngModel)]="user.email" name="email" #email autocomplete="username" class="form-control" />
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-md-3">
-        <label class="col-form-label" [bsFor]="username">Username</label>
-      </div>
-      <div class="col-md-9">
-        <input type="text" [(ngModel)]="user.userName" name="username" #username class="form-control" />
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-md-3">
-        <label class="col-form-label" [bsFor]="txtpassword">Password</label>
-      </div>
-      <div class="col-md-9">
-        <input type="password" [(ngModel)]="password" name="password" #txtpassword autocomplete="new-password" class="form-control" />
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-md-3">
-        <label class="col-form-label" [bsFor]="txtpasswordconfirmation">Password confirmation</label>
-      </div>
-      <div class="col-md-9">
-        <input type="password" [(ngModel)]="passwordConfirmation" name="confirmation" #txtpasswordconfirmation autocomplete="new-password" class="form-control" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <button type="submit" class="btn btn-primary">Create account</button>
-      </div>
-    </div>
-  </form>
+	<form class="container" (submit)="register()">
+		<div class="row mb-3">
+			<div class="col-12">
+				<h1 class="d-inline-block">Create account</h1>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-12">
+				<bs-alert [type]="colors.danger" *ngIf="(errorMessage$ | async) as errorMessage">
+					{{ errorMessage }}
+					<bs-alert-close></bs-alert-close>
+				</bs-alert>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-3">
+				<label class="col-form-label" [bsFor]="email">Email</label>
+			</div>
+			<div class="col-md-9">
+				<input type="email" [(ngModel)]="user.email" name="email" #email autocomplete="username" class="form-control" />
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-3">
+				<label class="col-form-label" [bsFor]="username">Username</label>
+			</div>
+			<div class="col-md-9">
+				<input type="text" [(ngModel)]="user.userName" name="username" #username class="form-control" />
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-3">
+				<label class="col-form-label" [bsFor]="txtpassword">Password</label>
+			</div>
+			<div class="col-md-9">
+				<input type="password" [(ngModel)]="password" name="password" #txtpassword autocomplete="new-password"
+					class="form-control" />
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-3">
+				<label class="col-form-label" [bsFor]="txtpasswordconfirmation">Password confirmation</label>
+			</div>
+			<div class="col-md-9">
+				<input type="password" [(ngModel)]="passwordConfirmation" name="confirmation" #txtpasswordconfirmation
+					autocomplete="new-password" class="form-control" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<button type="submit" class="btn btn-primary">Create account</button>
+			</div>
+		</div>
+	</form>
 </body>

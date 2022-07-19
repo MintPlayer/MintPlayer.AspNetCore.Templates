@@ -38,14 +38,14 @@ internal class SsoContext : IdentityDbContext<User, Role, Guid>, IPersistedGrant
         if (configuration == null)
         {
             // Only used when generating migrations
-            var migrationsConnectionString = @"Server=(localdb)\mssqllocaldb;Database=SsoCentral;Trusted_Connection=True;ConnectRetryCount=0";
+            var migrationsConnectionString = @"Server=(localdb)\mssqllocaldb;Database=MintPlayer.AspNetCore.IdentityServer;Trusted_Connection=True;ConnectRetryCount=0";
             optionsBuilder.UseSqlServer(migrationsConnectionString, options => {
                 options.MigrationsAssembly(typeof(SsoContext).Assembly.FullName);
             });
         }
         else
         {
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("SsoCentral"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("MintPlayer.AspNetCore.IdentityServer"));
         }
     }
 

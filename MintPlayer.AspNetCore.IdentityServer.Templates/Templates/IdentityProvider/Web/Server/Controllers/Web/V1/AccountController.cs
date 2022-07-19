@@ -244,7 +244,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
         {
             try
             {
-                const string appName = "WebApplication1";
+                const string appName = "MintPlayer.AspNetCore.IdentityServer";
                 var user = await accountService.GetCurrentUser();
                 var registrationCode = await accountService.GenerateTwoFactorRegistrationCode();
                 var registrationUrl = $"otpauth://totp/{urlEncoder.Encode(appName)}:{urlEncoder.Encode(user.Email)}?secret={registrationCode}&issuer={urlEncoder.Encode(appName)}&digits=8";
@@ -455,7 +455,6 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
 
             var model = new ExternalLoginTwoFactorVM
             {
-                TargetOrigin = $"{Request.Scheme}://{Request.Host.Value.Replace("external.", string.Empty)}",
                 SubmitUrl = Url.Action(nameof(ExternalLoginTwoFactorCallback), new { provider })!,
                 StylesheetUrl = angularStylesheet
             };

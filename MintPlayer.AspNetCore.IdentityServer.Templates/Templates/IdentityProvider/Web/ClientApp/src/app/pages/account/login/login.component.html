@@ -1,5 +1,10 @@
 <body>
 	<form class="container" (submit)="login()">
+		<div class="row">
+			<div class="col-md-12">
+				<h1>Login</h1>
+			</div>
+		</div>
 		<div class="row mb-3" *ngIf="(errorMessages$ | async) as errorMessages">
 			<div class="col-md-12">
 				<bs-alert *ngFor="let errorMessage of errorMessages" [type]="errorMessage.color" (afterOpenedOrClosed)="removeErrorMessage(errorMessage, $event)">
@@ -30,10 +35,15 @@
 			</div>
 		</div>
 		<div class="row">
+			<div class="col-md-12">
+				<span class="h2">Or use an external login instead</span>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-md-12 text-center">
 				<span>
-					<button *ngFor="let externalProvider of (externalProviders$ | async)" [externalLogin]="externalProvider.name" [action]="'connect'" (loginSuccessOrFailed)="externalLoginSuccessOrFailed($event)" class="btn btn-block btn-default">
-						Login using {{ externalProvider.displayName }}
+					<button *ngFor="let externalProvider of (externalProviders$ | async)" [externalLogin]="externalProvider.name" [action]="'connect'" (loginSuccessOrFailed)="externalLoginSuccessOrFailed($event)" type="button" class="btn btn-default d-block">
+						{{ externalProvider.displayName }}
 					</button>
 				</span>
 			</div>

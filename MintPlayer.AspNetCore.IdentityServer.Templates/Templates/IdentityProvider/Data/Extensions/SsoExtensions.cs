@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Mappers;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Services;
@@ -12,45 +13,46 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Extensions;
 
 public static class SsoExtensions
 {
-    public static IServiceCollection AddSso(this IServiceCollection services, Action<Options.SsoOptions> options)
-    {
-        var op = new Options.SsoOptions(); options(op);
+	public static IServiceCollection AddSso(this IServiceCollection services, Action<Options.SsoOptions> options)
+	{
+		var op = new Options.SsoOptions(); options(op);
 
-        services
-            .AddDbContext<Persistance.SsoContext>(options => options.UseSqlServer(op.ConnectionString))
-            .AddScoped<IAccountRepository, AccountRepository>()
-            .AddScoped<IAccountService, AccountService>()
-            .AddScoped<IUserMapper, UserMapper>()
-            .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<IRoleService, RoleService>()
-            .AddScoped<IRoleMapper, RoleMapper>();
+		services
+			.AddDbContext<Persistance.SsoContext>(options => options.UseSqlServer(op.ConnectionString))
+			.AddScoped<IAccountRepository, AccountRepository>()
+			.AddScoped<IAccountService, AccountService>()
+			.AddScoped<IUserMapper, UserMapper>()
+			.AddScoped<IRoleRepository, RoleRepository>()
+			.AddScoped<IRoleService, RoleService>()
+			.AddScoped<IRoleMapper, RoleMapper>()
+			.AddScoped<IDatabaseService, DatabaseService>();
 
-        services
-            .AddIdentity<Persistance.Entities.User, Persistance.Entities.Role>()
-            .AddEntityFrameworkStores<Persistance.SsoContext>()
-            .AddDefaultTokenProviders();
+		services
+			.AddIdentity<Persistance.Entities.User, Persistance.Entities.Role>()
+			.AddEntityFrameworkStores<Persistance.SsoContext>()
+			.AddDefaultTokenProviders();
 
-        var idsrvBuilder = services.AddIdentityServer()
-            .AddOperationalStore<Persistance.SsoContext>(isOptions =>
-            {
-                isOptions.ConfigureDbContext = (builder) => builder.UseSqlServer(op.ConnectionString);
-            })
-            .AddConfigurationStore<Persistance.SsoContext>(isOptions =>
-            {
-                isOptions.ConfigureDbContext = (builder) => builder.UseSqlServer(op.ConnectionString);
-            })
-            .AddAspNetIdentity<Persistance.Entities.User>()
-            .AddProfileService<Services.SsoProfileService>();
+		var idsrvBuilder = services.AddIdentityServer()
+			.AddOperationalStore<Persistance.SsoContext>(isOptions =>
+			{
+				isOptions.ConfigureDbContext = (builder) => builder.UseSqlServer(op.ConnectionString);
+			})
+			.AddConfigurationStore<Persistance.SsoContext>(isOptions =>
+			{
+				isOptions.ConfigureDbContext = (builder) => builder.UseSqlServer(op.ConnectionString);
+			})
+			.AddAspNetIdentity<Persistance.Entities.User>()
+			.AddProfileService<Services.SsoProfileService>();
 
-        if (op.Environment.IsDevelopment())
-        {
-            idsrvBuilder.AddDeveloperSigningCredential();
-        }
-        else
-        {
-            //idsrvBuilder.AddSigningCredential()
-        }
+		if (op.Environment.IsDevelopment())
+		{
+			idsrvBuilder.AddDeveloperSigningCredential();
+		}
+		else
+		{
+			//idsrvBuilder.AddSigningCredential()
+		}
 
-        return services;
-    }
+		return services;
+	}
 }
