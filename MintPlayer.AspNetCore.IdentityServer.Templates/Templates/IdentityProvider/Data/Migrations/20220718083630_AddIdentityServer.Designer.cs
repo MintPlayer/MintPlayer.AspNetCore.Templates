@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApplication26.Provider.Data.Persistance;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance;
 
 #nullable disable
 
-namespace WebApplication26.IdentityProvider.Data.Migrations
+namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Migrations
 {
     [DbContext(typeof(SsoContext))]
     [Migration("20220718083630_AddIdentityServer")]

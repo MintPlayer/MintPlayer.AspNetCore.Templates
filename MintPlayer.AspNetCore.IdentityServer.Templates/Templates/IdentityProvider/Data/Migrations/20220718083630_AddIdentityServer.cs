@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace WebApplication26.IdentityProvider.Data.Migrations
+namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Migrations
 {
     public partial class AddIdentityServer : Migration
     {
