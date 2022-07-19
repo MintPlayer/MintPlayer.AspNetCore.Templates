@@ -4,13 +4,20 @@
 <head>
     <title>Processing...</title>
     <script type="text/javascript">
-        var message = {
+        const message = {
             status: @Model.Status,
             provider: "@Model.Provider",
             error: "@Model.Error",
             errorDescription: "@Model.ErrorDescription"
         };
-        window.opener.postMessage(JSON.stringify(message), @(Model.TargetOrigin == null ? "undefined" : "\"" + Model.TargetOrigin + "\""));
+        @if (Model.TargetOrigin == null)
+        {
+            <text>window.opener.postMessage(JSON.stringify(message));</text>
+        }
+        else
+        {
+            <text>window.opener.postMessage(JSON.stringify(message), "@Model.TargetOrigin");</text>
+        }
     </script>
 </head>
 <body>

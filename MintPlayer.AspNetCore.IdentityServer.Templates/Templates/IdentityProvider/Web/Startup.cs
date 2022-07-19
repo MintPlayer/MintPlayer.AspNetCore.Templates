@@ -48,7 +48,7 @@ public class Startup
         var authenticationBuilder = services.AddAuthentication();
         if (Configuration.TryGetValue("Authentication:Microsoft", out MicrosoftAccountOptions ms))
         {
-            if ((ms.ClientId != null) && (ms.ClientSecret != null))
+            if (!string.IsNullOrEmpty(ms.ClientId) && !string.IsNullOrEmpty(ms.ClientSecret))
             {
                 authenticationBuilder.AddMicrosoftAccount(options =>
                 {
@@ -59,7 +59,7 @@ public class Startup
         }
         if (Configuration.TryGetValue("Authentication:Google", out GoogleOptions g))
         {
-            if ((g.ClientId != null) && (g.ClientSecret != null))
+            if (!string.IsNullOrEmpty(g.ClientId) && !string.IsNullOrEmpty(g.ClientSecret))
             {
                 authenticationBuilder.AddGoogle(options =>
                 {
@@ -70,7 +70,7 @@ public class Startup
         }
         if (Configuration.TryGetValue("Authentication:Linkedin", out LinkedInAuthenticationOptions li))
         {
-            if ((li.ClientId != null) && (li.ClientSecret != null))
+            if (!string.IsNullOrEmpty(li.ClientId) && !string.IsNullOrEmpty(li.ClientSecret))
             {
                 authenticationBuilder.AddLinkedIn(options =>
                 {
@@ -82,7 +82,7 @@ public class Startup
         }
         if (Configuration.TryGetValue("Authentication:Facebook", out FacebookOptions fb))
         {
-            if ((fb.ClientId != null) && (fb.ClientSecret != null))
+            if (!string.IsNullOrEmpty(fb.ClientId) && !string.IsNullOrEmpty(fb.ClientSecret))
             {
                 authenticationBuilder.AddFacebook(options =>
                 {
@@ -93,7 +93,7 @@ public class Startup
         }
         if (Configuration.TryGetValue("Authentication:Twitter", out TwitterOptions tw))
         {
-            if ((tw.ConsumerKey != null) && (tw.ConsumerSecret != null))
+            if (!string.IsNullOrEmpty(tw.ConsumerKey) && !string.IsNullOrEmpty(tw.ConsumerSecret))
             {
                 authenticationBuilder.AddTwitter(options =>
                 {
