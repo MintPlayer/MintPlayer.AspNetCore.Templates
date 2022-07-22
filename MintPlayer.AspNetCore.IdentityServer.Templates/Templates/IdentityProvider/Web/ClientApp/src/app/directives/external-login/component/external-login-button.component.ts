@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ExternalLoginProviderInfo } from '../../../api/dtos/external-login-provider-info';
+import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
 import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
 
 @Component({
@@ -15,7 +15,7 @@ export class ExternalLoginButtonComponent implements OnInit {
 	ngOnInit() {
 	}
 
-	@Input() public provider!: ExternalLoginProviderInfo;
+	@Input() public provider!: AuthenticationScheme;
 	@Input() public action: 'add' | 'connect' = 'connect';
 	@Output() public loginSuccessOrFailed = new EventEmitter<ExternalLoginResult>();
 

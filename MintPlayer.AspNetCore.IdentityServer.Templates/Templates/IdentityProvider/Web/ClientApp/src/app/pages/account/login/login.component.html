@@ -42,9 +42,7 @@
 		<div class="row">
 			<div class="col-md-12 text-center">
 				<span>
-					<button *ngFor="let externalProvider of (externalProviders$ | async)" [externalLogin]="externalProvider.name" [action]="'connect'" (loginSuccessOrFailed)="externalLoginSuccessOrFailed($event)" type="button" class="btn btn-default d-block">
-						{{ externalProvider.displayName }}
-					</button>
+					<external-login-button *ngFor="let externalProvider of (externalProviders$ | async)" [provider]="externalProvider" [action]="'connect'" (loginSuccessOrFailed)="externalLoginSuccessOrFailed($event)"></external-login-button>
 				</span>
 			</div>
 		</div>

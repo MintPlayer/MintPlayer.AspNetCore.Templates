@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Services;
 
