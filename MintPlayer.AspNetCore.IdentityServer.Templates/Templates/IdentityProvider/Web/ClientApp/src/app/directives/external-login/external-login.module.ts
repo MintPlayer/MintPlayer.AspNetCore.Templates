@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExternalLoginDirective } from './external-login.directive';
+import { ExternalLoginDirective } from './directive/external-login.directive';
+import { ExternalLoginButtonComponent } from './component/external-login-button.component';
 
 
 
 @NgModule({
 	declarations: [
-		ExternalLoginDirective
+		ExternalLoginDirective,
+		ExternalLoginButtonComponent
 	],
 	imports: [
 		CommonModule
 	],
 	exports: [
-		ExternalLoginDirective
+		ExternalLoginDirective,
+		ExternalLoginButtonComponent
 	]
 })
 export class ExternalLoginModule { }

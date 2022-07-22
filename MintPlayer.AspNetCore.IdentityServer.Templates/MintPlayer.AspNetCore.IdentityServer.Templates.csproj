@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.0.20</PackageVersion>
+		<PackageVersion>6.0.21</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -57,6 +57,7 @@
 
 	<ItemGroup>
 	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\api\dtos\authentication-scheme.ts" />
+	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\api\dtos\external-login-provider-info.ts" />
 	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\api\dtos\two-factor-code.ts" />
 	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\api\enums\code-type.ts" />
 	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\entities\change-password-modal.ts" />

@@ -360,7 +360,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
             }
         }
 
-        [HttpGet("ExternalLogin/Connect/{provider}", Name = "web-v1-account-externallogin-connect-challenge")]
+        [HttpGet("ExternalLogin/connect/{provider}", Name = "web-v1-account-externallogin-connect-challenge")]
 #if RELEASE
         [Host("external.example.com")]
 #endif
@@ -371,7 +371,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
             return Challenge(properties, provider);
         }
 
-        [HttpGet("ExternalLogin/Connect/{provider}/Callback", Name = "web-v1-account-externallogin-connect-callback")]
+        [HttpGet("ExternalLogin/connect/{provider}/Callback", Name = "web-v1-account-externallogin-connect-callback")]
 #if RELEASE
         [Host("external.example.com")]
 #endif
@@ -490,7 +490,24 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
         }
 
         [Authorize]
-        [HttpGet("ExternalLogin/Add/{provider}", Name = "web-v1-account-externallogin-add-challenge")]
+        [HttpGet("ExternalLogin", Name = "web-v1-account-externallogin-get")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<ActionResult<IEnumerable<string>>> GetRegisteredExternalLoginProviders()
+        {
+            try
+            {
+                var providers = await accountService.GetExternalLogins();
+                var providerNames = providers.Select(p => p.LoginProvider).ToArray();
+                return Ok(providerNames);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("ExternalLogin/add/{provider}", Name = "web-v1-account-externallogin-add-challenge")]
         [ApiExplorerSettings(IgnoreApi = true)]
 #if RELEASE
 		[Host("external.example.com")]
@@ -504,7 +521,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
 
         [Authorize]
         //[ValidateAntiForgeryToken]
-        [HttpGet("ExternalLogin/Add/{provider}/Callback", Name = "web-v1-account-externallogin-add-callback")]
+        [HttpGet("ExternalLogin/add/{provider}/Callback", Name = "web-v1-account-externallogin-add-callback")]
         [ApiExplorerSettings(IgnoreApi = true)]
 #if RELEASE
 		[Host("external.example.com")]
@@ -539,7 +556,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
 
         [Authorize]
         [ValidateAntiForgeryToken]
-        [HttpDelete("logins/{provider}", Name = "web-v1-account-externallogin-delete")]
+        [HttpDelete("ExternalLogin/{provider}", Name = "web-v1-account-externallogin-delete")]
         [ApiExplorerSettings(IgnoreApi = true)]
         public async Task<ActionResult> DeleteLogin(string provider)
         {

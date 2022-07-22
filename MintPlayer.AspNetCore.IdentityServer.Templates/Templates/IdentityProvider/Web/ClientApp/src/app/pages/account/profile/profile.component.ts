@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Select, Store } from '@ngxs/store';
-import { BehaviorSubject, filter, map, Observable, Subject, take, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map, Observable, Subject, take, tap } from 'rxjs';
 import { ApplicationManager } from '../../../states/application/application.manager';
 import { SetTwoFactor } from '../../../states/application/actions/set-two-factor';
 import { SetBypassTwoFactor } from '../../../states/application/actions/set-two-factor-bypass';
@@ -12,6 +12,10 @@ import { User } from '../../../api/dtos/user';
 import { TwoFactorCodeUI } from '../../../entities/two-factor-code-ui';
 import { TwoFactorCodeModal } from '../../../entities/two-factor-code-modal';
 import { ChangePasswordModal } from '../../../entities/change-password-modal';
+import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
+import { ExternalLoginProviderInfo } from '../../../api/dtos/external-login-provider-info';
+import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
+import { ELoginStatus } from '../../../api/enums/login-status';
 
 @Component({
 	selector: 'app-profile',
@@ -29,6 +33,21 @@ export class ProfileComponent implements OnInit {
 					return null;
 				}
 			}));
+
+		this.externalLoginProviders$ = combineLatest([this.allExternalLoginProviders$, this.registeredExternalLoginProviders$])
+			.pipe(map(([allExternalLoginProviders, registeredExternalLoginProviders]) => {
+				if (allExternalLoginProviders && registeredExternalLoginProviders) {
+					return allExternalLoginProviders.map(p => {
+						return <ExternalLoginProviderInfo>{
+							name: p.name,
+							displayName: p.displayName,
+							isRegistered: registeredExternalLoginProviders.includes(p.name),
+						};
+					})
+				} else {
+					return null;
+				}
+			}));
 	}
 
 	@Select(ApplicationManager.user) user$!: Observable<User>;
@@ -39,6 +58,9 @@ export class ProfileComponent implements OnInit {
 	twoFactorCodeProcessed$ = new Subject<boolean>();
 	recoveryCodes$ = new BehaviorSubject<string[] | null>(null);
 	numberOfRecoveryCodesLeft$ = new BehaviorSubject<number | null>(null);
+	allExternalLoginProviders$ = new BehaviorSubject<AuthenticationScheme[] | null>(null);
+	registeredExternalLoginProviders$ = new BehaviorSubject<string[] | null>(null);
+	externalLoginProviders$: Observable<ExternalLoginProviderInfo[] | null>;
 
 
 	changePasswordModal$ = new BehaviorSubject<ChangePasswordModal | null>({
@@ -84,6 +106,22 @@ export class ProfileComponent implements OnInit {
 		this.accountService.getRemainingRecoveryCodes().subscribe({
 			next: (count) => {
 				this.numberOfRecoveryCodesLeft$.next(count);
+			}, error: (error) => {
+				console.error(error);
+			}
+		});
+
+		this.accountService.getExternalLoginProviders().subscribe({
+			next: (providers) => {
+				this.allExternalLoginProviders$.next(providers);
+			}, error: (error) => {
+				console.error(error);
+			}
+		});
+
+		this.accountService.getRegisteredExternalLoginProviders().subscribe({
+			next: (providers) => {
+				this.registeredExternalLoginProviders$.next(providers);
 			}, error: (error) => {
 				console.error(error);
 			}
@@ -239,6 +277,44 @@ export class ProfileComponent implements OnInit {
 		if (value) {
 			setTimeout(() => element.focus(), 10);
 		}
+	}
+
+	externalLoginSuccessOrFailed(result: ExternalLoginResult) {
+		if (result.status === ELoginStatus.success) {
+			this.registeredExternalLoginProviders$.pipe(take(1), map((providers) => {
+				providers?.push(result.provider);
+				return providers;
+			})).subscribe({
+				next: (providers) => {
+					if (providers) {
+						this.registeredExternalLoginProviders$.next(providers);
+					} else {
+						this.registeredExternalLoginProviders$.next([]);
+					}
+				}, error: (error) => {
+					console.error(error);
+				}
+			});
+		}
+	}
+
+	removeExternalLogin(provider: string) {
+		this.accountService.removeExternalLoginProvider(provider).subscribe({
+			next: () => {
+				this.registeredExternalLoginProviders$.pipe(take(1), map((providers) => {
+					if (providers) {
+						providers?.splice(providers.indexOf(provider), 1);
+						return providers;
+					} else {
+						return null;
+					}
+				})).subscribe((providers) => {
+					this.registeredExternalLoginProviders$.next(providers);
+				});
+			}, error: (error) => {
+				console.error(error);
+			}
+		});
 	}
 
 }

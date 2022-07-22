@@ -109,6 +109,29 @@
 			</div>
 		</bs-card>
 	</div>
+	<div class="d-block mb-3">
+		<bs-card>
+			<bs-card-header>
+				<i class="fa fa-comments"></i>
+				Social logins
+			</bs-card-header>
+			<div class="container p-3" *ngIf="(externalLoginProviders$ | async) as externalLoginProviders">
+				<div *ngFor="let provider of externalLoginProviders; let isLast = last" class="form-group row" [class.mb-3]="!isLast">
+					<div class="col-md-6 col-lg-4">
+						<external-login-button *ngIf="!provider.isRegistered" [provider]="provider" [action]="'add'" (loginSuccessOrFailed)="externalLoginSuccessOrFailed($event)"></external-login-button>
+						<button *ngIf="provider.isRegistered" (click)="removeExternalLogin(provider.name)" class="btn btn-warning w-100 border-dark">
+							<i class="fa fa-trash-o"></i>
+							Remove {{ provider.displayName }} login
+						</button>
+					</div>
+					<div class="col-md-6 col-lg-8 col-form-label">
+						<span *ngIf="!provider.isRegistered">Add {{ provider.displayName }} account</span>
+						<span *ngIf="provider.isRegistered">{{ provider.displayName }} registered</span>
+					</div>
+				</div>
+			</div>
+		</bs-card>
+	</div>
 </div>
 <bs-modal *ngIf="(changePasswordModal$ | async) as changePasswordModal" [(isOpen)]="changePasswordModal.isChangingPassword">
 	<form *bsModal cdkTrapFocus (submit)="updatePassword()">

@@ -87,4 +87,12 @@ export class AccountService {
 		return this.httpClient.get<AuthenticationScheme[]>(`${this.baseUrl}/Web/V1/Account/ExternalLogin/Providers`);
 	}
 
+	public getRegisteredExternalLoginProviders() {
+		return this.httpClient.get<string[]>(`${this.baseUrl}/Web/V1/Account/ExternalLogin`);
+	}
+
+	public removeExternalLoginProvider(provider: string) {
+		return this.httpClient.delete(`${this.baseUrl}/Web/V1/Account/ExternalLogin/${provider}`);
+	}
+
 }

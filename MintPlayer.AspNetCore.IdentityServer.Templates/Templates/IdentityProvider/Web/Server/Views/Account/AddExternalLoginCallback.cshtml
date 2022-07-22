@@ -5,7 +5,7 @@
     <title>Processing...</title>
     <script type="text/javascript">
         const message = {
-            status: @Model.Status,
+            status: @( (int)Model.Status ),
             provider: "@Model.Provider",
             error: "@Model.Error",
             errorDescription: "@Model.ErrorDescription"

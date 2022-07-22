@@ -1,6 +1,7 @@
 import { Directive, EventEmitter, HostBinding, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BaseUrlService } from '@mintplayer/ng-base-url';
-import { ExternalLoginResult } from '../../api/dtos/external-login-result';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
 
 @Directive({
 	selector: '[externalLogin]'
@@ -16,7 +17,17 @@ export class ExternalLoginDirective implements OnInit, OnDestroy {
 	externalUrl: string | null;
 
 	@Input() public action: 'add' | 'connect' = 'connect';
-	@Input('externalLogin') public provider: string | null = null;
+
+	//#region Provider
+	provider$ = new BehaviorSubject<string | null>(null);
+	public get provider() {
+		return this.provider$.value;
+	}
+	@Input('externalLogin') public set provider(value: string | null) {
+		this.provider$.next(value);
+	}
+	//#endregion
+
 	@Output() public loginSuccessOrFailed = new EventEmitter<ExternalLoginResult>();
 	@HostBinding('disabled') isOpen = false;
 
@@ -44,10 +55,10 @@ export class ExternalLoginDirective implements OnInit, OnDestroy {
 	@HostListener('click', ['$event'])
 	onClick(ev: MouseEvent) {
 		if ((typeof window !== 'undefined') && (this.externalUrl)) {
-			this.authWindow = window.open(`${this.externalUrl}/Web/V1/Account/ExternalLogin/Connect/${this.provider}`, '_blank', 'width=600,height=400');
+			this.authWindow = window.open(`${this.externalUrl}/Web/V1/Account/ExternalLogin/${this.action}/${this.provider}`, '_blank', 'width=600,height=400');
 			this.isOpen = true;
 			const timer = setInterval(() => {
-				if (this.authWindow?.closed) {
+				if (!this.authWindow || this.authWindow.closed) {
 					this.isOpen = false;
 					clearInterval(timer);
 				}
@@ -66,11 +77,12 @@ export class ExternalLoginDirective implements OnInit, OnDestroy {
 			if (message.data.messageSource.indexOf('AUGURY_') > -1) return;
 		// Filter out any other trash
 		if (message.data == '' || message.data == null) return;
+		if (message.data.type === 'webpackOk') return;
 
 		const result = <ExternalLoginResult>JSON.parse(message.data);
 		//var medium = this.pwaHelper.isPwa() ? 'pwa' : 'web';
-		if ((result.provider === this.provider) && this.authWindow) {
-			this.authWindow.close();
+		if (result.provider === this.provider) {
+			this.authWindow && this.authWindow.close();
 			this.loginSuccessOrFailed.emit(result);
 		}
 	}

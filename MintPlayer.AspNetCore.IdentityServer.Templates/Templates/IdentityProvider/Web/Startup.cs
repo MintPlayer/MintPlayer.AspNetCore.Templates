@@ -11,7 +11,7 @@ using MintPlayer.AspNetCore.NoSniff;
 using MintPlayer.AspNetCore.SubDirectoryViews;
 using MintPlayer.AspNetCore.XsrfForSpas;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Extensions;
-using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Services;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
