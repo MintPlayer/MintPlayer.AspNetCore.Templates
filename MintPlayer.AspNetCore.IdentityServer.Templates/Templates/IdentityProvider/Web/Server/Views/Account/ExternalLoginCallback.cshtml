@@ -1,9 +1,9 @@
-﻿@model MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos.ExternalLoginResult
+@model MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos.ExternalLoginResult
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Processing...</title>
-	<script type="text/javascript">
+    <title>Processing...</title>
+    <script type="text/javascript">
         const message = {
             status: @( (int)Model.Status ),
             provider: "@Model.Provider",
@@ -12,13 +12,13 @@
         };
         @if (Model.TargetOrigin == null)
         {
-            <text>window.opener.postMessage(JSON.stringify(message));</text>
+            <text>window.opener.postMessage(JSON.stringify(message)); </text>
         }
         else
         {
-            <text>window.opener.postMessage(JSON.stringify(message), "@Model.TargetOrigin");</text>
+            <text>window.opener.postMessage(JSON.stringify(message), "@Model.TargetOrigin"); </text>
         }
-	</script>
+    </script>
 </head>
 <body>
     <h1>Sign-in succeeded</h1>

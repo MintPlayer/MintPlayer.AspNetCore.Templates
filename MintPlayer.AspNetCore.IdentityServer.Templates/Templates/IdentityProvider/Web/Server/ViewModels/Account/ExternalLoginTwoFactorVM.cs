@@ -1,9 +1,9 @@
-﻿namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Account;
+namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Account;
 
 public class ExternalLoginTwoFactorVM
 {
-    public string SubmitUrl { get; set; }
-    public string? StylesheetUrl { get; set; }
-    public string Code { get; set; }
-    public bool Remember { get; set; }
+	public string SubmitUrl { get; set; }
+	public string? StylesheetUrl { get; set; }
+	public string Code { get; set; }
+	public bool Remember { get; set; }
 }

@@ -1,24 +1,24 @@
 <bs-navbar #nav>
-  <ng-template bsExpandButton let-state>
-    <bs-navbar-toggler [state]="state" [toggleOnClick]="false"></bs-navbar-toggler>
-  </ng-template>
-  <bs-navbar-brand [routerLink]='["/"]'>
-    <span class="brand d-block px-3">
-      MintPlayer.AspNetCore.ServerSideRendering
-    </span>
-  </bs-navbar-brand>
-  <bs-navbar-nav [collapse]="true">
-    <bs-navbar-item>
-      <a [routerLink]='["/"]'>Home</a>
-    </bs-navbar-item>
-    <bs-navbar-item>
-      <a [routerLink]='["/counter"]'>Counter</a>
-    </bs-navbar-item>
-    <bs-navbar-item>
-      <a [routerLink]='["/fetch-data"]'>Fetch data</a>
-    </bs-navbar-item>
-  </bs-navbar-nav>
+	<ng-template bsExpandButton let-state>
+		<bs-navbar-toggler [state]="state" [toggleOnClick]="false"></bs-navbar-toggler>
+	</ng-template>
+	<bs-navbar-brand [routerLink]='["/"]'>
+		<span class="brand d-block px-3">
+			MintPlayer.AspNetCore.ServerSideRendering
+		</span>
+	</bs-navbar-brand>
+	<bs-navbar-nav [collapse]="true">
+		<bs-navbar-item>
+			<a [routerLink]='["/"]'>Home</a>
+		</bs-navbar-item>
+		<bs-navbar-item>
+			<a [routerLink]='["/counter"]'>Counter</a>
+		</bs-navbar-item>
+		<bs-navbar-item>
+			<a [routerLink]='["/fetch-data"]'>Fetch data</a>
+		</bs-navbar-item>
+	</bs-navbar-nav>
 </bs-navbar>
 <div [navbarContent]="nav" class="container" style="padding-top:10px">
-  <router-outlet></router-outlet>
+	<router-outlet></router-outlet>
 </div>

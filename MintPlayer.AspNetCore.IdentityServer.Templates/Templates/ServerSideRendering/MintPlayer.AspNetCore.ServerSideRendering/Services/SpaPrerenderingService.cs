@@ -1,19 +1,19 @@
-﻿using MintPlayer.AspNetCore.SpaServices.Prerendering.Services;
+using MintPlayer.AspNetCore.SpaServices.Prerendering.Services;
 using MintPlayer.AspNetCore.SpaServices.Routing;
 
 namespace MintPlayer.AspNetCore.ServerSideRendering.Services;
 
 public class SpaPrerenderingService : ISpaPrerenderingService
 {
-    #region Constructor
-    private readonly ISpaRouteService spaRouteService;
-    private readonly IWeatherForecastService weatherForecastService;
-    public SpaPrerenderingService(ISpaRouteService spaRouteService, IWeatherForecastService weatherForecastService)
+	#region Constructor
+	private readonly ISpaRouteService spaRouteService;
+	private readonly IWeatherForecastService weatherForecastService;
+	public SpaPrerenderingService(ISpaRouteService spaRouteService, IWeatherForecastService weatherForecastService)
 	{
 		this.spaRouteService = spaRouteService;
-        this.weatherForecastService = weatherForecastService;
-    }
-    #endregion
+		this.weatherForecastService = weatherForecastService;
+	}
+	#endregion
 
 	public Task BuildRoutes(ISpaRouteBuilder routeBuilder)
 	{

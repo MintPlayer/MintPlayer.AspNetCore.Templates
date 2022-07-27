@@ -6,12 +6,12 @@ import { FetchDataComponent } from './fetch-data.component';
 
 
 @NgModule({
-  declarations: [
-    FetchDataComponent
-  ],
-  imports: [
-    CommonModule,
-    FetchDataRoutingModule
-  ]
+	declarations: [
+		FetchDataComponent
+	],
+	imports: [
+		CommonModule,
+		FetchDataRoutingModule
+	]
 })
 export class FetchDataModule { }

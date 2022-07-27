@@ -2,5 +2,5 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access
 
 public interface IDatabaseService
 {
-    void Migrate();
+	void Migrate();
 }

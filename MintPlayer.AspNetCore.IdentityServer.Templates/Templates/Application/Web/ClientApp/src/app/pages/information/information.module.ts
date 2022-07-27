@@ -5,9 +5,9 @@ import { InformationRoutingModule } from './information-routing.module';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    InformationRoutingModule
-  ]
+	imports: [
+		CommonModule,
+		InformationRoutingModule
+	]
 })
 export class InformationModule { }

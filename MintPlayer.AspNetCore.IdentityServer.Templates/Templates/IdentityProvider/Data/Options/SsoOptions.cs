@@ -1,11 +1,11 @@
-﻿using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Options;
 
 public class SsoOptions
 {
-    internal SsoOptions() { }
+	internal SsoOptions() { }
 
-    public string ConnectionString { get; set; } = null!;
-    public IHostEnvironment Environment { get; set; } = null!;
+	public string ConnectionString { get; set; } = null!;
+	public IHostEnvironment Environment { get; set; } = null!;
 }

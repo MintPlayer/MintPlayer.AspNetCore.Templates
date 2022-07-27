@@ -6,10 +6,10 @@ import { AccountModule } from './account/account.module';
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    PagesRoutingModule,
-    AccountModule
-  ]
+	imports: [
+		CommonModule,
+		PagesRoutingModule,
+		AccountModule
+	]
 })
 export class PagesModule { }

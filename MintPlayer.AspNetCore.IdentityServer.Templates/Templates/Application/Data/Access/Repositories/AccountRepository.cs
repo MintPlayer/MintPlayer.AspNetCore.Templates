@@ -1,4 +1,4 @@
-﻿using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Repositories;
+using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Repositories;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Application.Data.Access.Repositories;
 

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Application.Data.Persistance.Entities;
 
 internal class User : IdentityUser<Guid>
 {
-    public bool Bypass2faForExternalLogin { get; set; }
+	public bool Bypass2faForExternalLogin { get; set; }
 }

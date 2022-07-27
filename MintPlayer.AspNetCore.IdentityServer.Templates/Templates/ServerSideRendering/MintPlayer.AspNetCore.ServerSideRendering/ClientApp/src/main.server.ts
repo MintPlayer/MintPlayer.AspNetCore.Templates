@@ -19,25 +19,25 @@ export { AppServerModule } from './app/app.server.module';
 enableProdMode();
 
 export default createServerRenderer(params => {
-  const { AppServerModule, AppServerModuleNgFactory, LAZY_MODULE_MAP } = (module as any).exports;
+	const { AppServerModule, AppServerModuleNgFactory, LAZY_MODULE_MAP } = (module as any).exports;
 
-  const providers: StaticProvider[] = [
-    { provide: BOOT_FUNC_PARAMS, useValue: params },
-    { provide: DATA_FROM_SERVER, useValue: params.data }
-  ];
+	const providers: StaticProvider[] = [
+		{ provide: BOOT_FUNC_PARAMS, useValue: params },
+		{ provide: DATA_FROM_SERVER, useValue: params.data }
+	];
 
-  const options = {
-    document: params.data.originalHtml,
-    url: params.url,
-    extraProviders: providers
-  };
+	const options = {
+		document: params.data.originalHtml,
+		url: params.url,
+		extraProviders: providers
+	};
 
-  // Bypass ssr api call cert warnings in development
-  process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = "0";
+	// Bypass ssr api call cert warnings in development
+	process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = "0";
 
-  const renderPromise = AppServerModuleNgFactory
-    ? /* AoT */ renderModuleFactory(AppServerModuleNgFactory, options)
-    : /* dev */ renderModule(AppServerModule, options);
+	const renderPromise = AppServerModuleNgFactory
+		? /* AoT */ renderModuleFactory(AppServerModuleNgFactory, options)
+		: /* dev */ renderModule(AppServerModule, options);
 
-  return renderPromise.then(html => ({ html }));
+	return renderPromise.then(html => ({ html }));
 });

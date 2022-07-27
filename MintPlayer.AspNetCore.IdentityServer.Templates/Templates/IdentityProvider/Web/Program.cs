@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web;
 
 public class Program
 {
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args).Build().Run();
+	public static void Main(string[] args)
+	{
+		CreateHostBuilder(args).Build().Run();
 	}
 
 	public static IHostBuilder CreateHostBuilder(string[] args) =>

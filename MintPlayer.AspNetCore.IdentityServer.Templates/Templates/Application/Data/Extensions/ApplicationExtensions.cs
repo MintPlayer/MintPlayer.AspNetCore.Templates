@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Repositories;
@@ -10,22 +10,22 @@ namespace MintPlayer.AspNetCore.IdentityServer.Application.Data.Extensions;
 
 public static class ApplicationExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services, Action<Options.ApplicationOptions> options)
-    {
-        var op = new Options.ApplicationOptions(); options(op);
+	public static IServiceCollection AddApplication(this IServiceCollection services, Action<Options.ApplicationOptions> options)
+	{
+		var op = new Options.ApplicationOptions(); options(op);
 
-        services
-            .AddDbContext<Persistance.MeteoContext>(options => options.UseSqlServer(op.ConnectionString))
-            .AddScoped<IAccountRepository, AccountRepository>()
-            .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<IAccountService, AccountService>()
-            .AddScoped<IRoleService, RoleService>();
+		services
+			.AddDbContext<Persistance.MeteoContext>(options => options.UseSqlServer(op.ConnectionString))
+			.AddScoped<IAccountRepository, AccountRepository>()
+			.AddScoped<IRoleRepository, RoleRepository>()
+			.AddScoped<IAccountService, AccountService>()
+			.AddScoped<IRoleService, RoleService>();
 
-        services
-            .AddIdentity<Persistance.Entities.User, Persistance.Entities.Role>()
-            .AddEntityFrameworkStores<Persistance.MeteoContext>()
-            .AddDefaultTokenProviders();
+		services
+			.AddIdentity<Persistance.Entities.User, Persistance.Entities.Role>()
+			.AddEntityFrameworkStores<Persistance.MeteoContext>()
+			.AddDefaultTokenProviders();
 
-        return services;
-    }
+		return services;
+	}
 }

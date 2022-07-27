@@ -6,12 +6,12 @@ import { CounterComponent } from './counter.component';
 
 
 @NgModule({
-  declarations: [
-    CounterComponent
-  ],
-  imports: [
-    CommonModule,
-    CounterRoutingModule
-  ]
+	declarations: [
+		CounterComponent
+	],
+	imports: [
+		CommonModule,
+		CounterRoutingModule
+	]
 })
 export class CounterModule { }

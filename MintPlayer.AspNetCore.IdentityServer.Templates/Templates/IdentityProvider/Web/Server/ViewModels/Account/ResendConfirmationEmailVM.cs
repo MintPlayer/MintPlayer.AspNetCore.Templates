@@ -2,5 +2,5 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Ac
 
 public class ResendConfirmationEmailVM
 {
-    public string Email { get; set; }
+	public string Email { get; set; }
 }

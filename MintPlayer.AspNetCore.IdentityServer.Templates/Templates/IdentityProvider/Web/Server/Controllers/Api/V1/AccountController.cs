@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
@@ -7,16 +7,16 @@ using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Accoun
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.Api.V1
 {
-    [ApiController]
-    [Route("Api/V1/[controller]")]
-    public class AccountController : Controller
-    {
-        #region Constructor
-        private readonly IAccountService accountService;
-        public AccountController(IAccountService accountService)
-        {
-            this.accountService = accountService;
-        }
+	[ApiController]
+	[Route("Api/V1/[controller]")]
+	public class AccountController : Controller
+	{
+		#region Constructor
+		private readonly IAccountService accountService;
+		public AccountController(IAccountService accountService)
+		{
+			this.accountService = accountService;
+		}
 		#endregion
 
 		[HttpPost("Register", Name = "api-v1-account-register")]

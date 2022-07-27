@@ -1,68 +1,68 @@
 <body>
-    <form class="container" (submit)="verifyCode()">
-        <div class="row mb-3" *ngIf="(errorMessages$ | async) as errorMessages">
-            <div class="col-md-12">
-                <bs-alert *ngFor="let errorMessage of errorMessages" [type]="errorMessage.color" (afterOpenedOrClosed)="removeErrorMessage(errorMessage, $event)">
-                    {{ errorMessage.message }}
-                    <bs-alert-close></bs-alert-close>
-                </bs-alert>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-12 text-center">
-                <label class="col-form-label" [bsFor]="txtverificationcode">Open your authenticator app and generate a code for MintPlayer.AspNetCore.IdentityServer in the box below:</label>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-12">
-                <input type="text" [(ngModel)]="verificationCode" name="verificationCode" #txtverificationcode autofocus autocomplete="off" class="form-control" />
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-md-12 text-center">
-                <label>
-                    <input type="checkbox" [(ngModel)]="remember" name="remember" #chkremember />
-                    Remeber this device
-                </label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <span class="btn-group">
-                    <button type="submit" class="btn btn-primary">Login</button>
-                    <button class="btn btn-secondary" (click)="OnLostDevice()">Lost device?</button>
-                </span>
-            </div>
-        </div>
-    </form>
-    <bs-modal [(isOpen)]="isRequestingRecoveryCode">
-        <form *bsModal cdkTrapFocus (submit)="recoveryCodeEntered()">
-            <div bsModalHeader>
-                <h5 class="modal-title">2FA Recovery</h5>
-            </div>
-            <div bsModalBody class="p-2 d-flex flex-row align-items-center justify-content-between">
-                <div class="container">
-                    <div class="form-group row mb-3">
-                        <div [bsFor]="txtRecoveryCode" class="col-md-12 col-form-label">
-                            Consult the recovery codes you've written down when activating 2-factor authentication. Enter a recovery code in the box below.
-                        </div>
-                    </div>
-                    <div class="form-group row mb-3">
-                        <div class="col-md-12">
-                            <input type="text" [(ngModel)]="twoFactorRecoveryCode" autofocus #txtRecoveryCode name="txtRecoveryCode" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div bsModalFooter>
-                <div class="btn-group">
-                    <button type="submit" class="btn btn-primary" aria-label="Update password">
-                        <i class="fa fa-unlock"></i>
-                        Recover account
-                    </button>
-                    <button type="button" bsModalClose class="btn btn-secondary" aria-label="Cancel">Cancel</button>
-                </div>
-            </div>
-        </form>
-    </bs-modal>
+	<form class="container" (submit)="verifyCode()">
+		<div class="row mb-3" *ngIf="(errorMessages$ | async) as errorMessages">
+			<div class="col-md-12">
+				<bs-alert *ngFor="let errorMessage of errorMessages" [type]="errorMessage.color" (afterOpenedOrClosed)="removeErrorMessage(errorMessage, $event)">
+					{{ errorMessage.message }}
+					<bs-alert-close></bs-alert-close>
+				</bs-alert>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-12 text-center">
+				<label class="col-form-label" [bsFor]="txtverificationcode">Open your authenticator app and generate a code for MintPlayer.AspNetCore.IdentityServer in the box below:</label>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-12">
+				<input type="text" [(ngModel)]="verificationCode" name="verificationCode" #txtverificationcode autofocus autocomplete="off" class="form-control" />
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-12 text-center">
+				<label>
+					<input type="checkbox" [(ngModel)]="remember" name="remember" #chkremember />
+					Remeber this device
+				</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<span class="btn-group">
+					<button type="submit" class="btn btn-primary">Login</button>
+					<button class="btn btn-secondary" (click)="OnLostDevice()">Lost device?</button>
+				</span>
+			</div>
+		</div>
+	</form>
+	<bs-modal [(isOpen)]="isRequestingRecoveryCode">
+		<form *bsModal cdkTrapFocus (submit)="recoveryCodeEntered()">
+			<div bsModalHeader>
+				<h5 class="modal-title">2FA Recovery</h5>
+			</div>
+			<div bsModalBody class="p-2 d-flex flex-row align-items-center justify-content-between">
+				<div class="container">
+					<div class="form-group row mb-3">
+						<div [bsFor]="txtRecoveryCode" class="col-md-12 col-form-label">
+							Consult the recovery codes you've written down when activating 2-factor authentication. Enter a recovery code in the box below.
+						</div>
+					</div>
+					<div class="form-group row mb-3">
+						<div class="col-md-12">
+							<input type="text" [(ngModel)]="twoFactorRecoveryCode" autofocus #txtRecoveryCode name="txtRecoveryCode" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div bsModalFooter>
+				<div class="btn-group">
+					<button type="submit" class="btn btn-primary" aria-label="Update password">
+						<i class="fa fa-unlock"></i>
+						Recover account
+					</button>
+					<button type="button" bsModalClose class="btn btn-secondary" aria-label="Cancel">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</bs-modal>
 </body>

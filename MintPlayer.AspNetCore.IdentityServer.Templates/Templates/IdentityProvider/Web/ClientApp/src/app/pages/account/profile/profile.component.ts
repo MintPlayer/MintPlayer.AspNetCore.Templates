@@ -36,16 +36,18 @@ export class ProfileComponent implements OnInit {
 
 		this.externalLoginProviders$ = combineLatest([this.allExternalLoginProviders$, this.registeredExternalLoginProviders$])
 			.pipe(map(([allExternalLoginProviders, registeredExternalLoginProviders]) => {
-				if (allExternalLoginProviders && registeredExternalLoginProviders) {
+				if (!allExternalLoginProviders || !registeredExternalLoginProviders) {
+					return null;
+				} else if (allExternalLoginProviders.length === 0) {
+					return null;
+				} else {
 					return allExternalLoginProviders.map(p => {
 						return <ExternalLoginProviderInfo>{
 							name: p.name,
 							displayName: p.displayName,
 							isRegistered: registeredExternalLoginProviders.includes(p.name),
 						};
-					})
-				} else {
-					return null;
+					});
 				}
 			}));
 	}

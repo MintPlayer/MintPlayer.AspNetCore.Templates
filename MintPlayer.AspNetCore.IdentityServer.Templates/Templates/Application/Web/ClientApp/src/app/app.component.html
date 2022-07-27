@@ -1,31 +1,31 @@
 <bs-navbar #nav>
-  <ng-template bsExpandButton let-state>
-    <bs-navbar-toggler [state]="state" [toggleOnClick]="false"></bs-navbar-toggler>
-  </ng-template>
-  <bs-navbar-brand [routerLink]='["/"]'>
-    <span class="brand d-block p-1">
-      Application
-    </span>
-  </bs-navbar-brand>
-  <bs-navbar-nav [collapse]="true">
-    <bs-navbar-item>
-      <a [routerLink]='["/"]'>Home</a>
-    </bs-navbar-item>
-    <bs-navbar-item>
-      <a [routerLink]='[]'>Information</a>
-      <bs-navbar-dropdown>
-        <bs-navbar-item>
-          <a [routerLink]='["/information", "weatherforecasts"]'>Weather forecasts</a>
-        </bs-navbar-item>
-      </bs-navbar-dropdown>
-    </bs-navbar-item>
-  </bs-navbar-nav>
-  <bs-navbar-nav class="me-0">
-    <bs-navbar-item>
-      <a [routerLink]='["/account", "login"]'>Login</a>
-    </bs-navbar-item>
-  </bs-navbar-nav>
+	<ng-template bsExpandButton let-state>
+		<bs-navbar-toggler [state]="state" [toggleOnClick]="false"></bs-navbar-toggler>
+	</ng-template>
+	<bs-navbar-brand [routerLink]='["/"]'>
+		<span class="brand d-block p-1">
+			Application
+		</span>
+	</bs-navbar-brand>
+	<bs-navbar-nav [collapse]="true">
+		<bs-navbar-item>
+			<a [routerLink]='["/"]'>Home</a>
+		</bs-navbar-item>
+		<bs-navbar-item>
+			<a [routerLink]='[]'>Information</a>
+			<bs-navbar-dropdown>
+				<bs-navbar-item>
+					<a [routerLink]='["/information", "weatherforecasts"]'>Weather forecasts</a>
+				</bs-navbar-item>
+			</bs-navbar-dropdown>
+		</bs-navbar-item>
+	</bs-navbar-nav>
+	<bs-navbar-nav class="me-0">
+		<bs-navbar-item>
+			<a [routerLink]='["/account", "login"]'>Login</a>
+		</bs-navbar-item>
+	</bs-navbar-nav>
 </bs-navbar>
 <div [navbarContent]="nav" style="padding-top:10px">
-  <router-outlet></router-outlet>
+	<router-outlet></router-outlet>
 </div>

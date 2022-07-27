@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 

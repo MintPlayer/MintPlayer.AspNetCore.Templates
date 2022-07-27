@@ -110,12 +110,12 @@
 		</bs-card>
 	</div>
 	<div class="d-block mb-3">
-		<bs-card *ngIf="(user$ | async) as user">
+		<bs-card *ngIf="(externalLoginProviders$ | async) as externalLoginProviders">
 			<bs-card-header>
 				<i class="fa fa-comments"></i>
 				Social logins
 			</bs-card-header>
-			<div class="container p-3" *ngIf="(externalLoginProviders$ | async) as externalLoginProviders">
+			<div class="container p-3">
 				<div *ngFor="let provider of externalLoginProviders; let isLast = last" class="form-group row" [class.mb-3]="!isLast">
 					<div class="col-md-6 col-lg-4">
 						<external-login-button *ngIf="!provider.isRegistered" [provider]="provider" [action]="'add'" (loginSuccessOrFailed)="externalLoginSuccessOrFailed($event)"></external-login-button>

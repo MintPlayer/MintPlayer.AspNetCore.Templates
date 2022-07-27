@@ -9,23 +9,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'XSRF-TOKEN',
-      headerName: 'X-XSRF-TOKEN'
-    }),
-    AdvancedRouterModule,
-    BsNavbarModule,
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		BrowserModule,
+		BrowserAnimationsModule,
+		HttpClientModule,
+		HttpClientXsrfModule.withOptions({
+			cookieName: 'XSRF-TOKEN',
+			headerName: 'X-XSRF-TOKEN'
+		}),
+		AdvancedRouterModule,
+		BsNavbarModule,
 
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+		AppRoutingModule
+	],
+	providers: [],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }
