@@ -4,8 +4,8 @@
 			<h1 class="d-inline-block">Update profile</h1>
 		</div>
 	</div>
-	<div class="d-block mb-3">
-		<bs-card *ngIf="(user$ | async) as user">
+	<div class="d-block mb-3" *ngIf="(user$ | async) as user">
+		<bs-card>
 			<bs-card-header>
 				<i class="fa fa-user"></i> Profile
 			</bs-card-header>
@@ -30,8 +30,8 @@
 			</div>
 		</bs-card>
 	</div>
-	<div class="d-block mb-3">
-		<bs-card *ngIf="(user$ | async) as user">
+	<div class="d-block mb-3" *ngIf="(user$ | async) as user">
+		<bs-card>
 			<bs-card-header>
 				<i class="fa fa-key"></i>
 				2-factor authentication
@@ -109,7 +109,7 @@
 			</div>
 		</bs-card>
 	</div>
-	<div class="d-block mb-3">
+	<div class="d-block mb-3" *ngIf="(user$ | async) as user">
 		<bs-card *ngIf="(externalLoginProviders$ | async) as externalLoginProviders">
 			<bs-card-header>
 				<i class="fa fa-comments"></i>
