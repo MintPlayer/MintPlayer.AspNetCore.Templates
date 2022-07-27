@@ -51,6 +51,10 @@ export class AccountService {
 		return this.httpClient.put(`${this.baseUrl}/Web/V1/Account/Password`, { currentPassword, newPassword, newPasswordConfirmation });
 	}
 
+	public performMustChangePassword(newPassword: string, newPasswordConfirmation: string) {
+		return this.httpClient.post(`${this.baseUrl}/Web/V1/Account/Password`, { newPassword, newPasswordConfirmation });
+	}
+
 	public getRoles() {
 		return this.httpClient.get<string[]>(`${this.baseUrl}/Web/V1/Account/Roles`);
 	}

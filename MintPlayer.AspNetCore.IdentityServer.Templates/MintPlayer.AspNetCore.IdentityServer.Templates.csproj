@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.0.22</PackageVersion>
+		<PackageVersion>6.0.23</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -60,6 +60,7 @@
 	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\api\dtos\external-login-provider-info.ts" />
 	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\api\dtos\two-factor-code.ts" />
 	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\api\enums\code-type.ts" />
+	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\entities\change-admin-password-modal.ts" />
 	  <None Remove="Templates\IdentityProvider\Web\ClientApp\src\app\entities\change-password-modal.ts" />
 	  <None Remove="Templates\ServerSideRendering\Web\Properties\launchSettings.json" />
 	</ItemGroup>
@@ -79,6 +80,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.7" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="6.0.7" />
 		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="6.0.0" />
+		<PackageReference Include="MintPlayer.AspNetCore.MustChangePassword" Version="6.0.1" />
 		<PackageReference Include="MintPlayer.AspNetCore.NoSniff" Version="6.0.2" />
 		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />

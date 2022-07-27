@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
+using MintPlayer.AspNetCore.MustChangePassword.Abstractions.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Services;
@@ -17,6 +18,7 @@ internal class AccountService : IAccountService
 {
     #region Constructor
     private readonly IAccountRepository accountRepository;
+    private readonly IMustChangePasswordService<Persistance.Entities.User, Guid> mustChangePasswordService;
     private readonly LinkGenerator linkGenerator;
     private readonly IHttpContextAccessor httpContextAccessor;
     private readonly IMailService mailService;
@@ -24,6 +26,7 @@ internal class AccountService : IAccountService
     private readonly IOptions<IdentityOptions> identityOptions;
     public AccountService(
         IAccountRepository accountRepository,
+        IMustChangePasswordService<Persistance.Entities.User, Guid> mustChangePasswordService,
         LinkGenerator linkGenerator,
         IHttpContextAccessor httpContextAccessor,
         IMailService mailService,
@@ -31,6 +34,7 @@ internal class AccountService : IAccountService
         IOptions<IdentityOptions> identityOptions)
     {
         this.accountRepository = accountRepository;
+        this.mustChangePasswordService = mustChangePasswordService;
         this.linkGenerator = linkGenerator;
         this.httpContextAccessor = httpContextAccessor;
         this.mailService = mailService;
@@ -109,6 +113,11 @@ internal class AccountService : IAccountService
     {
         var hasPassword = await accountRepository.HasPassword();
         return hasPassword;
+    }
+
+    public async Task PerformMustChangePassword(string newPassword, string newPasswordConfirmation)
+    {
+        await mustChangePasswordService.PerformChangePasswordAsync(newPassword, newPasswordConfirmation);
     }
 
     public async Task ChangePassword(string? currentPassword, string newPassword, string newPasswordConfirmation)

@@ -6,4 +6,6 @@ public enum ELoginStatus
 	Success,
 	RequiresTwoFactor,
 	NotActivated,
+	MustChangePassword,
+	InternalError,
 }

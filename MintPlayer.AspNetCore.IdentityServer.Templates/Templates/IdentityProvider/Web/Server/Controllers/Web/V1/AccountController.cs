@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System.Text.Encodings.Web;
+using MintPlayer.AspNetCore.MustChangePassword.Exceptions;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
@@ -143,6 +144,13 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
                     User = null
                 });
             }
+            catch (MustChangePasswordException mustChangePasswordEx)
+            {
+                return Ok(new LoginResult
+                {
+                    Status = Dtos.Enums.ELoginStatus.MustChangePassword,
+                });
+            }
             catch (RequiresTwoFactorException twoFactorEx)
             {
                 return Ok(new LoginResult
@@ -203,6 +211,21 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.W
             catch (Exception)
             {
                 return StatusCode(500);
+            }
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost("Password")]
+        public async Task<ActionResult> ForceChangePassword([FromBody] ChangePasswordVM changePasswordVM)
+        {
+            try
+            {
+                await accountService.PerformMustChangePassword(changePasswordVM.NewPassword, changePasswordVM.NewPasswordConfirmation);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(404);
             }
         }
 

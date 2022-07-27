@@ -3,5 +3,6 @@ export enum ELoginStatus {
 	success,
 	requiresTwoFactor,
 	notActivated,
-	internalError
+	mustChangePassword,
+	internalError,
 }

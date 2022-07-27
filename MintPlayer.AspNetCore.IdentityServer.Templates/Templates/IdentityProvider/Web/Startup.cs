@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MintPlayer.AspNetCore.Hsts;
+using MintPlayer.AspNetCore.MustChangePassword.Extensions;
 using MintPlayer.AspNetCore.NoSniff;
 using MintPlayer.AspNetCore.SubDirectoryViews;
 using MintPlayer.AspNetCore.XsrfForSpas;
@@ -14,6 +15,7 @@ using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Extensions;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Services;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using MintPlayer.AspNetCore.IdentityServer.Templates.Templates.IdentityProvider.Web.Extensions;
@@ -46,7 +48,10 @@ public class Startup
         services.AddDataProtection();
         services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
-        var authenticationBuilder = services.AddAuthentication();
+        var authenticationBuilder = services
+            .AddAuthentication()
+            .AddMustChangePasswordUserIdCookie();
+
         if (Configuration.TryGetValue("Authentication:Microsoft", out MicrosoftAccountOptions ms))
         {
             if (!string.IsNullOrEmpty(ms.ClientId) && !string.IsNullOrEmpty(ms.ClientSecret))

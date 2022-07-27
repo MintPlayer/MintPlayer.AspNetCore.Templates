@@ -149,7 +149,7 @@
 				<div class="form-group row mb-3">
 					<div [bsFor]="txtNewPassword" class="col-md-6 col-form-label">Enter new password</div>
 					<div class="col-md-6">
-						<input type="password" [(ngModel)]="changePasswordModal.newPassword" name="newPassword" #txtNewPassword class="form-control">
+						<input type="password" [(ngModel)]="changePasswordModal.newPassword" [autofocus]="changePasswordModal.currentPassword === null" name="newPassword" #txtNewPassword class="form-control">
 					</div>
 				</div>
 				<div class="form-group row">

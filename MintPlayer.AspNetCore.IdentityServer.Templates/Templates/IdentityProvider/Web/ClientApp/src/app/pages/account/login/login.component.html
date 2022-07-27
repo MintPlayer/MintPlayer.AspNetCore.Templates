@@ -18,7 +18,7 @@
 				<label class="col-form-label" [bsFor]="txtemail">Email</label>
 			</div>
 			<div class="col-md-9">
-				<input type="email" [(ngModel)]="email" name="email" #txtemail autocomplete="username" class="form-control" />
+				<input type="email" [(ngModel)]="email" name="email" #txtemail autofocus autocomplete="username" class="form-control" />
 			</div>
 		</div>
 		<div class="row mb-3">
@@ -47,4 +47,33 @@
 			</div>
 		</div>
 	</form>
+	<bs-modal *ngIf="(changePasswordModal$ | async) as changePasswordModal" [(isOpen)]="changePasswordModal.isChangingPassword">
+		<form *bsModal cdkTrapFocus (submit)="updateAdminPassword()">
+			<div bsModalHeader>
+				<h5 class="modal-title">Change admin password</h5>
+			</div>
+			<div bsModalBody>
+				<div class="container">
+					<div class="form-group row mb-3">
+						<div [bsFor]="txtNewPassword" class="col-md-6 col-form-label">New password</div>
+						<div class="col-md-6">
+							<input type="password" [(ngModel)]="changePasswordModal.newPassword" name="newPassword" #txtNewPassword class="form-control" />
+						</div>
+					</div>
+					<div class="form-group row mb-3">
+						<div [bsFor]="txtNewPasswordConfirmation" class="col-md-6 col-form-label">Confirm new password</div>
+						<div class="col-md-6">
+							<input type="password" [(ngModel)]="changePasswordModal.newPasswordConfirmation" name="newPasswordConfirmation" #txtNewPasswordConfirmation class="form-control" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div bsModalFooter>
+				<div class="btn-group">
+					<button type="submit" class="btn btn-primary" aria-label="Update password">Update password</button>
+					<button type="button" bsModalClose class="btn btn-secondary" aria-label="Cancel">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</bs-modal>
 </body>

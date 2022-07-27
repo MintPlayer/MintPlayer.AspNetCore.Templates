@@ -992,7 +992,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WebApplication26.Provider.Data.Persistance.Entities.Role", b =>
+            modelBuilder.Entity("MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance.Entities.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1020,7 +1020,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("WebApplication26.Provider.Data.Persistance.Entities.User", b =>
+            modelBuilder.Entity("MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -1278,7 +1278,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("WebApplication26.Provider.Data.Persistance.Entities.Role", null)
+                    b.HasOne("MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1287,7 +1287,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("WebApplication26.Provider.Data.Persistance.Entities.User", null)
+                    b.HasOne("MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1296,7 +1296,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("WebApplication26.Provider.Data.Persistance.Entities.User", null)
+                    b.HasOne("MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1305,13 +1305,13 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("WebApplication26.Provider.Data.Persistance.Entities.Role", null)
+                    b.HasOne("MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApplication26.Provider.Data.Persistance.Entities.User", null)
+                    b.HasOne("MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1320,7 +1320,7 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("WebApplication26.Provider.Data.Persistance.Entities.User", null)
+                    b.HasOne("MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

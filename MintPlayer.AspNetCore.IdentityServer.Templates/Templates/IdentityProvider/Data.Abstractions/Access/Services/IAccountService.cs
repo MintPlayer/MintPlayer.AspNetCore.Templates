@@ -15,6 +15,7 @@ public interface IAccountService
     Task<IEnumerable<string>> GetRoles();
     Task Logout();
     Task<bool> HasPassword();
+    Task PerformMustChangePassword(string newPassword, string newPasswordConfirmation);
     Task ChangePassword(string? currentPassword, string newPassword, string newPasswordConfirmation);
     Task<string> GenerateTwoFactorRegistrationCode();
     Task<User> TwoFactorLogin(string verificationCode, bool rememberDevice);

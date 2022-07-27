@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace MintPlayer.AspNetCore.IdentityServer.Templates.Templates.IdentityProvider.Web.Extensions;
+namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Extensions;
 
 internal static class ConfigurationExtensions
 {

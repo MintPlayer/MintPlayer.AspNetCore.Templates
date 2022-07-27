@@ -9,6 +9,10 @@
   "description": "ASP.NET Core Identity provider using IdentityServer",
   "sourceName": "MintPlayer.AspNetCore.IdentityServer",
   "defaultName": "WebApplication1",
+  "guids": [
+    "d2c53e36-9a0a-42e4-b075-a4cc6481dd15",
+    "0097e37b-1c43-47d6-9665-419aa28cd8be"
+  ],
   "tags": {
     "language": "C#",
     "type": "project"

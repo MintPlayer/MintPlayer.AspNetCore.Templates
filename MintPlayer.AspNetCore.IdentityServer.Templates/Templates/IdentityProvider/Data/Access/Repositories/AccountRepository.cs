@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication;
+using MintPlayer.AspNetCore.MustChangePassword.Abstractions.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Mappers;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Enums;
-using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Repositories;
@@ -22,6 +23,7 @@ internal class AccountRepository : IAccountRepository
     private readonly IUserMapper userMapper;
     private readonly IHttpContextAccessor httpContextAccessor;
     private readonly IServiceProvider serviceProvider;
+    private readonly IMustChangePasswordService<Persistance.Entities.User, Guid> mustChangePasswordService;
     public AccountRepository(
         UserManager<Persistance.Entities.User> userManager,
         SignInManager<Persistance.Entities.User> signinManager,
@@ -29,7 +31,8 @@ internal class AccountRepository : IAccountRepository
         IOptions<IdentityOptions> identityOptions,
         IUserMapper userMapper,
         IHttpContextAccessor httpContextAccessor,
-        IServiceProvider serviceProvider)
+        IServiceProvider serviceProvider,
+        IMustChangePasswordService<Persistance.Entities.User, Guid> mustChangePasswordService)
     {
         this.userManager = userManager;
         this.signinManager = signinManager;
@@ -38,6 +41,7 @@ internal class AccountRepository : IAccountRepository
         this.userMapper = userMapper;
         this.httpContextAccessor = httpContextAccessor;
         this.serviceProvider = serviceProvider;
+        this.mustChangePasswordService = mustChangePasswordService;
     }
     #endregion
 
@@ -89,17 +93,27 @@ internal class AccountRepository : IAccountRepository
                 var isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);
                 if (identityOptions.Value.SignIn.RequireConfirmedEmail && !isEmailConfirmed) throw new EmailNotConfirmedException();
 
+                var userDto = await userMapper.Entity2Dto(user);
+
+                // 1) Password == "admin"
+                // 2) Password correct
+                // 3) Email = "admin@example.com"
+                if ((password == "admin") && isPasswordCorrect && (email == "admin@example.com"))
+                {
+                    // The following call will always throw MustChangePasswordException()
+                    await mustChangePasswordService.ChangePasswordSignInAsync(user, password);
+                }
+
                 var signinResult = await signinManager.PasswordSignInAsync(user, password, true, true);
                 if (signinResult.Succeeded)
                 {
-                    var dto = await userMapper.Entity2Dto(user);
-                    return dto;
+                    return userDto;
                 }
                 else if (signinResult.RequiresTwoFactor)
                 {
                     throw new RequiresTwoFactorException
                     {
-                        User = await userMapper.Entity2Dto(user)
+                        User = userDto,
                     };
                 }
                 else

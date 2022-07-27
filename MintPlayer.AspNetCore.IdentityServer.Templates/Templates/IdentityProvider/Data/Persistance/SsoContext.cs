@@ -52,8 +52,43 @@ internal class SsoContext : IdentityDbContext<User, Role, Guid>, IPersistedGrant
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        var passwordHasher = new Microsoft.AspNetCore.Identity.PasswordHasher<Entities.User>();
+
         builder.Entity<DeviceFlowCodes>().HasNoKey();
         builder.Entity<PersistedGrant>().HasKey(pg => pg.Key);
+        builder.Entity<Entities.User>().HasData(new[]
+        {
+            new Entities.User
+            {
+                Id = Guid.Parse("d2c53e36-9a0a-42e4-b075-a4cc6481dd15"),
+                Email = "admin@example.com",
+                NormalizedEmail = "ADMIN@EXAMPLE.COM",
+                EmailConfirmed = true,
+                UserName = "admin",
+                NormalizedUserName = "admin".Normalize(),
+                TwoFactorEnabled = false,
+                PasswordHash = passwordHasher.HashPassword(null!, "admin"),
+                SecurityStamp = string.Empty,
+            }
+        });
+        builder.Entity<Entities.Role>().HasData(new[]
+        {
+            new Entities.Role
+            {
+                Id = Guid.Parse("0097e37b-1c43-47d6-9665-419aa28cd8be"),
+                Name = "Administrator",
+                NormalizedName = "Administrator".Normalize(),
+            }
+        });
+        builder.Entity<Microsoft.AspNetCore.Identity.IdentityUserRole<Guid>>().HasData(new[]
+        {
+            new Microsoft.AspNetCore.Identity.IdentityUserRole<Guid>
+            {
+                UserId = Guid.Parse("d2c53e36-9a0a-42e4-b075-a4cc6481dd15"),
+                RoleId = Guid.Parse("0097e37b-1c43-47d6-9665-419aa28cd8be"),
+            }
+        });
     }
 
     public async Task<int> SaveChangesAsync()
