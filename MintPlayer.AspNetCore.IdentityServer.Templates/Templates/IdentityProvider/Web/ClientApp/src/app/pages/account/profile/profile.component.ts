@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Select, Store } from '@ngxs/store';
-import { BehaviorSubject, combineLatest, filter, map, Observable, Subject, take, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import { ApplicationManager } from '../../../states/application/application.manager';
 import { SetTwoFactor } from '../../../states/application/actions/set-two-factor';
 import { SetBypassTwoFactor } from '../../../states/application/actions/set-two-factor-bypass';
@@ -16,15 +16,17 @@ import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
 import { ExternalLoginProviderInfo } from '../../../api/dtos/external-login-provider-info';
 import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
 import { ELoginStatus } from '../../../api/enums/login-status';
+import { SetupService } from '../../../api/services/setup/setup.service';
+import { DeveloperPortalAppInformation } from '../../../api/dtos/developer-portal-app-information';
 
 @Component({
 	selector: 'app-profile',
 	templateUrl: './profile.component.html',
 	styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
-	constructor(private accountService: AccountService, private domSanitizer: DomSanitizer, private store: Store) {
+	constructor(private accountService: AccountService, private setupService: SetupService, private domSanitizer: DomSanitizer, private store: Store) {
 		this.twoFaRegistrationUrlSanitized$ = this.twoFaRegistrationUrl$
 			.pipe(map((url) => {
 				if (url) {
@@ -50,6 +52,19 @@ export class ProfileComponent implements OnInit {
 					});
 				}
 			}));
+
+		this.userRoles$
+			.pipe(takeUntil(this.destroyed$))
+			.subscribe((roles) => {
+				if (roles && roles.includes('Administrator')) {
+					this.setupService.isDeveloperPortalClientRegistered()
+						.subscribe((isRegistered) => {
+							this.developerPortalAppInformation$.next({
+								isRegistered
+							});
+						});
+				}
+			});
 	}
 
 	@Select(ApplicationManager.user) user$!: Observable<User>;
@@ -63,6 +78,10 @@ export class ProfileComponent implements OnInit {
 	allExternalLoginProviders$ = new BehaviorSubject<AuthenticationScheme[] | null>(null);
 	registeredExternalLoginProviders$ = new BehaviorSubject<string[] | null>(null);
 	externalLoginProviders$: Observable<ExternalLoginProviderInfo[] | null>;
+	userRoles$ = new BehaviorSubject<string[] | null>(null);
+	developerPortalAppInformation$ = new BehaviorSubject<DeveloperPortalAppInformation | null>(null);
+	developerPortalRedirectUrl = '';
+	destroyed$ = new Subject();
 
 
 	changePasswordModal$ = new BehaviorSubject<ChangePasswordModal | null>({
@@ -128,6 +147,15 @@ export class ProfileComponent implements OnInit {
 				console.error(error);
 			}
 		});
+
+		this.accountService.getRoles().subscribe({
+			next: (roles) => this.userRoles$.next(roles),
+			error: (error) => console.error(error)
+		});
+	}
+
+	ngOnDestroy() {
+		this.destroyed$.next(true);
 	}
 
 	convertTwoFactorCode(code: TwoFactorCodeUI) {
@@ -317,6 +345,20 @@ export class ProfileComponent implements OnInit {
 				console.error(error);
 			}
 		});
+	}
+
+	createDeveloperPortal() {
+		this.setupService.registerDeveloperPortalClient({ redirectUris: [this.developerPortalRedirectUrl] })
+			.subscribe({
+				next: (response) => {
+					this.developerPortalAppInformation$.next({
+						isRegistered: true,
+						clientId: response.clientId,
+						clientSecret: response.clientSecret,
+					});
+				},
+				error: (error) => console.error(error)
+			});
 	}
 
 }

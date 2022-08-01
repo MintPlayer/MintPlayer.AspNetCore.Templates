@@ -132,6 +132,44 @@
 			</div>
 		</bs-card>
 	</div>
+	<ng-container *ngIf="(developerPortalAppInformation$ | async) as developerPortalAppInformation">
+		<div class="d-block mb-3" *ngIf="!developerPortalAppInformation.isRegistered || (developerPortalAppInformation.isRegistered && developerPortalAppInformation.clientId)">
+			<bs-card>
+				<bs-card-header>
+					<i class="fa fa-code"></i>
+					Developer portal
+				</bs-card-header>
+				<form class="container p-3" (submit)="createDeveloperPortal()">
+					<div class="row">
+						<div class="col-md-12">
+							<p>
+								You don&#x27;t have a developer portal setup yet.
+								Create a new application from the <b>Developer Portal Template</b>,
+								and copy the redirect url in the box below.
+								The redirect url usually ends with <b>signin-xxx</b>
+							</p>
+						</div>
+					</div>
+					<div class="row" *ngIf="!developerPortalAppInformation.clientId">
+						<div class="col-md-12">
+							<div class="input-group">
+								<input type="text" [(ngModel)]="developerPortalRedirectUrl" name="redirectUrl" class="form-control" />
+								<button type="submit" class="btn btn-primary">Create</button>
+							</div>
+						</div>
+					</div>
+					<div class="row" *ngIf="developerPortalAppInformation.clientId">
+						<div class="col-md-6 col-form-label text-end">Client ID</div>
+						<div class="col-md-6 col-form-label">{{ developerPortalAppInformation.clientId }}</div>
+					</div>
+					<div class="row" *ngIf="developerPortalAppInformation.clientId">
+						<div class="col-md-6 col-form-label text-end">Client Secret</div>
+						<div class="col-md-6 col-form-label">{{ developerPortalAppInformation.clientSecret }}</div>
+					</div>
+				</form>
+			</bs-card>
+		</div>
+	</ng-container>
 </div>
 <bs-modal *ngIf="(changePasswordModal$ | async) as changePasswordModal" [(isOpen)]="changePasswordModal.isChangingPassword">
 	<form *bsModal cdkTrapFocus (submit)="updatePassword()">

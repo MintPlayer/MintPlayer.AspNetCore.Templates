@@ -1,1 +1,15 @@
-<p>home works!</p>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<bs-alert *ngIf="(mustCreateDeveloperPortalApp$ | async) as mustCreateDeveloperPortalApp" [type]="colors.danger" [isVisible]="mustCreateDeveloperPortalApp">
+				No OAuth client has been configured for your developer portal.
+				<a [routerLink]='["/account","profile"]'><b>Click here</b></a> to create one.
+			</bs-alert>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<p>home works!</p>
+		</div>
+	</div>
+</div>

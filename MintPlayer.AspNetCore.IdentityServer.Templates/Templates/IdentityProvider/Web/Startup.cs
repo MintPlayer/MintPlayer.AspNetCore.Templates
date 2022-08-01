@@ -46,6 +46,8 @@ public class Startup
 		services.ConfigureViewsInSubfolder("Server");
 		services.AddDataProtection();
 		services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+		services.AddRandomizer();
+		services.AddSingleton<System.Random>();
 
 		var authenticationBuilder = services
 			.AddAuthentication()
