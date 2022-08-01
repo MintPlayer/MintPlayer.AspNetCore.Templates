@@ -7,7 +7,7 @@
   "shortName": "id-application",
   "name": "IdentityServer Application",
   "description": "ASP.NET Core Identity Application",
-  "sourceName": "MintPlayer.AspNetCore.IdentityServer",
+  "sourceName": "MintPlayer.AspNetCore.IdentityServer.Application",
   "defaultName": "WebApplication1",
   "tags": {
     "language": "C#",

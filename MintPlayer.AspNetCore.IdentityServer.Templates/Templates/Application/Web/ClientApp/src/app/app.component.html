@@ -4,7 +4,7 @@
 	</ng-template>
 	<bs-navbar-brand [routerLink]='["/"]'>
 		<span class="brand d-block p-1">
-			Application
+			MintPlayer.AspNetCore.IdentityServer.Application
 		</span>
 	</bs-navbar-brand>
 	<bs-navbar-nav [collapse]="true">
@@ -22,7 +22,25 @@
 	</bs-navbar-nav>
 	<bs-navbar-nav class="me-0">
 		<bs-navbar-item>
-			<a [routerLink]='["/account", "login"]'>Login</a>
+			<a [routerLink]='[]'>Account</a>
+			<bs-navbar-dropdown>
+				<ng-container *ngIf="(user$ | async) === null">
+					<bs-navbar-item>
+						<a [routerLink]='["/account", "login"]'>Login</a>
+					</bs-navbar-item>
+					<bs-navbar-item>
+						<a [routerLink]='["/account", "register"]'>Register</a>
+					</bs-navbar-item>
+				</ng-container>
+				<ng-container *ngIf="(user$ | async) !== null">
+					<bs-navbar-item>
+						<a [routerLink]='["/account", "profile"]'>Profile</a>
+					</bs-navbar-item>
+					<bs-navbar-item>
+						<a [routerLink]='[]' (click)="onLogout()">Logout</a>
+					</bs-navbar-item>
+				</ng-container>
+			</bs-navbar-dropdown>
 		</bs-navbar-item>
 	</bs-navbar-nav>
 </bs-navbar>

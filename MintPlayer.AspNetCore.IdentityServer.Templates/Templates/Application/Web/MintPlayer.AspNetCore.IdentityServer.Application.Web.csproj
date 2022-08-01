@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -11,12 +11,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.7" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.6" />
 		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.AspNetCore.NoSniff" Version="6.0.2" />
-		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.0" />
+		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.1" />
 		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />
 	</ItemGroup>
 

@@ -25,7 +25,7 @@ internal class MeteoContext : IdentityDbContext<User, Role, Guid>
 		if (configuration == null)
 		{
 			// Only used when generating migrations
-			var migrationsConnectionString = @"Server=(localdb)\mssqllocaldb;Database=MeteoApplication;Trusted_Connection=True;ConnectRetryCount=0";
+			var migrationsConnectionString = @"Server=(localdb)\mssqllocaldb;Database=MintPlayer.AspNetCore.IdentityServer.Application;Trusted_Connection=True;ConnectRetryCount=0";
 			optionsBuilder.UseSqlServer(migrationsConnectionString, options =>
 			{
 				options.MigrationsAssembly(typeof(MeteoContext).Assembly.FullName);
@@ -33,7 +33,7 @@ internal class MeteoContext : IdentityDbContext<User, Role, Guid>
 		}
 		else
 		{
-			optionsBuilder.UseSqlServer(configuration.GetConnectionString("Meteo"));
+			optionsBuilder.UseSqlServer(configuration.GetConnectionString("MintPlayer.AspNetCore.IdentityServer.Application"));
 		}
 	}
 }

@@ -5,6 +5,7 @@ using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.
 using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Services;
 using MintPlayer.AspNetCore.IdentityServer.Application.Data.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Application.Data.Access.Services;
+using MintPlayer.AspNetCore.IdentityServer.Application.Data.Access.Mappers;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Application.Data.Extensions;
 
@@ -17,9 +18,13 @@ public static class ApplicationExtensions
 		services
 			.AddDbContext<Persistance.MeteoContext>(options => options.UseSqlServer(op.ConnectionString))
 			.AddScoped<IAccountRepository, AccountRepository>()
-			.AddScoped<IRoleRepository, RoleRepository>()
 			.AddScoped<IAccountService, AccountService>()
-			.AddScoped<IRoleService, RoleService>();
+			.AddScoped<IUserMapper, UserMapper>()
+			.AddScoped<IRoleRepository, RoleRepository>()
+			.AddScoped<IRoleService, RoleService>()
+			.AddScoped<IRoleMapper, RoleMapper>()
+			.AddScoped<IWeatherForecastService, WeatherForecastService>()
+			.AddSingleton<IDatabaseService, DatabaseService>();
 
 		services
 			.AddIdentity<Persistance.Entities.User, Persistance.Entities.Role>()

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,9 @@ using MintPlayer.AspNetCore.IdentityServer.Application.Data.Extensions;
 using MintPlayer.AspNetCore.NoSniff;
 using MintPlayer.AspNetCore.SubDirectoryViews;
 using MintPlayer.AspNetCore.XsrfForSpas;
+using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Services;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using MintPlayer.AspNetCore.IdentityServer.Application.Web.Extensions;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Application.Web;
 
@@ -27,13 +31,37 @@ public class Startup
 	public void ConfigureServices(IServiceCollection services)
 	{
 		services
-			.ConfigureViewsInSubfolder("Server")
 			.AddControllersWithViews()
 			.AddNewtonsoftJson();
 
+		services.ConfigureViewsInSubfolder("Server");
+
+		var authenticationBuilder = services
+			.AddAuthentication();
+
+		if (Configuration.TryGetValue("Authentication:Central", out OpenIdConnectOptions central))
+		{
+			if (!string.IsNullOrEmpty(central.ClientId) && !string.IsNullOrEmpty(central.ClientSecret))
+			{
+				authenticationBuilder.AddOpenIdConnect("central", options =>
+				{
+					options.ClientId = central.ClientId;
+					options.ClientSecret = central.ClientSecret;
+					options.ResponseType = Microsoft.IdentityModel.Protocols.OpenIdConnect.OpenIdConnectResponseType.Code;
+					options.UsePkce = true;
+					options.CallbackPath = new PathString("/signin-central");
+					options.Authority = central.Authority;
+
+					options.Scope.Clear();
+					options.Scope.Add("openid");
+					options.Scope.Add("profile");
+				});
+			}
+		}
+
 		services.AddApplication(options =>
 		{
-			options.ConnectionString = Configuration.GetConnectionString("Application");
+			options.ConnectionString = Configuration.GetConnectionString("MintPlayer.AspNetCore.IdentityServer.Application");
 			options.Environment = Environment;
 		});
 
@@ -53,6 +81,7 @@ public class Startup
 		if (env.IsDevelopment())
 		{
 			app.UseDeveloperExceptionPage();
+			app.ApplicationServices.GetRequiredService<IDatabaseService>().Migrate();
 		}
 		else
 		{

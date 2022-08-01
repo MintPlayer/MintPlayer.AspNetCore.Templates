@@ -26,6 +26,7 @@ public static class SsoExtensions
 			.AddScoped<IRoleMapper, RoleMapper>()
 			.AddScoped<ISetupRepository, SetupRepository>()
 			.AddScoped<ISetupService, SetupService>()
+            .AddScoped<ISsoService, SsoService>()
 			.AddSingleton<IDatabaseService, DatabaseService>()
 			.AddMustChangePassword<Persistance.Entities.User, Guid>();
 

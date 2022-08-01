@@ -1,0 +1,38 @@
+@using MintPlayer.AspNetCore.IdentityServer.Provider.Server.ViewModels.Provider.Auth;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model LoginVM;
+
+<form action="/Account/Login" method="POST" class="login-page">
+    <div class="lead">
+        <h1>Login</h1>
+        <p>Choose how to login</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Local Account</h2>
+                </div>
+
+                <div class="card-body">
+                    <form asp-route="Login">
+                        <input type="hidden" asp-for="ReturnUrl" />
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <label asp-for="User.Email"></label>
+                            <input class="form-control" placeholder="Email address" asp-for="User.Email" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="button" value="login">Login</button>
+                        @Html.ActionLink("Register", "Register", new { ReturnUrl = Context.Request.Query["ReturnUrl"] })
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

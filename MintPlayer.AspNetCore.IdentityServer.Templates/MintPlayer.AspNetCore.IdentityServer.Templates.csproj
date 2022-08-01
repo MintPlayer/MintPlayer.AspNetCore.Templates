@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.0.26</PackageVersion>
+		<PackageVersion>6.0.27</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>

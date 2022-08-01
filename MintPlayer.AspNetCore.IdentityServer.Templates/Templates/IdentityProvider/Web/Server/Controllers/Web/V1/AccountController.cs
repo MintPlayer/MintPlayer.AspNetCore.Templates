@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Extensions.Hosting;
 using System.Text.Encodings.Web;
 using MintPlayer.AspNetCore.MustChangePassword.Exceptions;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Hosting;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.Web.V1;
 

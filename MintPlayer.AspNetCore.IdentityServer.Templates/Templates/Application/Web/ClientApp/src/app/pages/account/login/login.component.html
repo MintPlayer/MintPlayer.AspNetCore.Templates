@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Login</h1>
+		</div>
+	</div>
+	<div class="row mb-3" *ngIf="(errorMessages$ | async) as errorMessages">
+		<div class="col-md-12">
+			<bs-alert *ngFor="let errorMessage of errorMessages" [type]="errorMessage.color" (afterOpenedOrClosed)="removeErrorMessage(errorMessage, $event)">
+				{{ errorMessage.message }}
+				<bs-alert-close></bs-alert-close>
+			</bs-alert>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<span class="h2">Login using SSO</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<span>
+				<external-login-button *ngFor="let externalProvider of (externalProviders$ | async)" [provider]="externalProvider" [action]="'connect'" (loginSuccessOrFailed)="externalLoginSuccessOrFailed($event)"></external-login-button>
+			</span>
+		</div>
+	</div>
+</div>

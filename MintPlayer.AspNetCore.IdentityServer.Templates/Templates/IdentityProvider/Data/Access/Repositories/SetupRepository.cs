@@ -92,7 +92,7 @@ internal class SetupRepository : ISetupRepository
 			NonEditable = true,
 			AllowedScopes = new List<Duende.IdentityServer.EntityFramework.Entities.ClientScope>
 			{
-				//new Duende.IdentityServer.EntityFramework.Entities.ClientScope { Scope = "openid" },
+				new Duende.IdentityServer.EntityFramework.Entities.ClientScope { Scope = "openid" },
 				new Duende.IdentityServer.EntityFramework.Entities.ClientScope { Scope = "profile" },
 				new Duende.IdentityServer.EntityFramework.Entities.ClientScope { Scope = "email" },
 			},
@@ -103,16 +103,76 @@ internal class SetupRepository : ISetupRepository
 					Created = DateTime.Now,
 					Description = "Default secret to create the developer portal",
 					Type = Duende.IdentityServer.IdentityServerConstants.SecretTypes.SharedSecret,
-					Value = defaultSecret,
+					Value = defaultSecret.Sha256(),
 				}
 			},
 			RedirectUris = request.RedirectUris.Select(r => new Duende.IdentityServer.EntityFramework.Entities.ClientRedirectUri
 			{
 				RedirectUri = r,
 			}).ToList(),
+			AllowedGrantTypes = GrantTypes.CodeAndClientCredentials.Select(gt => new Duende.IdentityServer.EntityFramework.Entities.ClientGrantType { GrantType = gt }).ToList(),
 		};
 
 		await ssoContext.Clients.AddAsync(client);
+
+		if (!ssoContext.IdentityResources.Any())
+		{
+			await ssoContext.IdentityResources.AddRangeAsync(
+				new Duende.IdentityServer.EntityFramework.Entities.IdentityResource
+				{
+					Enabled = true,
+					Name = "openid",
+					DisplayName = "Your user identifier",
+					Description = "Your user identifier",
+					Required = true,
+					ShowInDiscoveryDocument = true,
+					UserClaims = new List<Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim>
+					{
+						new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = "id" },
+						new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = "name" },
+					}
+				},
+				new Duende.IdentityServer.EntityFramework.Entities.IdentityResource
+				{
+					Enabled = true,
+					Name = "profile",
+					DisplayName = "User profile",
+					Description = "Your user profile information (first name, last name, etc.)",
+					Required = false,
+					ShowInDiscoveryDocument = true,
+					UserClaims = new List<Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim>
+					{
+					}
+				},
+				new Duende.IdentityServer.EntityFramework.Entities.IdentityResource
+				{
+					Enabled = true,
+					Name = "email",
+					DisplayName = "Your email address",
+					Description = "Your email address",
+					Required = false,
+					ShowInDiscoveryDocument = true,
+					UserClaims = new List<Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim>
+					{
+						new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = "email" },
+					}
+				},
+				new Duende.IdentityServer.EntityFramework.Entities.IdentityResource
+				{
+					Enabled = true,
+					Name = "phone",
+					DisplayName = "Your phone number",
+					Description = "Your phone number",
+					Required = false,
+					ShowInDiscoveryDocument = true,
+					UserClaims = new List<Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim>
+					{
+						//new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = "mobilephone" },
+					}
+				}
+			);
+		}
+
 		await ssoContext.SaveChangesAsync();
 
 		return new CreateDeveloperPortalResponse
