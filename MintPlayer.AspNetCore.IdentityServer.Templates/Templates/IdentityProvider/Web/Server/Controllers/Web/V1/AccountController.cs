@@ -19,18 +19,21 @@ public class AccountController : Controller
 {
 	#region Constructor
 	private readonly IAccountService accountService;
+	private readonly IAngularService angularService;
 	private readonly UrlEncoder urlEncoder;
 	private readonly LinkGenerator linkGenerator;
 	private readonly IWebHostEnvironment webHostEnvironment;
 	private readonly IServiceProvider serviceProvider;
 	public AccountController(
 		IAccountService accountService,
+		IAngularService angularService,
 		UrlEncoder urlEncoder,
 		LinkGenerator linkGenerator,
 		IWebHostEnvironment webHostEnvironment,
 		IServiceProvider serviceProvider)
 	{
 		this.accountService = accountService;
+		this.angularService = angularService;
 		this.urlEncoder = urlEncoder;
 		this.linkGenerator = linkGenerator;
 		this.webHostEnvironment = webHostEnvironment;
@@ -173,7 +176,7 @@ public class AccountController : Controller
 		try
 		{
 			var user = await accountService.TwoFactorLogin(twoFactorLoginVM.VerificationCode, twoFactorLoginVM.RememberDevice);
-			return user;
+			return Ok(user);
 		}
 		catch (LoginException)
 		{
@@ -457,26 +460,13 @@ public class AccountController : Controller
 	}
 
 #if RELEASE
-        [Host("external.example.com")]
+	[Host("external.example.com")]
 #endif
 	[HttpGet("ExternalLogin/TwoFactor/{provider}", Name = "web-v1-account-externallogin-twofactor")]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public ActionResult ExternalLoginTwoFactor([FromRoute] string provider)
 	{
-		var angularStylesheet = string.Empty;
-		if (webHostEnvironment.IsDevelopment())
-		{
-			angularStylesheet = "/styles.css";
-		}
-		else
-		{
-			var root = webHostEnvironment.ContentRootPath + "/ClientApp/dist";
-			angularStylesheet = Directory.GetFiles(root, "styles.*.css", SearchOption.AllDirectories)
-				.Select(f => Path.GetFileName(f))
-				.Select(f => Url.Content($"~/{f}"))
-				.FirstOrDefault();
-		}
-
+		var angularStylesheet = await angularService.GetStylesheetUrl(Url);
 		var model = new ExternalLoginTwoFactorVM
 		{
 			SubmitUrl = Url.Action(nameof(ExternalLoginTwoFactorCallback), new { provider })!,
@@ -486,7 +476,7 @@ public class AccountController : Controller
 	}
 
 #if RELEASE
-        [Host("external.example.com")]
+	[Host("external.example.com")]
 #endif
 	[ValidateAntiForgeryToken]
 	[HttpPost("ExternalLogin/TwoFactor/{provider}", Name = "web-v1-account-externallogin-twofactor-callback")]

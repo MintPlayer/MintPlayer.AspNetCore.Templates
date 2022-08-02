@@ -3,36 +3,55 @@
 
 @model LoginVM;
 
-<form action="/Account/Login" method="POST" class="login-page">
-    <div class="lead">
-        <h1>Login</h1>
-        <p>Choose how to login</p>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Local Account</h2>
-                </div>
+<link rel="stylesheet" href="@Model.StylesheetUrl" />
+<div class="container login-page">
+	<div class="lead">
+		<h1>Login</h1>
+		<p>Choose how to login</p>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card mb-3">
+				<div class="card-header">
+					<span>Local Account</span>
+				</div>
+				<div class="card-body">
+					<form action="/Account/Login" method="POST" class="container">
+						<input type="hidden" asp-for="ReturnUrl" />
+						@Html.AntiForgeryToken()
 
-                <div class="card-body">
-                    <form asp-route="Login">
-                        <input type="hidden" asp-for="ReturnUrl" />
-                        @Html.AntiForgeryToken()
-
-                        <div class="form-group">
-                            <label asp-for="User.Email"></label>
-                            <input class="form-control" placeholder="Email address" asp-for="User.Email" autofocus>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password"></label>
-                            <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                        </div>
-                        <button type="submit" class="btn btn-primary" name="button" value="login">Login</button>
-                        @Html.ActionLink("Register", "Register", new { ReturnUrl = Context.Request.Query["ReturnUrl"] })
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
+						<div class="form-group row mb-3">
+							<label class="col-form-label" asp-for="User.Email"></label>
+							<input class="form-control" placeholder="Email address" asp-for="User.Email" autofocus>
+						</div>
+						<div class="form-group row mb-3">
+							<label class="col-form-label" asp-for="Password"></label>
+							<input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
+						</div>
+						<div class="row">
+							<div class="col-md-12 text-center">
+								<span class="btn-group">
+									<button type="submit" class="btn btn-primary" name="button" value="login">Login</button>
+									@Html.ActionLink("Register", "Register", new { ReturnUrl = Context.Request.Query["ReturnUrl"] }, new { @class = "btn btn-secondary" })
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card mb-3">
+				<div class="card-header">
+					<span>External Account</span>
+				</div>
+				<div class="card-body">
+					@foreach (var provider in Model.ExternalProviders)
+					{
+						@Html.RouteLink(provider.DisplayName, "auth-externallogin-challenge", new { provider = provider.Name, returnUrl = Model.ReturnUrl }, new { @class = "btn btn-default d-block w-100" })
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.Facebook;
+﻿using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -117,6 +117,7 @@ public class Startup
 			options.Environment = Environment;
 		});
 		services.AddScoped<IMailService, MailService>();
+		services.AddScoped<IAngularService, AngularService>();
 
 		// In production, the Angular files will be served from this directory
 		services.AddSpaStaticFiles(configuration =>
