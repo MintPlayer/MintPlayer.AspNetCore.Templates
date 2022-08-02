@@ -1,6 +1,8 @@
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Mvc;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Services;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Server.Controllers;
@@ -121,7 +123,8 @@ public class AuthController : Controller
 		var stylesheetUrl = await angularService.GetStylesheetUrl(Url);
 		var model = new Web.Server.ViewModels.Account.ExternalLoginTwoFactorVM
 		{
-			SubmitUrl = returnUrl,
+			// It might be better to store the returnUrl in an httponly cookie
+			SubmitUrl = Url.Action(nameof(ExternalLoginTwoFactorCallback), new { provider, returnUrl })!,
 			StylesheetUrl = stylesheetUrl,
 		};
 		return View(model);
@@ -130,14 +133,14 @@ public class AuthController : Controller
 	[ValidateAntiForgeryToken]
 	[HttpPost("ExternalLogin/TwoFactor/{provider}", Name = "auth-externallogin-twofactor-callback")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public async Task<ActionResult> ExternalLoginTwoFactorCallback([FromRoute] string provider, [FromForm] Web.Server.ViewModels.Account.ExternalLoginTwoFactorVM externalLoginTwoFactorVM)
+	public async Task<ActionResult> ExternalLoginTwoFactorCallback([FromRoute] string provider, [FromForm] Web.Server.ViewModels.Account.ExternalLoginTwoFactorVM externalLoginTwoFactorVM, [FromQuery] string returnUrl)
 	{
 		try
 		{
 			var user = await accountService.TwoFactorLogin(externalLoginTwoFactorVM.Code, externalLoginTwoFactorVM.Remember);
 			if (user == null) throw new Exception();
 
-			return Redirect(externalLoginTwoFactorVM.SubmitUrl);
+			return Redirect(returnUrl);
 		}
 		catch (Exception)
 		{

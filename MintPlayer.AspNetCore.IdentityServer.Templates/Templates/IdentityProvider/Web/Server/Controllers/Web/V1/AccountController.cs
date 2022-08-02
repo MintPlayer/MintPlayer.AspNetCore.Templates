@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System.Text.Encodings.Web;
 using MintPlayer.AspNetCore.MustChangePassword.Exceptions;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Services;
+using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Services;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.ViewModels.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Exceptions.Account;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
@@ -464,7 +465,7 @@ public class AccountController : Controller
 #endif
 	[HttpGet("ExternalLogin/TwoFactor/{provider}", Name = "web-v1-account-externallogin-twofactor")]
 	[ApiExplorerSettings(IgnoreApi = true)]
-	public ActionResult ExternalLoginTwoFactor([FromRoute] string provider)
+	public async Task<ActionResult> ExternalLoginTwoFactor([FromRoute] string provider)
 	{
 		var angularStylesheet = await angularService.GetStylesheetUrl(Url);
 		var model = new ExternalLoginTwoFactorVM
