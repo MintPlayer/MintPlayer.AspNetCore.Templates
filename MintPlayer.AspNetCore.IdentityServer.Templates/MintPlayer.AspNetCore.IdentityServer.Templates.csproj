@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<!-- <TargetFramework>${DefaultNetCoreTargetFramework}</TargetFramework> -->
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
@@ -47,6 +48,13 @@
 		<Content Include="Templates\**\*;Templates\**\.browserlistrc;Templates\**\.editorconfig;Templates\**\.gitignore" Exclude="Templates\**\node_modules\**\*;Templates\**\bin\**\*;Templates\**\obj\**\*" />
 		<None Remove="Templates\**\node_modules\**\*;Templates\**\bin\**\*;Templates\**\obj\**\*" />
 	</ItemGroup>
+
+	<PropertyGroup>
+		<!-- Lists the versions of dependencies not built in this repo. Packages produced from this repo should be listed as a PackageVersionVariableReference.  -->
+		<GeneratedContentProperties>
+			DefaultNetCoreTargetFramework=$(DefaultNetCoreTargetFramework);
+		</GeneratedContentProperties>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<GeneratedContent Include="Templates/Application/Data/MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj.in" OutputPath="Templates/Application/Data/MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj" />

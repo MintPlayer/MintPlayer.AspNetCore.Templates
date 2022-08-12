@@ -1,0 +1,7 @@
+<Project>
+    <PropertyGroup Label="Version settings">
+        <DefaultNetCoreTargetFramework>net6.0</DefaultNetCoreTargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Label="Package versions">
+    </PropertyGroup>
+</Project>

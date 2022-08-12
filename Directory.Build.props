@@ -1,0 +1,4 @@
+<Project>
+    <Import Project="eng/Versions.props" />
+    <!-- Condition=" '$(RepoRoot)' == '' " -->
+</Project>
