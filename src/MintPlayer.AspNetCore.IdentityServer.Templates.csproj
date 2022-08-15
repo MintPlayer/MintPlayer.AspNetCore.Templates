@@ -40,13 +40,13 @@
 	-->
 
 	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
-		<Compile Include="src\content\**\*.cs" Exclude="src\content\**\bin\**;src\content\**\obj\**;src\content\*\.template.config\**" />
-		<Content Include="src\content\**\*" Exclude="src\content\**\bin\**;src\content\**\obj\**;src\content\**\*.cs" />
+		<Compile Include="content\**\*.cs" Exclude="content\**\bin\**;content\**\obj\**;content\*\.template.config\**" />
+		<Content Include="content\**\*" Exclude="content\**\bin\**;content\**\obj\**;content\**\*.cs" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-		<Content Include="src\content\**\*;src\content\**\.browserlistrc;src\content\**\.editorconfig;src\content\**\.gitignore" Exclude="src\content\**\node_modules\**\*;src\content\**\bin\**\*;src\content\**\obj\**\*" />
-		<None Remove="src\content\**\node_modules\**\*;src\content\**\bin\**\*;src\content\**\obj\**\*" />
+		<Content Include="content\**\*;content\**\.browserlistrc;content\**\.editorconfig;content\**\.gitignore" Exclude="content\**\node_modules\**\*;content\**\bin\**\*;content\**\obj\**\*" />
+		<None Remove="content\**\node_modules\**\*;content\**\bin\**\*;content\**\obj\**\*" />
 	</ItemGroup>
 
 	<PropertyGroup>
