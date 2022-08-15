@@ -8,7 +8,7 @@
   <PropertyGroup Label="Package versions">
     <!-- Packages from dotnet/arcade -->
     <!-- <MicrosoftDotNetBuildTasksTemplatingVersion>6.0.0</MicrosoftDotNetBuildTasksTemplatingVersion> -->
-    <MicrosoftDotNetBuildTasksTemplatingVersion>6.0.0-beta.21373.11</MicrosoftDotNetBuildTasksTemplatingVersion>
+    <MicrosoftDotNetBuildTasksTemplatingVersion>6.0.0-beta.22412.2</MicrosoftDotNetBuildTasksTemplatingVersion>
     <!-- Packages from dotnet/aspnetcore -->
     <MicrosoftAspNetCoreApiAuthorizationIdentityServerVersion>6.0.0</MicrosoftAspNetCoreApiAuthorizationIdentityServerVersion>
     <MicrosoftAspNetCoreDiagnosticsEntityFrameworkCoreVersion>6.0.0</MicrosoftAspNetCoreDiagnosticsEntityFrameworkCoreVersion>
