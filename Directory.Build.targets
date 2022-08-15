@@ -35,4 +35,5 @@ To install the templates in this package, run 'dotnet new --install $(PackageId)
   </ItemGroup>
 
   <Import Project="eng/GenerateContent.targets" Condition=" '$(RepoRoot)' == '' " />
+  <Import Project="eng/Packaging.targets" Condition=" '$(RepoRoot)' == '' " />
 </Project>
