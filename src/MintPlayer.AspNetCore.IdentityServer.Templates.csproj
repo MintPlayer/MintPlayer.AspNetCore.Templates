@@ -8,7 +8,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.1.0</PackageVersion>
+		<PackageVersion>6.2.0</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -57,15 +57,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<GeneratedContent Include="Templates/Application/Data/MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj.in" OutputPath="Templates/Application/Data/MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj" />
-		<GeneratedContent Include="Templates/Application/Data.Abstractions/MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.csproj.in" OutputPath="Templates/Application/Data.Abstractions/MintPlayer.AspNetCore.IdentityServer.Application.Abstractions.csproj.csproj" />
-		<GeneratedContent Include="Templates/Application/Dtos/MintPlayer.AspNetCore.IdentityServer.Application.Dtos.csproj.in" OutputPath="Templates/Application/Dtos/MintPlayer.AspNetCore.IdentityServer.Application.Dtos.csproj" />
-		<GeneratedContent Include="Templates/Application/Web/MintPlayer.AspNetCore.IdentityServer.Application.Web.csproj.in" OutputPath="Templates/Application/Web/MintPlayer.AspNetCore.IdentityServer.Application.Web.csproj" />
-		<GeneratedContent Include="Templates/IdentityProvider/Data/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.csproj.in" OutputPath="Templates/IdentityProvider/Data/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.csproj" />
-		<GeneratedContent Include="Templates/IdentityProvider/Data.Abstractions/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.Abstractions.csproj.in" OutputPath="Templates/IdentityProvider/Data.Abstractions/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Abstractions.csproj.csproj" />
-		<GeneratedContent Include="Templates/IdentityProvider/Dtos/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Dtos.csproj.in" OutputPath="Templates/IdentityProvider/Dtos/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Dtos.csproj" />
-		<GeneratedContent Include="Templates/IdentityProvider/Web/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Web.csproj.in" OutputPath="Templates/IdentityProvider/Web/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Web.csproj" />
-		<GeneratedContent Include="Templates/ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering.csproj.in" OutputPath="Templates/ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj.in" OutputPath="content/Application/Data/MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.csproj.in" OutputPath="content/Application/Data.Abstractions/MintPlayer.AspNetCore.IdentityServer.Application.Abstractions.csproj.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Dtos.csproj.in" OutputPath="content/Application/Dtos/MintPlayer.AspNetCore.IdentityServer.Application.Dtos.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Web.csproj.in" OutputPath="content/Application/Web/MintPlayer.AspNetCore.IdentityServer.Application.Web.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.csproj.in" OutputPath="content/IdentityProvider/Data/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.Abstractions.csproj.in" OutputPath="content/IdentityProvider/Data.Abstractions/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Abstractions.csproj.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Dtos.csproj.in" OutputPath="content/IdentityProvider/Dtos/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Dtos.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Web.csproj.in" OutputPath="content/IdentityProvider/Web/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Web.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.ServerSideRendering.csproj.in" OutputPath="content/ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering.csproj" />
 	</ItemGroup>
 	
 	<ItemGroup>

@@ -4,9 +4,9 @@
 		<_GenerateContentPropertiesHashFile>$(IntermediateOutputPath)$(MSBuildProjectName).content.g.cache</_GenerateContentPropertiesHashFile>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<!-- <ItemGroup>
 		<PackageReference Include="Microsoft.DotNet.Build.Tasks.Templating" Version="$(MicrosoftDotNetBuildTasksTemplatingVersion)" AllowExplicitReference="true" PrivateAssets="All" IsImplicitlyDefined="true" />
-	</ItemGroup>
+	</ItemGroup> -->
 
 	<!-- Make sure the "NuGet targets and build tasks" workload is installed. -->
 	<!-- Generates content using MSBuild variables. -->
