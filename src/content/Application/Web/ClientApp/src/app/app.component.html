@@ -1,7 +1,5 @@
 <bs-navbar #nav>
-	<ng-template bsExpandButton let-state>
-		<bs-navbar-toggler [state]="state" [toggleOnClick]="false"></bs-navbar-toggler>
-	</ng-template>
+	<bs-navbar-toggler *bsExpandButton="let state" [state]="state" [toggleOnClick]="false"></bs-navbar-toggler>
 	<bs-navbar-brand [routerLink]='["/"]'>
 		<span class="brand d-block p-1">
 			MintPlayer.AspNetCore.IdentityServer.Application
