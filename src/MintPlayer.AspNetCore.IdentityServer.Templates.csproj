@@ -8,7 +8,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.2.5</PackageVersion>
+		<PackageVersion>6.2.6</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -69,26 +69,27 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="6.0.6" />
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.1" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
+		<PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="6.0.9" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.4" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.4" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.6" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="6.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="6.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="6.0.8" />
 		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.AspNetCore.MustChangePassword" Version="6.0.1" />
 		<PackageReference Include="MintPlayer.AspNetCore.NoSniff" Version="6.0.2" />
-		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.0" />
+		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="6.1.3" />
+		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.1" />
 		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.Extensions.OrderBy" Version="6.0.0" />
-		<PackageReference Include="MintPlayer.Pagination" Version="1.0.3" />
+		<PackageReference Include="MintPlayer.Pagination" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.Random" Version="6.0.0" />
 	</ItemGroup>
 
