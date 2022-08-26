@@ -3,6 +3,9 @@ using MintPlayer.AspNetCore.Hsts;
 using MintPlayer.AspNetCore.SpaServices.Prerendering;
 using MintPlayer.AspNetCore.SpaServices.Routing;
 using MintPlayer.AspNetCore.SubDirectoryViews;
+#if (UseHtmlMinification)
+using WebMarkupMin.AspNetCore6;
+#endif
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
@@ -11,6 +14,27 @@ builder.Services.AddSpaStaticFiles(options =>
 	options.RootPath = "ClientApp/dist";
 });
 builder.Services.AddSpaPrerenderingService<MintPlayer.AspNetCore.ServerSideRendering.Services.SpaPrerenderingService>();
+#if (UseHtmlMinification)
+builder.Services.AddWebMarkupMin(options =>
+{
+	options.DisablePoweredByHttpHeaders = true;
+	options.AllowMinificationInDevelopmentEnvironment = true;
+	options.AllowCompressionInDevelopmentEnvironment = true;
+	options.DisablePoweredByHttpHeaders = false;
+}).AddHttpCompression(options =>
+{
+}).AddHtmlMinification(options =>
+{
+	options.MinificationSettings.RemoveEmptyAttributes = true;
+	options.MinificationSettings.RemoveRedundantAttributes = true;
+	options.MinificationSettings.RemoveHttpProtocolFromAttributes = true;
+	options.MinificationSettings.RemoveHttpsProtocolFromAttributes = false;
+	options.MinificationSettings.MinifyInlineJsCode = true;
+	options.MinificationSettings.MinifyEmbeddedJsCode = true;
+	options.MinificationSettings.MinifyEmbeddedJsonData = true;
+	options.MinificationSettings.WhitespaceMinificationMode = WebMarkupMin.Core.WhitespaceMinificationMode.Aggressive;
+});
+#endif
 builder.Services.AddScoped<MintPlayer.AspNetCore.ServerSideRendering.Services.IWeatherForecastService, MintPlayer.AspNetCore.ServerSideRendering.Services.WeatherForecastService>();
 builder.Services.ConfigureViewsInSubfolder("Server");
 
@@ -53,6 +77,10 @@ app.UseSpa(spa =>
 		options.BootModulePath = $"{spa.Options.SourcePath}/dist/ClientApp/server/main.js";
 		options.ExcludeUrls = new[] { "/sockjs-node" };
 	});
+
+#if (UseHtmlMinification)
+	app.UseWebMarkupMin();
+#endif
 
 	if (app.Environment.IsDevelopment())
 	{

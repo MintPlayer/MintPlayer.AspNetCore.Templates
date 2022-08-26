@@ -55,6 +55,13 @@
         "fallbackVariableName": "iisHttpsPortGenerated"
       },
       "replaces": "44300"
+    },
+    "UseHtmlMinification": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Use HTML minification",
+      "description": "Use WebMarkupMin to minify the generated HTML"
     }
 
   }
