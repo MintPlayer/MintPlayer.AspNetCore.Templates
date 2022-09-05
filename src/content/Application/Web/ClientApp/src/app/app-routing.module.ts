@@ -5,7 +5,8 @@ const routes: Routes = [{ path: '', loadChildren: () => import('./pages/pages.mo
 
 @NgModule({
 	imports: [RouterModule.forRoot(routes, {
-		preloadingStrategy: PreloadAllModules
+		preloadingStrategy: PreloadAllModules,
+		initialNavigation: 'enabledBlocking'
 	})],
 	exports: [RouterModule]
 })

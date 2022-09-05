@@ -15,7 +15,11 @@ import { ApplicationManager } from './states/application/application.manager';
 		AppComponent
 	],
 	imports: [
+////#if (UseServerSideRendering)
+		BrowserModule.withServerTransition({ appId: 'serverApp' }),
+////#else
 		BrowserModule,
+////#endif
 		BrowserAnimationsModule,
 		HttpClientModule,
 		HttpClientXsrfModule.withOptions({

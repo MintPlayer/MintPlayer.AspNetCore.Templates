@@ -13,6 +13,9 @@ using MintPlayer.AspNetCore.XsrfForSpas;
 using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Services;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using MintPlayer.AspNetCore.IdentityServer.Application.Web.Extensions;
+#if (UseHtmlMinification)
+using WebMarkupMin.AspNetCore6;
+#endif
 
 namespace MintPlayer.AspNetCore.IdentityServer.Application.Web;
 
@@ -64,6 +67,31 @@ public class Startup
 		services.AddDataProtection();
 		services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
+#if (UseServerSideRendering)
+		services.AddSpaPrerenderingService<MintPlayer.AspNetCore.IdentityServer.Application.Web.Services.SpaPrerenderingService>();
+#endif
+#if (UseHtmlMinification)
+		services.AddWebMarkupMin(options =>
+		{
+			options.DisablePoweredByHttpHeaders = true;
+			options.AllowMinificationInDevelopmentEnvironment = true;
+			options.AllowCompressionInDevelopmentEnvironment = true;
+			options.DisablePoweredByHttpHeaders = false;
+		}).AddHttpCompression(options =>
+		{
+		}).AddHtmlMinification(options =>
+		{
+			options.MinificationSettings.RemoveEmptyAttributes = true;
+			options.MinificationSettings.RemoveRedundantAttributes = true;
+			options.MinificationSettings.RemoveHttpProtocolFromAttributes = true;
+			options.MinificationSettings.RemoveHttpsProtocolFromAttributes = false;
+			options.MinificationSettings.MinifyInlineJsCode = true;
+			options.MinificationSettings.MinifyEmbeddedJsCode = true;
+			options.MinificationSettings.MinifyEmbeddedJsonData = true;
+			options.MinificationSettings.WhitespaceMinificationMode = WebMarkupMin.Core.WhitespaceMinificationMode.Aggressive;
+		});
+#endif
+
 		// In production, the Angular files will be served from this directory
 		services.AddSpaStaticFiles(configuration =>
 		{
@@ -110,6 +138,20 @@ public class Startup
 		{
 			spa.Options.SourcePath = "ClientApp";
 
+#if (UseServerSideRendering)
+			spa.UseSpaPrerendering(options =>
+			{
+				// Disable below line, and run "npm run build:ssr" or "npm run dev:ssr" manually for faster development.
+				options.BootModuleBuilder = app.Environment.IsDevelopment() ? new AngularPrerendererBuilder(npmScript: "build:ssr") : null;
+				options.BootModulePath = $"{spa.Options.SourcePath}/dist/ClientApp/server/main.js";
+				options.ExcludeUrls = new[] { "/sockjs-node" };
+			});
+
+#endif
+#if (UseHtmlMinification)
+			app.UseWebMarkupMin();
+
+#endif
 			if (env.IsDevelopment())
 			{
 				spa.UseAngularCliServer(npmScript: "start");

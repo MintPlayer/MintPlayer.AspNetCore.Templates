@@ -6,6 +6,12 @@
 		"start": "ng serve",
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
+////#if (UseServerSideRendering)
+//	"dev:ssr": "ng run ClientApp:serve-ssr",
+//	"serve:ssr": "node dist/ClientApp/server/main.js",
+//	"build:ssr": "ng build && ng run ClientApp:server",
+//	"prerender": "ng run ClientApp:prerender",
+////#endif
 		"test": "ng test"
 	},
 	"private": true,
@@ -17,11 +23,20 @@
 		"@angular/forms": "~14.2.0",
 		"@angular/platform-browser": "~14.2.0",
 		"@angular/platform-browser-dynamic": "~14.2.0",
+////#if (UseServerSideRendering)
+		"@angular/platform-server": "~14.2.0",
+////#endif
 		"@angular/router": "~14.2.0",
 		"@mintplayer/ng-base-url": "~14.3.0",
 		"@mintplayer/ng-bootstrap": "~14.5.0",
 		"@mintplayer/ng-router": "~14.2.0",
+////#if (UseServerSideRendering)
+		"@nguniversal/express-engine": "^14.1.0",
+////#endif
 		"@ngxs/store": "~3.7.5",
+////#if (UseServerSideRendering)
+		"express": "^4.15.2",
+////#endif
 		"guid-typescript": "^1.0.9",
 		"rxjs": "~7.5.6",
 		"rxjs-compat": "~6.6.7",
@@ -32,7 +47,14 @@
 		"@angular-devkit/build-angular": "~14.2.1",
 		"@angular/cli": "~14.2.1",
 		"@angular/compiler-cli": "~14.2.0",
+////#if (UseServerSideRendering)
+		"@nguniversal/builders": "^14.1.0",
+		"@types/express": "^4.17.0",
+////#endif
 		"@types/jasmine": "~4.3.0",
+////#if (UseServerSideRendering)
+		"@types/node": "^14.15.0",
+////#endif
 		"jasmine-core": "~4.4.0",
 		"karma": "~6.4.0",
 		"karma-chrome-launcher": "~3.1.1",

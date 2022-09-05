@@ -19,6 +19,12 @@
 		<PackageReference Include="MintPlayer.AspNetCore.NoSniff" Version="6.0.2" />
 		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.1" />
 		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />
+<!--#if (UseServerSideRendering) -->
+		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="6.1.3" />
+<!--#endif -->
+<!--#if (UseHtmlMinification) -->
+		<PackageReference Include="WebMarkupMin.AspNetCore6" Version="2.12.0" />
+<!--#endif -->
 	</ItemGroup>
 
 	<ItemGroup>

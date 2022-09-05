@@ -3,5 +3,13 @@
   "order": 0,
   "icon": "music_note_64.png",
   "symbolInfo": [
+    {
+      "id": "UseServerSideRendering",
+      "isVisible": true
+    },
+    {
+      "id": "UseHtmlMinification",
+      "isVisible": true
+    }
   ]
 }

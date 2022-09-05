@@ -12,5 +12,42 @@
   "tags": {
     "language": "C#",
     "type": "project"
-  }
+  },
+  "symbols": {
+    "UseServerSideRendering": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "Use server-side rendering",
+      "description": "Use Angular Universal to render the requested pages through NodeJS on the server"
+    },
+    "UseHtmlMinification": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Use HTML minification",
+      "description": "Use WebMarkupMin to minify the generated HTML"
+    }
+  },
+  "sources": [
+    {
+      "source": "./",
+      "target": "./",
+      "exclude": [
+        ".template.config/**"
+      ],
+      "modifiers": [
+        {
+          "condition": "(UseServerSideRendering)",
+          "exclude": [
+            "Web/ClientApp/src/app/app.server.module.ts",
+            "Web/ClientApp/src/main.server.ts",
+            "Web/ClientApp/server.ts",
+            "Web/ClientApp/tsconfig.server.json",
+            "Web/Services/SpaPrerenderingService.cs"
+          ]
+        }
+      ]
+    }
+  ]
 }
