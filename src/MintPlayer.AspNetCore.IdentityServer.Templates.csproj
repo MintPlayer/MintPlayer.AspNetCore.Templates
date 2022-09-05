@@ -8,7 +8,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.2.11</PackageVersion>
+		<PackageVersion>6.2.12</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -69,9 +69,9 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="6.0.9" />
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.4" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.4" />
+		<PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="6.0.11" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.5" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.8" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
