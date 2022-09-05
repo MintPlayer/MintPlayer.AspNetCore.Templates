@@ -6,12 +6,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MintPlayer.AspNetCore.Hsts;
-using MintPlayer.AspNetCore.IdentityServer.Application.Data.Extensions;
 using MintPlayer.AspNetCore.NoSniff;
 using MintPlayer.AspNetCore.SubDirectoryViews;
 using MintPlayer.AspNetCore.XsrfForSpas;
-using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Services;
+#if (UseServerSideRendering)
+using MintPlayer.AspNetCore.SpaServices.Prerendering;
+using MintPlayer.AspNetCore.SpaServices.Routing;
+#endif
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.Services;
+using MintPlayer.AspNetCore.IdentityServer.Application.Data.Extensions;
 using MintPlayer.AspNetCore.IdentityServer.Application.Web.Extensions;
 #if (UseHtmlMinification)
 using WebMarkupMin.AspNetCore6;
@@ -142,7 +146,7 @@ public class Startup
 			spa.UseSpaPrerendering(options =>
 			{
 				// Disable below line, and run "npm run build:ssr" or "npm run dev:ssr" manually for faster development.
-				options.BootModuleBuilder = app.Environment.IsDevelopment() ? new AngularPrerendererBuilder(npmScript: "build:ssr") : null;
+				options.BootModuleBuilder = env.IsDevelopment() ? new AngularPrerendererBuilder(npmScript: "build:ssr") : null!;
 				options.BootModulePath = $"{spa.Options.SourcePath}/dist/ClientApp/server/main.js";
 				options.ExcludeUrls = new[] { "/sockjs-node" };
 			});

@@ -38,7 +38,7 @@
       ],
       "modifiers": [
         {
-          "condition": "(UseServerSideRendering)",
+          "condition": "(!UseServerSideRendering)",
           "exclude": [
             "Web/ClientApp/src/app/app.server.module.ts",
             "Web/ClientApp/src/main.server.ts",
