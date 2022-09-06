@@ -8,7 +8,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.2.15</PackageVersion>
+		<PackageVersion>6.2.16</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -65,6 +65,7 @@
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.csproj.in" OutputPath="content/Application/Data.Abstractions/MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.csproj" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Dtos.csproj.in" OutputPath="content/Application/Dtos/MintPlayer.AspNetCore.IdentityServer.Application.Dtos.csproj" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Web.csproj.in" OutputPath="content/Application/Web/MintPlayer.AspNetCore.IdentityServer.Application.Web.csproj" />
+		<GeneratedContent Include="content/Application/Web/ClientApp/package.json.in" OutputPath="content/Application/Web/ClientApp/package.json" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.csproj.in" OutputPath="content/IdentityProvider/Data/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.csproj" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.Abstractions.csproj.in" OutputPath="content/IdentityProvider/Data.Abstractions/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Data.Abstractions.csproj" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Dtos.csproj.in" OutputPath="content/IdentityProvider/Dtos/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Dtos.csproj" />
