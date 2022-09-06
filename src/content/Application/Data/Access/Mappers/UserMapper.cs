@@ -2,15 +2,15 @@ namespace MintPlayer.AspNetCore.IdentityServer.Application.Data.Access.Mappers;
 
 internal class UserMapper : IUserMapper
 {
-	public Task<Persistance.Entities.User> Dto2Entity(Dtos.Dtos.User user)
+	public Task<Persistance.Entities.User?> Dto2Entity(Dtos.Dtos.User? user)
 	{
 		if (user == null)
 		{
-			return null;
+			return Task.FromResult<Persistance.Entities.User?>(null);
 		}
 		else
 		{
-			return Task.FromResult(new Persistance.Entities.User
+			return Task.FromResult<Persistance.Entities.User?>(new Persistance.Entities.User
 			{
 				Id = user.Id,
 				Email = user.Email,
@@ -21,15 +21,15 @@ internal class UserMapper : IUserMapper
 		}
 	}
 
-	public Task<Dtos.Dtos.User> Entity2Dto(Persistance.Entities.User user)
+	public Task<Dtos.Dtos.User?> Entity2Dto(Persistance.Entities.User? user)
 	{
 		if (user == null)
 		{
-			return null;
+			return Task.FromResult<Dtos.Dtos.User?>(null);
 		}
 		else
 		{
-			return Task.FromResult(new Dtos.Dtos.User
+			return Task.FromResult<Dtos.Dtos.User?>(new Dtos.Dtos.User
 			{
 				Id = user.Id,
 				Email = user.Email,

@@ -2,6 +2,7 @@ import { enableProdMode, StaticProvider } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
+import { DATA_FROM_SERVER } from './app/providers/data-from-server';
 import { environment } from './environments/environment';
 
 if (environment.production) {
@@ -9,6 +10,7 @@ if (environment.production) {
 }
 
 const providers: StaticProvider[] = [
+	{ provide: DATA_FROM_SERVER, useValue: null },
 ];
 
 function bootstrap() {
