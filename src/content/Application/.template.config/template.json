@@ -44,8 +44,19 @@
             "Web/ClientApp/src/main.server.ts",
             "Web/ClientApp/server.ts",
             "Web/ClientApp/tsconfig.server.json",
-            "Web/Services/SpaPrerenderingService.cs"
+            "Web/Services/SpaPrerenderingService.cs",
+            "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ssr.ts",
+            "Web/ClientApp/src/app/providers/data-from-server.ts"
           ]
+        },
+        {
+          "condition": "(UseServerSideRendering)",
+          "exclude": [
+            "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ts"
+          ],
+          "rename": {
+            "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ssr.ts": "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ts"
+          }
         }
       ]
     }

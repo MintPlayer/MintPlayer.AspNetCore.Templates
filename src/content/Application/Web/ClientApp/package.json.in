@@ -35,6 +35,7 @@
 ////#endif
 		"@ngxs/store": "~3.7.5",
 ////#if (UseServerSideRendering)
+		"aspnet-prerendering": "^3.0.1",
 		"express": "^4.15.2",
 ////#endif
 		"guid-typescript": "^1.0.9",

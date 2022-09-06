@@ -8,7 +8,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.2.14</PackageVersion>
+		<PackageVersion>6.2.15</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -55,6 +55,10 @@
 			DefaultNetCoreTargetFramework=$(DefaultNetCoreTargetFramework);
 		</GeneratedContentProperties>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="content\Application\Web\ClientApp\src\app\pages\information\weatherforecasts\weatherforecasts.component.ssr.ts" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj.in" OutputPath="content/Application/Data/MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj" />
