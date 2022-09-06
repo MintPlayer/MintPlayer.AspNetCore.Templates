@@ -34,7 +34,8 @@
       "source": "./",
       "target": "./",
       "exclude": [
-        ".template.config/**"
+        ".template.config/**",
+        "Web/ClientApp/package.json.in"
       ],
       "modifiers": [
         {
