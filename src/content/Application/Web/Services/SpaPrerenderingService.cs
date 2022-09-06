@@ -9,10 +9,12 @@ public class SpaPrerenderingService : ISpaPrerenderingService
 	#region Constructor
 	private readonly ISpaRouteService spaRouteService;
 	private readonly IWeatherForecastService weatherForecastService;
-	public SpaPrerenderingService(ISpaRouteService spaRouteService, IWeatherForecastService weatherForecastService)
+	private readonly IAccountService accountService;
+	public SpaPrerenderingService(ISpaRouteService spaRouteService, IWeatherForecastService weatherForecastService, IAccountService accountService)
 	{
 		this.spaRouteService = spaRouteService;
 		this.weatherForecastService = weatherForecastService;
+		this.accountService = accountService;
 	}
 	#endregion
 
@@ -21,7 +23,14 @@ public class SpaPrerenderingService : ISpaPrerenderingService
 		routeBuilder
 			.Route("", "home")
 			.Route("counter", "counter")
-			.Route("fetch-data", "fetchdata");
+			.Group("information", "information", routes =>
+			{
+				routes.Route("weatherforecasts", "weatherforecasts");
+			})
+			.Group("account", "account", routes =>
+			{
+				routes.Route("login", "login");
+			});
 
 		return Task.CompletedTask;
 	}
@@ -29,11 +38,21 @@ public class SpaPrerenderingService : ISpaPrerenderingService
 	public async Task OnSupplyData(HttpContext context, IDictionary<string, object> data)
 	{
 		var route = await spaRouteService.GetCurrentRoute(context);
+		var user = await accountService.GetCurrentUser();
+		data["user"] = user;
 		switch (route?.Name)
 		{
-			case "fetchdata":
-				var weatherForecasts = await weatherForecastService.GetWeatherForecasts();
-				data["weatherForecasts"] = weatherForecasts;
+			case "information-weatherforecasts":
+				if (user == null)
+				{
+					var url = await spaRouteService.GenerateUrl("account-login", new { returnUrl = context.Request.Path });
+					context.Response.Redirect(url, false);
+				}
+				else
+				{
+					var weatherForecasts = await weatherForecastService.GetWeatherForecasts();
+					data["weatherForecasts"] = weatherForecasts;
+				}
 				break;
 			default:
 				break;
