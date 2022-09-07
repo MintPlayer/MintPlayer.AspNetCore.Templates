@@ -8,6 +8,9 @@
 		<IsPackable>false</IsPackable>
 		<SpaRoot>ClientApp\</SpaRoot>
 		<TypeScriptToolsVersion>4.6</TypeScriptToolsVersion>
+<!--#if (UseServerSideRendering) -->
+		<BuildServerSideRenderer>true</BuildServerSideRenderer>
+<!--#endif -->
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -50,8 +53,12 @@
 
 	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
 		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+<!--#if (UseServerSideRendering) -->
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" Condition=" '$(BuildServerSideRenderer)' == 'false' " />
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+<!--#else -->
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" />
+<!--#endif -->
 
 		<!-- Include the newly-built files in the publish output -->
 		<ItemGroup>
