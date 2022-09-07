@@ -10,7 +10,9 @@ if (environment.production) {
 }
 
 const providers: StaticProvider[] = [
+////#if (UseServerSideRendering)
 	{ provide: DATA_FROM_SERVER, useValue: null },
+////#endif
 ];
 
 function bootstrap() {

@@ -60,10 +60,12 @@
         {
           "condition": "(UseServerSideRendering)",
           "exclude": [
-            "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ts"
+            "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ts",
+            "Web/ClientApp/src/app/guards/is-logged-in/is-logged-in.guard.ts"
           ],
           "rename": {
-            "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ssr.ts": "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ts"
+            "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ssr.ts": "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ts",
+            "Web/ClientApp/src/app/guards/is-logged-in/is-logged-in.guard.ssr.ts": "Web/ClientApp/src/app/guards/is-logged-in/is-logged-in.guard.ts"
           }
         },
         {

@@ -9,7 +9,7 @@
 //#if(UseServerSideRendering)
 		"dev:ssr": "ng run ClientApp:serve-ssr",
 		"serve:ssr": "node dist/ClientApp/server/main.js",
-		"build:ssr": "ng build && ng run ClientApp:server",
+		"build:ssr": "ng build && ng run ClientApp:server:production",
 		"prerender": "ng run ClientApp:prerender",
 //#endif
 		"test": "ng test"
