@@ -8,7 +8,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.2.20</PackageVersion>
+		<PackageVersion>6.2.21</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -57,6 +57,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="content\Application\Web\ClientApp\ngsw-config.json" />
 	  <None Remove="content\Application\Web\ClientApp\src\app\pages\information\weatherforecasts\weatherforecasts.component.ssr.ts" />
 	</ItemGroup>
 

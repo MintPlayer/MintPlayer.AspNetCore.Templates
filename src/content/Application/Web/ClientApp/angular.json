@@ -24,9 +24,19 @@
 						"tsConfig": "tsconfig.app.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [
+//#if(UsePwa)
+							"src/favicon.ico",
+							"src/assets",
+              "src/manifest.webmanifest"
+//#else
 							"src/favicon.ico",
 							"src/assets"
+//#endif
 						],
+//#if(UsePwa)
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json",
+//#endif
 						"styles": [
 							"node_modules/@mintplayer/ng-bootstrap/_bootstrap.scss",
 							"src/styles.scss"
@@ -93,8 +103,14 @@
 						"karmaConfig": "karma.conf.js",
 						"inlineStyleLanguage": "scss",
 						"assets": [
+//#if(UsePwa)
+							"src/favicon.ico",
+							"src/assets",
+              "src/manifest.webmanifest"
+//#else
 							"src/favicon.ico",
 							"src/assets"
+//#endif
 						],
 						"styles": [
 							"node_modules/@mintplayer/ng-bootstrap/_bootstrap.scss",

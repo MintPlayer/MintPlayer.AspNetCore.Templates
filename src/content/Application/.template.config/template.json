@@ -27,6 +27,13 @@
       "defaultValue": "true",
       "displayName": "Use HTML minification",
       "description": "Use WebMarkupMin to minify the generated HTML"
+    },
+    "UsePwa": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Make this app a PWA",
+      "description": "Progressive Web Apps offer the possibility to install the application on the device"
     }
   },
   "sources": [
@@ -58,6 +65,14 @@
           "rename": {
             "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ssr.ts": "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ts"
           }
+        },
+        {
+          "condition": "(!UsePwa)",
+          "exclude": [
+            "Web/ClientApp/ngsw-config.json",
+            "Web/ClientApp/src/manifest.webmanifest",
+            "Web/ClientApp/src/assets/icons"
+          ]
         }
       ]
     }

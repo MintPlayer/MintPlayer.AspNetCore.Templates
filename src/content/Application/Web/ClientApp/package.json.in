@@ -27,6 +27,9 @@
 		"@angular/platform-server": "~14.2.0",
 //#endif
 		"@angular/router": "~14.2.0",
+//#if(UsePwa)
+		"@angular/service-worker": "~14.2.0",
+//#endif
 		"@mintplayer/ng-base-url": "~14.3.0",
 		"@mintplayer/ng-bootstrap": "~14.5.0",
 		"@mintplayer/ng-router": "~14.2.0",

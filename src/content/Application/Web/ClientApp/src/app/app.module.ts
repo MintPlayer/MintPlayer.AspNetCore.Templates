@@ -9,6 +9,10 @@ import { AdvancedRouterModule } from '@mintplayer/ng-router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApplicationManager } from './states/application/application.manager';
+////#if (UsePwa)
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+////#endif
 
 @NgModule({
 	declarations: [
