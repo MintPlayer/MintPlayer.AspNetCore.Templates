@@ -30,6 +30,7 @@
 			</div>
 		</bs-card>
 	</div>
+<!--#if (UseTwoFactorAuthentication) -->
 	<div class="d-block mb-3" *ngIf="(user$ | async) as user">
 		<bs-card>
 			<bs-card-header>
@@ -109,6 +110,8 @@
 			</div>
 		</bs-card>
 	</div>
+<!--#endif -->
+<!--#if (UseExternalLogins) -->
 	<div class="d-block mb-3" *ngIf="(user$ | async) as user">
 		<bs-card *ngIf="(externalLoginProviders$ | async) as externalLoginProviders">
 			<bs-card-header>
@@ -132,6 +135,7 @@
 			</div>
 		</bs-card>
 	</div>
+<!--#endif -->
 	<ng-container *ngIf="(developerPortalAppInformation$ | async) as developerPortalAppInformation">
 		<div class="d-block mb-3" *ngIf="!developerPortalAppInformation.isRegistered || (developerPortalAppInformation.isRegistered && developerPortalAppInformation.clientId)">
 			<bs-card>
@@ -206,6 +210,7 @@
 		</div>
 	</form>
 </bs-modal>
+<!--#if (UseTwoFactorAuthentication) -->
 <bs-modal *ngIf="(twoFactorCodeModal$ | async) as twoFactorCodeModal" [(isOpen)]="twoFactorCodeModal.isRequestingTwoFactorCode">
 	<form *bsModal cdkTrapFocus (submit)="twoFactorCodeEntered()">
 		<div bsModalHeader>
@@ -263,3 +268,4 @@
 		</div>
 	</form>
 </bs-modal>
+<!--#endif -->

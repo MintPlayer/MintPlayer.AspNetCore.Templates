@@ -68,9 +68,10 @@ public class Startup
 			options.Environment = Environment;
 		});
 
+#if (UseXsrfProtection)
 		services.AddDataProtection();
 		services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
-
+#endif
 #if (UseServerSideRendering)
 		services.AddSpaPrerenderingService<MintPlayer.AspNetCore.IdentityServer.Application.Web.Services.SpaPrerenderingService>();
 #endif
@@ -120,7 +121,9 @@ public class Startup
 		app.UseImprovedHsts();
 		app.UseHttpsRedirection();
 		app.UseNoSniff();
+#if (UseXsrfProtection)
 		app.UseAntiforgery();
+#endif
 		app.UseStaticFiles();
 
 		app.UseAuthentication();

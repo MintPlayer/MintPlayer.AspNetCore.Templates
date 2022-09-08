@@ -36,6 +36,7 @@ export class ApplicationManager {
 		});
 	}
 
+//#if (UseTwoFactorAuthentication)
 	@Action(SetTwoFactor)
 	setTwoFactor(ctx: StateContext<ApplicationState>, action: SetTwoFactor) {
 		const applicationState = ctx.getState();
@@ -64,4 +65,5 @@ export class ApplicationManager {
 		}
 	}
 
+//#endif
 }

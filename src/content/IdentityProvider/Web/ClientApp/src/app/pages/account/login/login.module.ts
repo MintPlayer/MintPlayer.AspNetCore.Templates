@@ -8,7 +8,9 @@ import { BsAlertModule, BsForModule, BsModalModule } from '@mintplayer/ng-bootst
 
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
+//#if (UseExternalLogins)
 import { ExternalLoginModule } from '../../../directives/external-login/external-login.module';
+//#endif
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { ExternalLoginModule } from '../../../directives/external-login/external
 		BsModalModule,
 		A11yModule,
 		AdvancedRouterModule,
+//#if (UseExternalLogins)
 		ExternalLoginModule,
+//#endif
 		LoginRoutingModule
 	]
 })

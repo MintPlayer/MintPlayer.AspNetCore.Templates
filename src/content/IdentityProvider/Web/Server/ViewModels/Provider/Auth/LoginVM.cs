@@ -8,6 +8,8 @@ public class LoginVM
 	public string ReturnUrl { get; set; }
 	public User User { get; set; }
 	public string Password { get; set; }
+#if (UseExternalLogins)
 	public IEnumerable<AuthenticationScheme> ExternalProviders { get; set; }
+#endif
 	public string StylesheetUrl { get; set; }
 }

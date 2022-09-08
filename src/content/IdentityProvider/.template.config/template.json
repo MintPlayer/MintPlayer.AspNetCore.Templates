@@ -16,5 +16,90 @@
   "tags": {
     "language": "C#",
     "type": "project"
-  }
+  },
+  "symbols": {
+    "UseTwoFactorAuthentication": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "Add two-factor authentication",
+      "description": "Enable two-factor authentication using an authenticator app"
+    },
+    "UseEmailConfirmation": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "Add email confirmation",
+      "description": "Adds the methods required for email confirmation"
+    },
+    "UseExternalLogins": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "Add external logins",
+      "description": "Adds the methods required for external logins (Microsoft, Google, Twitter, Facebook, LinkedIn)"
+    },
+    "UseXsrfProtection": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Use XSRF protection",
+      "description": "Adds code in both the ASP.NET Core and angular app to prevent XSRF attacks"
+    }
+  },
+  "sources": [
+    {
+      "source": "./",
+      "target": "./",
+      "exclude": [
+        ".template.config/**"
+      ],
+      "modifiers": [
+        {
+          "condition": "(!UseTwoFactorAuthentication)",
+          "exclude": [
+            "Data/Exceptions/Account/RequiresTwoFactorException.cs",
+            "Dtos/Dtos/TwoFactorCode.cs",
+            "Dtos/Dtos/TwoFactorRegistrationInfo.cs",
+            "Web/ClientApp/src/app/api/dtos/two-factor-code.ts",
+            "Web/ClientApp/src/app/api/dtos/two-factor-registration-info.ts",
+            "Web/ClientApp/src/app/entities/two-factor-code-modal.ts",
+            "Web/ClientApp/src/app/entities/two-factor-code-ui.ts",
+            "Web/ClientApp/src/app/pages/account/two-factor/**",
+            "Web/ClientApp/src/app/states/application/actions/set-two-factor.ts",
+            "Web/ClientApp/src/app/states/application/actions/set-two-factor-bypass.ts",
+            "Web/Server/ViewModels/Account/ExternalLoginTwoFactorVM.cs",
+            "Web/Server/ViewModels/Account/TwoFactorBypassVM.cs",
+            "Web/Server/ViewModels/Account/TwoFactorEnableVM.cs",
+            "Web/Server/ViewModels/Account/TwoFactorGenerateCodesVM.cs",
+            "Web/Server/ViewModels/Account/TwoFactorLoginVM.cs",
+            "Web/Server/ViewModels/Account/TwoFactorRecoveryVM.cs",
+            "Web/Server/Views/Account/ExternalLoginTwoFactor.cshtml",
+            "Web/Server/Views/Auth/ExternalLoginTwoFactor.cshtml"
+          ]
+        },
+        {
+          "condition": "(!UseEmailConfirmation)",
+          "exclude": [
+            "Data/Exceptions/EmailNotConfirmedException.cs",
+            "Data/Exceptions/VerifyEmailException.cs",
+            "Web/Server/ViewModels/Account/ResendConfirmationEmailVM.cs"
+          ]
+        },
+        {
+          "condition": "(!UseExternalLogins)",
+          "exclude": [
+            "Data/Exceptions/OtherAccountException.cs",
+            "Dtos/Dtos/ExternalLoginResult.cs",
+            "Web/Server/ViewModels/Account/ExternalLoginTwoFactorVM.cs",
+            "Web/Server/Views/Account/**",
+            "Web/Server/Views/Auth/ExternalLoginTwoFactor.cshtml",
+            "Web/ClientApp/src/app/api/dtos/external-login-provider-info.ts",
+            "Web/ClientApp/src/app/api/dtos/external-login-result.ts",
+            "Web/ClientApp/src/app/directives/external-login/**"
+          ]
+        }
+      ]
+    }
+  ]
 }

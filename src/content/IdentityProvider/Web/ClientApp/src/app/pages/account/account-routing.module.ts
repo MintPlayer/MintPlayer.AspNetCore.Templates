@@ -6,7 +6,9 @@ const routes: Routes = [
 	{ path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
 	{ path: 'register', loadChildren: () => import('./register/register.module').then(m => m.RegisterModule) },
 	{ path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule), canActivate: [IsLoggedInGuard] },
-	{ path: 'two-factor', loadChildren: () => import('./two-factor/two-factor.module').then(m => m.TwoFactorModule) }
+//#if (UseTwoFactorAuthentication)
+	{ path: 'two-factor', loadChildren: () => import('./two-factor/two-factor.module').then(m => m.TwoFactorModule) },
+//#endif
 ];
 
 @NgModule({

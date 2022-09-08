@@ -59,6 +59,7 @@ internal class AccountRepository : IAccountRepository
 		return dto;
 	}
 
+#if (UseEmailConfirmation)
 	public async Task<string> GenerateEmailConfirmationToken(string email)
 	{
 		var user = await userManager.FindByEmailAsync(email);
@@ -77,6 +78,7 @@ internal class AccountRepository : IAccountRepository
 			);
 		}
 	}
+#endif
 
 	public async Task<User> Login(string email, string password, bool createCookie)
 	{
@@ -90,9 +92,11 @@ internal class AccountRepository : IAccountRepository
 				var isPasswordCorrect = await userManager.CheckPasswordAsync(user, password);
 				if (!isPasswordCorrect) throw new InvalidPasswordException();
 
+#if (UseEmailConfirmation)
 				var isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);
 				if (identityOptions.Value.SignIn.RequireConfirmedEmail && !isEmailConfirmed) throw new EmailNotConfirmedException();
 
+#endif
 				var userDto = await userMapper.Entity2Dto(user);
 
 				// 1) Password == "admin"
@@ -109,6 +113,7 @@ internal class AccountRepository : IAccountRepository
 				{
 					return userDto;
 				}
+#if (UseTwoFactorAuthentication)
 				else if (signinResult.RequiresTwoFactor)
 				{
 					throw new RequiresTwoFactorException
@@ -116,6 +121,7 @@ internal class AccountRepository : IAccountRepository
 						User = userDto,
 					};
 				}
+#endif
 				else
 				{
 					throw new LoginException();
@@ -126,14 +132,17 @@ internal class AccountRepository : IAccountRepository
 				var signinResult = await signinManager.CheckPasswordSignInAsync(user, password, true);
 				if (!signinResult.Succeeded) throw new LoginException { UserId = user.Id, Email = email, Username = user.UserName };
 
+#if (UseEmailConfirmation)
 				var isEmailConfirmed = await userManager.IsEmailConfirmedAsync(user);
 				if (!isEmailConfirmed) throw new EmailNotConfirmedException();
 
+#endif
 				if (signinResult.Succeeded)
 				{
 					var dto = await userMapper.Entity2Dto(user);
 					return dto;
 				}
+#if (UseTwoFactorAuthentication)
 				else if (signinResult.RequiresTwoFactor)
 				{
 					throw new RequiresTwoFactorException
@@ -141,6 +150,7 @@ internal class AccountRepository : IAccountRepository
 						User = await userMapper.Entity2Dto(user)
 					};
 				}
+#endif
 				else
 				{
 					throw new LoginException();
@@ -157,6 +167,7 @@ internal class AccountRepository : IAccountRepository
 		}
 	}
 
+#if (UseTwoFactorAuthentication)
 	public async Task<User> TwoFactorLogin(string verificationCode, bool rememberDevice)
 	{
 		var result = await signinManager.TwoFactorAuthenticatorSignInAsync(verificationCode, true, rememberDevice);
@@ -172,7 +183,7 @@ internal class AccountRepository : IAccountRepository
 		}
 	}
 
-
+#endif
 	public async Task<User> GetCurrentUser()
 	{
 		var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext!.User);
@@ -228,6 +239,7 @@ internal class AccountRepository : IAccountRepository
 		}
 	}
 
+#if (UseTwoFactorAuthentication)
 	public async Task<string> GenerateTwoFactorRegistrationCode()
 	{
 		var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext.User);
@@ -322,6 +334,8 @@ internal class AccountRepository : IAccountRepository
 		}
 	}
 
+#endif
+#if (UseExternalLogins)
 	public async Task<IEnumerable<AuthenticationScheme>> GetExternalLoginProviders()
 	{
 		var providers = await signinManager.GetExternalAuthenticationSchemesAsync();
@@ -397,6 +411,7 @@ internal class AccountRepository : IAccountRepository
 				User = await userMapper.Entity2Dto(user),
 			};
 		}
+#if (UseTwoFactorAuthentication)
 		else if (signinResult.RequiresTwoFactor)
 		{
 			return new ExternalLoginResult
@@ -406,6 +421,7 @@ internal class AccountRepository : IAccountRepository
 				User = await userMapper.Entity2Dto(user),
 			};
 		}
+#endif
 		else
 		{
 			return new ExternalLoginResult
@@ -455,4 +471,5 @@ internal class AccountRepository : IAccountRepository
 		var result = await userManager.RemoveLoginAsync(user, login.LoginProvider, login.ProviderKey);
 		if (!result.Succeeded) throw new Exception($"Could not remove {provider} login");
 	}
+#endif
 }

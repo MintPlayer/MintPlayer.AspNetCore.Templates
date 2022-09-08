@@ -3,5 +3,21 @@
   "order": 0,
   "icon": "music_note_64.png",
   "symbolInfo": [
+    {
+      "id": "UseTwoFactorAuthentication",
+      "isVisible": true
+    },
+    {
+      "id": "UseEmailConfirmation",
+      "isVisible": true
+    },
+    {
+      "id": "UseExternalLogins",
+      "isVisible": true
+    },
+    {
+      "id": "UseXsrfProtection",
+      "isVisible": true
+    }
   ]
 }

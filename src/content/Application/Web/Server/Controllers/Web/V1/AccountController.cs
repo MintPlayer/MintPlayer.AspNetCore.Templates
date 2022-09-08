@@ -115,7 +115,9 @@ public class AccountController : Controller
 	}
 
 	[Authorize]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("Logout", Name = "web-v1-account-logout")]
 	public async Task<ActionResult> Logout()
 	{
@@ -130,6 +132,7 @@ public class AccountController : Controller
 		}
 	}
 
+#if (UseXsrfProtection)
 	[HttpPost("Csrf-Refresh", Name = "web-v1-account-csrfrefresh")]
 	public async Task<ActionResult> CsrfRefresh()
 	{
@@ -140,4 +143,5 @@ public class AccountController : Controller
 		return Ok();
 	}
 
+#endif
 }

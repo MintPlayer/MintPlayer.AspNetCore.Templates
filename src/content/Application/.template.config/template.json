@@ -34,6 +34,13 @@
       "defaultValue": "true",
       "displayName": "Make this app a PWA",
       "description": "Progressive Web Apps offer the possibility to install the application on the device"
+    },
+    "UseXsrfProtection": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Use XSRF protection",
+      "description": "Adds code in both the ASP.NET Core and angular app to prevent XSRF attacks"
     }
   },
   "sources": [

@@ -54,6 +54,7 @@ internal class AccountService : IAccountService
 		return new RegisterResult { User = newUser, RequiresEmailConfirmation = identityOptions.Value.SignIn.RequireConfirmedEmail };
 	}
 
+#if (UseEmailConfirmation)
 	public async Task<string> GenerateEmailConfirmationToken(string email)
 	{
 		var token = await accountRepository.GenerateEmailConfirmationToken(email);
@@ -79,19 +80,21 @@ internal class AccountService : IAccountService
 		await accountRepository.VerifyEmailConfirmationToken(email, token);
 	}
 
-
+#endif
 	public async Task<User> Login(string email, string password, bool createCookie)
 	{
 		var user = await accountRepository.Login(email, password, createCookie);
 		return user;
 	}
 
+#if (UseTwoFactorAuthentication)
 	public async Task<User> TwoFactorLogin(string verificationCode, bool rememberDevice)
 	{
 		var result = await accountRepository.TwoFactorLogin(verificationCode, rememberDevice);
 		return result;
 	}
 
+#endif
 	public async Task<User> GetCurrentUser()
 	{
 		var user = await accountRepository.GetCurrentUser();
@@ -125,6 +128,7 @@ internal class AccountService : IAccountService
 		await accountRepository.ChangePassword(currentPassword, newPassword, newPasswordConfirmation);
 	}
 
+#if (UseTwoFactorAuthentication)
 	public async Task<string> GenerateTwoFactorRegistrationCode()
 	{
 		var code = await accountRepository.GenerateTwoFactorRegistrationCode();
@@ -159,6 +163,8 @@ internal class AccountService : IAccountService
 		return user;
 	}
 
+#endif
+#if (UseExternalLogins)
 	public async Task<IEnumerable<AuthenticationScheme>> GetExternalLoginProviders()
 	{
 		var providers = await accountRepository.GetExternalLoginProviders();
@@ -192,4 +198,5 @@ internal class AccountService : IAccountService
 	{
 		await accountRepository.RemoveExternalLogin(provider);
 	}
+#endif
 }

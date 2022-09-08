@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Facebook;
+using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -44,8 +44,10 @@ public class Startup
 			.AddNewtonsoftJson();
 
 		services.ConfigureViewsInSubfolder("Server");
+#if (UseXsrfProtection)
 		services.AddDataProtection();
 		services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+#endif
 		services.AddRandomizer();
 		services.AddSingleton<System.Random>();
 
@@ -53,6 +55,7 @@ public class Startup
 			.AddAuthentication()
 			.AddMustChangePasswordUserIdCookie();
 
+#if (UseExternalLogins)
 		if (Configuration.TryGetValue("Authentication:Microsoft", out MicrosoftAccountOptions ms))
 		{
 			if (!string.IsNullOrEmpty(ms.ClientId) && !string.IsNullOrEmpty(ms.ClientSecret))
@@ -110,6 +113,7 @@ public class Startup
 				});
 			}
 		}
+#endif
 
 		services.AddSso(options =>
 		{
@@ -128,7 +132,11 @@ public class Startup
 		services
 			.Configure<IdentityOptions>(options =>
 			{
+#if (UseEmailConfirmation)
 				options.SignIn.RequireConfirmedEmail = Configuration.GetValue<bool>("Account:RequireEmailConfirmation", true);
+#else
+				options.SignIn.RequireConfirmedEmail = false;
+#endif
 			})
 			.ConfigureApplicationCookie(options =>
 			{
@@ -160,7 +168,9 @@ public class Startup
 		app.UseImprovedHsts();
 		app.UseHttpsRedirection();
 		app.UseNoSniff();
+#if (UseXsrfProtection)
 		app.UseAntiforgery();
+#endif
 		app.UseStaticFiles();
 
 		app.UseAuthentication();

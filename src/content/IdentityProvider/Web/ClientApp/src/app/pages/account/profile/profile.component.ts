@@ -3,18 +3,22 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, combineLatest, filter, map, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import { ApplicationManager } from '../../../states/application/application.manager';
-import { SetTwoFactor } from '../../../states/application/actions/set-two-factor';
-import { SetBypassTwoFactor } from '../../../states/application/actions/set-two-factor-bypass';
 import { ECodeType } from '../../../api/enums/code-type';
-import { TwoFactorCode } from '../../../api/dtos/two-factor-code';
 import { AccountService } from '../../../api/services/account/account.service';
 import { User } from '../../../api/dtos/user';
+//#if (UseTwoFactorAuthentication)
+import { SetTwoFactor } from '../../../states/application/actions/set-two-factor';
+import { SetBypassTwoFactor } from '../../../states/application/actions/set-two-factor-bypass';
+import { TwoFactorCode } from '../../../api/dtos/two-factor-code';
 import { TwoFactorCodeUI } from '../../../entities/two-factor-code-ui';
 import { TwoFactorCodeModal } from '../../../entities/two-factor-code-modal';
+//#endif
 import { ChangePasswordModal } from '../../../entities/change-password-modal';
 import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
+//#if (UseExternalLogins)
 import { ExternalLoginProviderInfo } from '../../../api/dtos/external-login-provider-info';
 import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
+//#endif
 import { ELoginStatus } from '../../../api/enums/login-status';
 import { SetupService } from '../../../api/services/setup/setup.service';
 import { DeveloperPortalAppInformation } from '../../../api/dtos/developer-portal-app-information';
@@ -27,6 +31,7 @@ import { DeveloperPortalAppInformation } from '../../../api/dtos/developer-porta
 export class ProfileComponent implements OnInit, OnDestroy {
 
 	constructor(private accountService: AccountService, private setupService: SetupService, private domSanitizer: DomSanitizer, private store: Store) {
+//#if (UseTwoFactorAuthentication)
 		this.twoFaRegistrationUrlSanitized$ = this.twoFaRegistrationUrl$
 			.pipe(map((url) => {
 				if (url) {
@@ -36,6 +41,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 				}
 			}));
 
+//#endif
+//#if (UseExternalLogins)
 		this.externalLoginProviders$ = combineLatest([this.allExternalLoginProviders$, this.registeredExternalLoginProviders$])
 			.pipe(map(([allExternalLoginProviders, registeredExternalLoginProviders]) => {
 				if (!allExternalLoginProviders || !registeredExternalLoginProviders) {
@@ -53,6 +60,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 				}
 			}));
 
+//#endif
 		this.userRoles$
 			.pipe(takeUntil(this.destroyed$))
 			.subscribe((roles) => {
@@ -69,15 +77,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
 	@Select(ApplicationManager.user) user$!: Observable<User>;
 
+//#if (UseTwoFactorAuthentication)
 	twoFaRegistrationUrl$ = new BehaviorSubject<string | null>(null);
 	twoFaRegistrationUrlSanitized$: Observable<SafeUrl | null>;
 	enteredTwoFaCode$ = new Subject<TwoFactorCodeUI | null>();
 	twoFactorCodeProcessed$ = new Subject<boolean>();
 	recoveryCodes$ = new BehaviorSubject<string[] | null>(null);
 	numberOfRecoveryCodesLeft$ = new BehaviorSubject<number | null>(null);
+//#endif
+//#if (UseExternalLogins)
 	allExternalLoginProviders$ = new BehaviorSubject<AuthenticationScheme[] | null>(null);
 	registeredExternalLoginProviders$ = new BehaviorSubject<string[] | null>(null);
 	externalLoginProviders$: Observable<ExternalLoginProviderInfo[] | null>;
+//#endif
 	userRoles$ = new BehaviorSubject<string[] | null>(null);
 	developerPortalAppInformation$ = new BehaviorSubject<DeveloperPortalAppInformation | null>(null);
 	developerPortalRedirectUrl = '';
@@ -90,6 +102,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 		newPassword: '',
 		newPasswordConfirmation: '',
 	});
+
+//#if (UseTwoFactorAuthentication)
 	twoFactorCodeModal$ = new BehaviorSubject<TwoFactorCodeModal | null>({
 		isRequestingTwoFactorCode: false,
 		twoFactorCode: {
@@ -100,6 +114,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 		allowRecoveryCode: false,
 	});
 
+//#endif
 	ngOnInit() {
 		this.accountService.hasPassword().subscribe({
 			next: (hasPassword) => {
@@ -116,6 +131,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 			}
 		});
 
+//#if (UseTwoFactorAuthentication)
 		this.accountService.getTwoFactorRegistrationInfo().subscribe({
 			next: (info) => {
 				this.twoFaRegistrationUrl$.next(info.registrationUrl);
@@ -132,6 +148,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 			}
 		});
 
+//#endif
+//#if (UseExternalLogins)
 		this.accountService.getExternalLoginProviders().subscribe({
 			next: (providers) => {
 				this.allExternalLoginProviders$.next(providers);
@@ -148,6 +166,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 			}
 		});
 
+//#endif
 		this.accountService.getRoles().subscribe({
 			next: (roles) => this.userRoles$.next(roles),
 			error: (error) => console.error(error)
@@ -158,6 +177,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 		this.destroyed$.next(true);
 	}
 
+//#if (UseTwoFactorAuthentication)
 	convertTwoFactorCode(code: TwoFactorCodeUI) {
 		switch (code.type) {
 			case ECodeType.verificationCode:
@@ -175,6 +195,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 		}
 	}
 
+//#endif
 	changePassword(show: boolean) {
 		this.changePasswordModal$.pipe(take(1)).subscribe((modal) => {
 			if (modal) {
@@ -204,6 +225,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 		});
 	}
 
+//#if (UseTwoFactorAuthentication)
 	setEnableTwoFactor(enable: boolean) {
 		this.enteredTwoFaCode$.pipe(take(1), filter((code) => code !== null)).subscribe((code) => {
 			this.accountService.setTwoFactorEnabled(enable, this.convertTwoFactorCode(code!)).subscribe({
@@ -303,12 +325,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
 		});
 	}
 
+//#endif
 	setFocus(value: boolean, element: HTMLElement) {
 		if (value) {
 			setTimeout(() => element.focus(), 10);
 		}
 	}
 
+//#if (UseExternalLogins)
 	externalLoginSuccessOrFailed(result: ExternalLoginResult) {
 		if (result.status === ELoginStatus.success) {
 			this.registeredExternalLoginProviders$.pipe(take(1), map((providers) => {
@@ -347,6 +371,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 		});
 	}
 
+//#endif
 	createDeveloperPortal() {
 		this.setupService.registerDeveloperPortalClient({ redirectUris: [this.developerPortalRedirectUrl] })
 			.subscribe({

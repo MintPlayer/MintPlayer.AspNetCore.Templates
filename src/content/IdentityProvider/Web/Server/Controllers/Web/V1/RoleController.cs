@@ -40,6 +40,9 @@ public class RoleController : Controller
 	}
 
 	[HttpPost]
+#if (UseXsrfProtection)
+	[ValidateAntiForgeryToken]
+#endif
 	[Authorize(Roles = "administrator")]
 	public async Task<ActionResult<Role>> Post([FromBody] Role role)
 	{
@@ -48,6 +51,9 @@ public class RoleController : Controller
 	}
 
 	[HttpPut("{id}")]
+#if (UseXsrfProtection)
+	[ValidateAntiForgeryToken]
+#endif
 	[Authorize(Roles = "administrator")]
 	public async Task<ActionResult<Role>> Put([FromRoute] Guid id, [FromBody] Role role)
 	{
@@ -56,6 +62,9 @@ public class RoleController : Controller
 	}
 
 	[HttpDelete("{id}")]
+#if (UseXsrfProtection)
+	[ValidateAntiForgeryToken]
+#endif
 	[Authorize(Roles = "administrator")]
 	public async Task<ActionResult> Delete([FromRoute] Guid id)
 	{

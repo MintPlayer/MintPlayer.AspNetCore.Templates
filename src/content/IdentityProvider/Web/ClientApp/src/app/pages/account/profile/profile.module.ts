@@ -24,7 +24,9 @@ import { ExternalLoginModule } from '../../../directives/external-login/external
 		QrCodeModule,
 		A11yModule,
 		FocusOnLoadModule,
+//#if (UseExternalLogins)
 		ExternalLoginModule,
+//#endif
 		ProfileRoutingModule
 	]
 })

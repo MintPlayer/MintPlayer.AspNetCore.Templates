@@ -86,7 +86,6 @@ namespace MintPlayer.AspNetCore.IdentityServer.Provider.Web.Server.Controllers.A
 		}
 
 		[Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
-		[ValidateAntiForgeryToken]
 		[HttpPut("Password")]
 		public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordVM changePasswordVM)
 		{

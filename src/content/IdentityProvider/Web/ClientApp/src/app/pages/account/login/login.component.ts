@@ -9,7 +9,9 @@ import { ELoginStatus } from '../../../api/enums/login-status';
 import { AccountService } from '../../../api/services/account/account.service';
 import { SetUser } from '../../../states/application/actions/set-user';
 import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
+//#if (UseExternalLogins)
 import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
+//#endif
 import { ChangeAdminPasswordModal } from '../../../entities/change-admin-password-modal';
 import { LoginResult } from '../../../api/dtos/login-result';
 
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.route.queryParams.pipe(takeUntil(this.destroyed$)).subscribe((params) => {
 			this.returnUrl = params['return'] || '/';
 		});
+//#if (UseExternalLogins)
 		this.accountService.getExternalLoginProviders().subscribe({
 			next: (providers) => {
 				this.externalProviders$.next(providers);
@@ -35,6 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 				})).subscribe();
 			}
 		});
+//#endif
 	}
 
 	ngOnDestroy() {
@@ -120,6 +124,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 					errorMessages.push({ message: 'Your account isn\'t confirmed yet', color: this.colors.warning });
 				})).subscribe();
 				break;
+//#if (UseExternalLogins)
 			case ELoginStatus.requiresTwoFactor:
 				this.router.navigate(
 					['/account', 'two-factor'],
@@ -128,6 +133,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 					}
 				);
 				break;
+//#endif
 			case ELoginStatus.mustChangePassword:
 				this.changePasswordModal$.pipe(tap((changePasswordModal) => {
 					changePasswordModal.isChangingPassword = true;
@@ -137,6 +143,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		}
 	}
 
+//#if (UseExternalLogins)
 	externalLoginSuccessOrFailed(result: ExternalLoginResult) {
 		console.log('externalLoginSuccessOrFailed', result);
 		switch (result.status) {
@@ -163,13 +170,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 		}
 	}
 
+//#endif
 	email = '';
 	password = '';
 	colors = Color;
 	private returnUrl = '';
 	private destroyed$ = new Subject();
 
+//#if (UseExternalLogins)
 	externalProviders$ = new BehaviorSubject<AuthenticationScheme[]>([]);
+//#endif
 	errorMessages$ = new BehaviorSubject<ErrorMessage[]>([]);
 	changePasswordModal$ = new BehaviorSubject<ChangeAdminPasswordModal>({
 		isChangingPassword: false,

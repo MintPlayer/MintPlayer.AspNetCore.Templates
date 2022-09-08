@@ -31,14 +31,18 @@ export class AccountService {
 		return this.httpClient.post<LoginResult>(`${this.baseUrl}/Web/V1/Account/Login`, { email, password });
 	}
 
+//#if (UseTwoFactorAuthentication)
 	public twoFactorLogin(verificationCode: string, rememberDevice: boolean) {
 		return this.httpClient.post<User>(`${this.baseUrl}/Web/V1/Account/TwoFactor/Login`, { verificationCode, rememberDevice });
 	}
 
+//#endif
+//#if (UseEmailConfirmation)
 	public resendConfirmationEmail(email: string) {
 		return this.httpClient.post(`${this.baseUrl}/Web/V1/Account/Resend`, { email });
 	}
 
+//#endif
 	public currentUser() {
 		return this.httpClient.get<User>(`${this.baseUrl}/Web/V1/Account/CurrentUser`);
 	}
@@ -63,6 +67,7 @@ export class AccountService {
 		return this.httpClient.post(`${this.baseUrl}/Web/V1/Account/Logout`, {});
 	}
 
+//#if (UseTwoFactorAuthentication)
 	public getTwoFactorRegistrationInfo() {
 		return this.httpClient.post<TwoFactorRegistrationInfo>(`${this.baseUrl}/Web/V1/Account/TwoFactor/RegistrationInfo`, {});
 	}
@@ -87,6 +92,8 @@ export class AccountService {
 		return this.httpClient.post<User>(`${this.baseUrl}/Web/V1/Account/TwoFactor/Recovery`, { recoveryCode });
 	}
 
+//#endif
+//#if (UseExternalLogins)
 	public getExternalLoginProviders() {
 		return this.httpClient.get<AuthenticationScheme[]>(`${this.baseUrl}/Web/V1/Account/ExternalLogin/Providers`);
 	}
@@ -99,4 +106,5 @@ export class AccountService {
 		return this.httpClient.delete(`${this.baseUrl}/Web/V1/Account/ExternalLogin/${provider}`);
 	}
 
+//#endif
 }

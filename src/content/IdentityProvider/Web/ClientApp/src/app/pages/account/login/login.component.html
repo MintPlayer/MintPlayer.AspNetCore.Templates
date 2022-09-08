@@ -34,6 +34,7 @@
 				<button type="submit" class="btn btn-primary">Login</button>
 			</div>
 		</div>
+<!--#if (UseExternalLogins) -->
 		<div class="row">
 			<div class="col-md-12">
 				<span class="h2">Or use an external login instead</span>
@@ -46,6 +47,7 @@
 				</span>
 			</div>
 		</div>
+<!--#endif -->
 	</form>
 	<bs-modal *ngIf="(changePasswordModal$ | async) as changePasswordModal" [(isOpen)]="changePasswordModal.isChangingPassword">
 		<form *bsModal cdkTrapFocus (submit)="updateAdminPassword()">

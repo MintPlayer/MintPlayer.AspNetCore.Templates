@@ -32,7 +32,9 @@ public class AuthController : Controller
 	public async Task<IActionResult> AppLogin([FromQuery] string returnUrl)
 	{
 		var context = await interaction.GetAuthorizationContextAsync(returnUrl);
+#if (UseExternalLogins)
 		var externalProviders = await accountService.GetExternalLoginProviders();
+#endif
 		var stylesheetUrl = await angularService.GetStylesheetUrl(Url);
 
 		return View(new Provider.Server.ViewModels.Provider.Auth.LoginVM
@@ -42,13 +44,17 @@ public class AuthController : Controller
 			{
 				UserName = context?.LoginHint ?? string.Empty,
 			},
+#if (UseExternalLogins)
 			ExternalProviders = externalProviders,
+#endif
 			StylesheetUrl = stylesheetUrl,
 		});
 	}
 
 	[HttpPost("Login")]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	public async Task<IActionResult> LoginPost([FromForm] Provider.Server.ViewModels.Provider.Auth.LoginVM model)
 	{
 		try
@@ -81,6 +87,7 @@ public class AuthController : Controller
 		}
 	}
 
+#if (UseExternalLogins)
 	[HttpGet("ExternalLogin/{provider}", Name = "auth-externallogin-challenge")]
 	public async Task<ActionResult> ExternalLogin([FromRoute] string provider, [FromQuery] string returnUrl)
 	{
@@ -99,9 +106,11 @@ public class AuthController : Controller
 			{
 				case Dtos.Enums.ELoginStatus.Success:
 					return Redirect(returnUrl);
+#if (UseTwoFactorAuthentication)
 				case Dtos.Enums.ELoginStatus.RequiresTwoFactor:
 					// For external logins, show the two-factor input form in the popup.
 					return RedirectToAction(nameof(ExternalLoginTwoFactor), new { provider = loginResult.Provider, returnUrl });
+#endif
 				default:
 					return StatusCode(500);
 			}
@@ -116,6 +125,7 @@ public class AuthController : Controller
 		}
 	}
 
+#if (UseTwoFactorAuthentication)
 	[HttpGet("ExternalLogin/TwoFactor/{provider}", Name = "auth-externallogin-twofactor")]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> ExternalLoginTwoFactor([FromRoute] string provider, [FromQuery] string returnUrl)
@@ -130,7 +140,9 @@ public class AuthController : Controller
 		return View(model);
 	}
 
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("ExternalLogin/TwoFactor/{provider}", Name = "auth-externallogin-twofactor-callback")]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> ExternalLoginTwoFactorCallback([FromRoute] string provider, [FromForm] Web.Server.ViewModels.Account.ExternalLoginTwoFactorVM externalLoginTwoFactorVM, [FromQuery] string returnUrl)
@@ -147,4 +159,6 @@ public class AuthController : Controller
 			return RedirectToAction(nameof(ExternalLoginTwoFactor), new { provider });
 		}
 	}
+#endif
+#endif
 }

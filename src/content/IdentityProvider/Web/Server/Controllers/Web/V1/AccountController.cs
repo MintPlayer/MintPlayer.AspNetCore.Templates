@@ -42,13 +42,16 @@ public class AccountController : Controller
 	}
 	#endregion
 
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("Register", Name = "web-v1-account-register")]
 	public async Task<ActionResult<RegisterResult?>> Register([FromBody] RegisterVM registerVM)
 	{
 		try
 		{
 			var result = await accountService.Register(registerVM.User, registerVM.Password, registerVM.PasswordConfirmation);
+#if (UseEmailConfirmation)
 			var confirmationToken = await accountService.GenerateEmailConfirmationToken(registerVM.User.Email);
 			var confirmationUrl = linkGenerator.GetUriByName("web-v1-account-verify", new
 			{
@@ -57,6 +60,7 @@ public class AccountController : Controller
 			}, Request.Scheme, Request.Host);
 
 			await accountService.SendConfirmationEmail(registerVM.User.Email, confirmationUrl);
+#endif
 			return Ok(result);
 		}
 		catch (PasswordConfirmationException passwordEx)
@@ -69,6 +73,7 @@ public class AccountController : Controller
 		}
 	}
 
+#if (UseEmailConfirmation)
 	[HttpGet("Verify", Name = "web-v1-account-verify")]
 	public async Task<ActionResult> Verify([FromQuery] string email, [FromQuery] string code)
 	{
@@ -89,7 +94,9 @@ public class AccountController : Controller
 		}
 	}
 
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("Resend", Name = "web-v1-account-resend")]
 	public async Task<ActionResult> ResendConfirmationEmail([FromBody] ResendConfirmationEmailVM resendConfirmationEmailVM)
 	{
@@ -112,7 +119,10 @@ public class AccountController : Controller
 		}
 	}
 
+#endif
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("Login", Name = "web-v1-account-login")]
 	public async Task<ActionResult<LoginResult>> Login([FromBody] LoginVM loginVM)
 	{
@@ -141,6 +151,7 @@ public class AccountController : Controller
 				User = null
 			});
 		}
+#if (UseEmailConfirmation)
 		catch (EmailNotConfirmedException emailNotConfirmedEx)
 		{
 			return StatusCode(403, new LoginResult
@@ -149,6 +160,7 @@ public class AccountController : Controller
 				User = null
 			});
 		}
+#endif
 		catch (MustChangePasswordException mustChangePasswordEx)
 		{
 			return Ok(new LoginResult
@@ -156,6 +168,7 @@ public class AccountController : Controller
 				Status = Dtos.Enums.ELoginStatus.MustChangePassword,
 			});
 		}
+#if (UseTwoFactorAuthentication)
 		catch (RequiresTwoFactorException twoFactorEx)
 		{
 			return Ok(new LoginResult
@@ -164,13 +177,17 @@ public class AccountController : Controller
 				User = twoFactorEx.User
 			});
 		}
+#endif
 		catch (Exception)
 		{
 			return StatusCode(500);
 		}
 	}
 
+#if (UseTwoFactorAuthentication)
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("TwoFactor/Login", Name = "web-v1-account-twofactor-login")]
 	public async Task<ActionResult<User>> TwoFactorLogin([FromBody] TwoFactorLoginVM twoFactorLoginVM)
 	{
@@ -189,6 +206,7 @@ public class AccountController : Controller
 		}
 	}
 
+#endif
 	[Authorize]
 	[HttpGet("CurrentUser", Name = "web-v1-account-currentuser")]
 	public async Task<ActionResult<Dtos.Dtos.User>> CurrentUser()
@@ -219,7 +237,9 @@ public class AccountController : Controller
 		}
 	}
 
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("Password")]
 	public async Task<ActionResult> ForceChangePassword([FromBody] ChangePasswordVM changePasswordVM)
 	{
@@ -235,7 +255,9 @@ public class AccountController : Controller
 	}
 
 	[Authorize]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPut("Password")]
 	public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordVM changePasswordVM)
 	{
@@ -265,8 +287,11 @@ public class AccountController : Controller
 		}
 	}
 
+#if (UseTwoFactorAuthentication)
 	[Authorize]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("TwoFactor/RegistrationInfo", Name = "web-v1-account-twofactor-registrationinfo")]
 	public async Task<ActionResult<TwoFactorRegistrationInfo>> GetTwoFactorRegistrationInfo()
 	{
@@ -289,7 +314,9 @@ public class AccountController : Controller
 	}
 
 	[Authorize]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("TwoFactor", Name = "web-v1-account-twofactor-enable")]
 	public async Task<ActionResult> SetEnableTwoFactor([FromBody] TwoFactorEnableVM twoFactorEnableVM)
 	{
@@ -324,7 +351,9 @@ public class AccountController : Controller
 	}
 
 	[Authorize]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPut("TwoFactor/Recovery/RemainingCodes", Name = "web-v1-account-twofactor-recovery-remainingcodes-generate")]
 	public async Task<ActionResult<IEnumerable<string>>> GenerateNewRecoveryCodes([FromBody] TwoFactorGenerateCodesVM twoFactorGenerateCodesVM)
 	{
@@ -339,8 +368,11 @@ public class AccountController : Controller
 		}
 	}
 
+#if (UseExternalLogins)
 	[Authorize]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("TwoFactor/Bypass", Name = "web-v1-account-twofactor-bypass")]
 	public async Task<ActionResult> SetBypassTwoFactorForExternallogins([FromBody] TwoFactorBypassVM twoFactorBypassVM)
 	{
@@ -359,7 +391,10 @@ public class AccountController : Controller
 		}
 	}
 
+#endif
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("TwoFactor/Recovery", Name = "web-v1-account-twofactor-recovery")]
 	public async Task<ActionResult<User>> TwoFactorRecoveryCodeSignin([FromBody] TwoFactorRecoveryVM twoFactorRecoveryVM)
 	{
@@ -374,6 +409,8 @@ public class AccountController : Controller
 		}
 	}
 
+#endif
+#if (UseExternalLogins)
 	[HttpGet("ExternalLogin/Providers", Name = "web-v1-account-externallogin-providers")]
 	public async Task<ActionResult<IEnumerable<AuthenticationScheme>>> GetExternalLoginProviders()
 	{
@@ -389,9 +426,9 @@ public class AccountController : Controller
 	}
 
 	[HttpGet("ExternalLogin/connect/{provider}", Name = "web-v1-account-externallogin-connect-challenge")]
-#if RELEASE
-        [Host("external.example.com")]
-#endif
+//#if RELEASE
+    [Host("external.example.com")]
+//#endif
 	public async Task<ActionResult> ExternalLogin([FromRoute] string provider)
 	{
 		var redirectUrl = Url.RouteUrl("web-v1-account-externallogin-connect-callback", new { provider });
@@ -400,9 +437,9 @@ public class AccountController : Controller
 	}
 
 	[HttpGet("ExternalLogin/connect/{provider}/Callback", Name = "web-v1-account-externallogin-connect-callback")]
-#if RELEASE
-        [Host("external.example.com")]
-#endif
+//#if RELEASE
+	[Host("external.example.com")]
+//#endif
 	public async Task<ActionResult> ExternalLoginCallback([FromRoute] string provider)
 	{
 		try
@@ -419,9 +456,11 @@ public class AccountController : Controller
 						Provider = loginResult.Provider,
 					};
 					return View(successModel);
+#if (UseTwoFactorAuthentication)
 				case Dtos.Enums.ELoginStatus.RequiresTwoFactor:
 					// For external logins, show the two-factor input form in the popup.
 					return RedirectToAction(nameof(ExternalLoginTwoFactor), new { provider = loginResult.Provider });
+#endif
 				default:
 					var failedModel = new ExternalLoginResult
 					{
@@ -460,9 +499,10 @@ public class AccountController : Controller
 		}
 	}
 
-#if RELEASE
+#if (UseTwoFactorAuthentication)
+//#if RELEASE
 	[Host("external.example.com")]
-#endif
+//#endif
 	[HttpGet("ExternalLogin/TwoFactor/{provider}", Name = "web-v1-account-externallogin-twofactor")]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> ExternalLoginTwoFactor([FromRoute] string provider)
@@ -476,10 +516,12 @@ public class AccountController : Controller
 		return View(model);
 	}
 
-#if RELEASE
+//#if RELEASE
 	[Host("external.example.com")]
-#endif
+//#endif
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("ExternalLogin/TwoFactor/{provider}", Name = "web-v1-account-externallogin-twofactor-callback")]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> ExternalLoginTwoFactorCallback([FromRoute] string provider, [FromForm] ExternalLoginTwoFactorVM externalLoginTwoFactorVM)
@@ -504,6 +546,7 @@ public class AccountController : Controller
 		}
 	}
 
+#endif
 	[Authorize]
 	[HttpGet("ExternalLogin", Name = "web-v1-account-externallogin-get")]
 	[ApiExplorerSettings(IgnoreApi = true)]
@@ -570,7 +613,9 @@ public class AccountController : Controller
 	}
 
 	[Authorize]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpDelete("ExternalLogin/{provider}", Name = "web-v1-account-externallogin-delete")]
 	[ApiExplorerSettings(IgnoreApi = true)]
 	public async Task<ActionResult> DeleteLogin(string provider)
@@ -579,8 +624,11 @@ public class AccountController : Controller
 		return Ok();
 	}
 
+#endif
 	[Authorize]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	[HttpPost("Logout", Name = "web-v1-account-logout")]
 	public async Task<ActionResult> Logout()
 	{

@@ -26,10 +26,12 @@ import { environment } from '../environments/environment';
 ////#endif
 		BrowserAnimationsModule,
 		HttpClientModule,
+////#if (UseXsrfProtection)
 		HttpClientXsrfModule.withOptions({
 			cookieName: 'XSRF-TOKEN',
 			headerName: 'X-XSRF-TOKEN'
 		}),
+////#endif
 		NgxsModule.forRoot([
 			ApplicationManager
 		]),

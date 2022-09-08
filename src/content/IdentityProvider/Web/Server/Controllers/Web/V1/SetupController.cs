@@ -33,7 +33,9 @@ public class SetupController : Controller
 
 	[HttpPost]
 	[Authorize(Roles = "Administrator")]
+#if (UseXsrfProtection)
 	[ValidateAntiForgeryToken]
+#endif
 	public async Task<ActionResult<CreateDeveloperPortalResponse>> CreateDeveloperPortal([FromBody] CreateDeveloperPortalRequest request)
 	{
 		try

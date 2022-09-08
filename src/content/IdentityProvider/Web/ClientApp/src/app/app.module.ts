@@ -18,10 +18,12 @@ import { ApplicationManager } from './states/application/application.manager';
 		BrowserModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
+////#if (UseXsrfProtection)
 		HttpClientXsrfModule.withOptions({
 			cookieName: 'XSRF-TOKEN',
 			headerName: 'X-XSRF-TOKEN'
 		}),
+////#endif
 		NgxsModule.forRoot([
 			ApplicationManager
 		]),
