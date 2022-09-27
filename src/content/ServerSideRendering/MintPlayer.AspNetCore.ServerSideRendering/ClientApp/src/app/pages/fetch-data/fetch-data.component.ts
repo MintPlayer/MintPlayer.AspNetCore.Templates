@@ -3,6 +3,7 @@ import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { DATA_FROM_SERVER } from '../../providers/data-from-server';
 import { WeatherForecast } from '../../interfaces/weather-forecast'
 import { WeatherForecastService } from '../../services/weather-forecast/weather-forecast.service';
+import { DataFromServer } from '../../interfaces/data-from-server';
 
 @Component({
 	selector: 'app-fetch-data',
@@ -15,7 +16,7 @@ export class FetchDataComponent {
 	constructor(
 		@Inject(PLATFORM_ID) platformId: Object,
 		private weatherForecastService: WeatherForecastService,
-		@Inject(DATA_FROM_SERVER) dataFromServer: { weatherForecasts: WeatherForecast[] }
+		@Inject(DATA_FROM_SERVER) dataFromServer: DataFromServer
 	) {
 		if (isPlatformServer(platformId)) {
 			this.forecasts = dataFromServer.weatherForecasts;

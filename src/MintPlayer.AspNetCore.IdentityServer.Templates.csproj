@@ -8,7 +8,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.2.25</PackageVersion>
+		<PackageVersion>6.2.26</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -38,13 +38,19 @@
 	</ItemGroup>
 	
 	-->
-
+	<!-- 
 	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
 		<Compile Include="content\**\*.cs" Exclude="content\**\bin\**;content\**\obj\**;content\*\.template.config\**" />
 		<Content Include="content\**\*" Exclude="content\**\bin\**;content\**\obj\**;content\**\*.cs" />
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+		<Content Include="content\**\*;content\**\.browserlistrc;content\**\.editorconfig;content\**\.gitignore" Exclude="content\**\node_modules\**\*;content\**\bin\**\*;content\**\obj\**\*" />
+		<None Remove="content\**\node_modules\**\*;content\**\bin\**\*;content\**\obj\**\*" />
+	</ItemGroup>
+	 -->
+
+	<ItemGroup>
 		<Content Include="content\**\*;content\**\.browserlistrc;content\**\.editorconfig;content\**\.gitignore" Exclude="content\**\node_modules\**\*;content\**\bin\**\*;content\**\obj\**\*" />
 		<None Remove="content\**\node_modules\**\*;content\**\bin\**\*;content\**\obj\**\*" />
 	</ItemGroup>

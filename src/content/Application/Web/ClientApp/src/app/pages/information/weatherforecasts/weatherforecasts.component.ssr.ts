@@ -1,6 +1,7 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { DataFromServer } from '../../../interfaces/data-from-server';
 import { WeatherForecast } from '../../../api/dtos/weather-forecast';
 import { WeatherforecastService } from '../../../api/services/weatherforecast/weatherforecast.service';
 import { DATA_FROM_SERVER } from '../../../providers/data-from-server';
@@ -15,7 +16,7 @@ export class WeatherforecastsComponent implements OnInit {
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: Object,
 		private weatherForecastService: WeatherforecastService,
-		@Inject(DATA_FROM_SERVER) private dataFromServer: { weatherForecasts: WeatherForecast[] }) {
+		@Inject(DATA_FROM_SERVER) private dataFromServer: DataFromServer) {
 	}
 
 	weatherForecasts$ = new BehaviorSubject<WeatherForecast[]>([]);
