@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { patch } from '@ngxs/store/operators';
 import { Logout } from "./actions/logout";
+//#if (UseTwoFactorAuthentication)
 import { SetTwoFactor } from "./actions/set-two-factor";
 import { SetBypassTwoFactor } from "./actions/set-two-factor-bypass";
+//#endif
 import { SetUser } from "./actions/set-user";
 import { ApplicationState } from "./contracts/application.state";
 import { Metadata } from "./metadata";

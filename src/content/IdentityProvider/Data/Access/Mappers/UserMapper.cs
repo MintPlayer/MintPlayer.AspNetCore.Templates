@@ -15,8 +15,10 @@ internal class UserMapper : IUserMapper
 				Id = user.Id,
 				Email = user.Email,
 				UserName = user.UserName,
+#if (UseTwoFactorAuthentication)
 				TwoFactorEnabled = user.IsTwoFactorEnabled,
 				Bypass2faForExternalLogin = user.Bypass2faForExternalLogin,
+#endif
 			});
 		}
 	}
@@ -34,8 +36,10 @@ internal class UserMapper : IUserMapper
 				Id = user.Id,
 				Email = user.Email,
 				UserName = user.UserName,
+#if (UseTwoFactorAuthentication)
 				IsTwoFactorEnabled = user.TwoFactorEnabled,
 				Bypass2faForExternalLogin = user.Bypass2faForExternalLogin,
+#endif
 			});
 		}
 	}

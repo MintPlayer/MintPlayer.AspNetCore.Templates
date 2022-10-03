@@ -94,6 +94,7 @@
             "Web/Server/ViewModels/Account/ExternalLoginTwoFactorVM.cs",
             "Web/Server/Views/Account/**",
             "Web/Server/Views/Auth/ExternalLoginTwoFactor.cshtml",
+            "Web/ClientApp/src/app/api/dtos/authentication-scheme.ts",
             "Web/ClientApp/src/app/api/dtos/external-login-provider-info.ts",
             "Web/ClientApp/src/app/api/dtos/external-login-result.ts",
             "Web/ClientApp/src/app/directives/external-login/**"

@@ -8,7 +8,9 @@ import { FocusOnLoadModule } from '@mintplayer/ng-focus-on-load';
 
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
+//#if (UseExternalLogins)
 import { ExternalLoginModule } from '../../../directives/external-login/external-login.module';
+//#endif
 
 
 @NgModule({

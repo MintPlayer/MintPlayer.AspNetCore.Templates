@@ -58,7 +58,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		});
 	}
 
+//#if (UseTwoFactorAuthentication)
 	user: User = { id: Guid.createEmpty()['value'], userName: '', email: '', isTwoFactorEnabled: false, bypass2faForExternalLogin: false };
+//#else
+	user: User = { id: Guid.createEmpty()['value'], userName: '', email: '' };
+//#endif
 	password = '';
 	passwordConfirmation = '';
 	colors = Color;

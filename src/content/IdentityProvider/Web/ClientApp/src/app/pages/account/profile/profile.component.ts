@@ -14,8 +14,8 @@ import { TwoFactorCodeUI } from '../../../entities/two-factor-code-ui';
 import { TwoFactorCodeModal } from '../../../entities/two-factor-code-modal';
 //#endif
 import { ChangePasswordModal } from '../../../entities/change-password-modal';
-import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
 //#if (UseExternalLogins)
+import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
 import { ExternalLoginProviderInfo } from '../../../api/dtos/external-login-provider-info';
 import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
 //#endif

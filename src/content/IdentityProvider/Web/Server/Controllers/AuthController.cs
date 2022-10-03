@@ -77,10 +77,12 @@ public class AuthController : Controller
 				throw new Exception("Invalid return url");
 			}
 		}
+#if (UseTwoFactorAuthentication)
 		catch (RequiresTwoFactorException twoFaEx)
 		{
 			return RedirectToAction(nameof(ExternalLoginTwoFactor), new { provider = "local", returnUrl = model.ReturnUrl });
 		}
+#endif
 		catch (Exception ex)
 		{
 			return View(model);

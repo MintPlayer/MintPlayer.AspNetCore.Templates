@@ -19,3 +19,6 @@ Generate a new project using one of the templates
 
 	dotnet new id-provider
 	dotnet new id-application
+
+## About .NET Templating
+Some stuff is explained in the [following readme](https://github.com/dotnet/templating/wiki/Conditional-processing-and-comment-syntax#razor-views)

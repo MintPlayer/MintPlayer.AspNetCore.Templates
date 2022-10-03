@@ -8,8 +8,8 @@ import { ErrorMessage } from '../../../entities/error-message';
 import { ELoginStatus } from '../../../api/enums/login-status';
 import { AccountService } from '../../../api/services/account/account.service';
 import { SetUser } from '../../../states/application/actions/set-user';
-import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
 //#if (UseExternalLogins)
+import { AuthenticationScheme } from '../../../api/dtos/authentication-scheme';
 import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
 //#endif
 import { ChangeAdminPasswordModal } from '../../../entities/change-admin-password-modal';

@@ -10,7 +10,11 @@
 		<p>Choose how to login</p>
 	</div>
 	<div class="row">
+		@*#if (UseExternalLogins)
 		<div class="col-md-6">
+		#else
+		<div class="col-md-12">
+		#endif *@
 			<div class="card mb-3">
 				<div class="card-header">
 					<span>Local Account</span>
@@ -40,6 +44,7 @@
 				</div>
 			</div>
 		</div>
+		@*#if (UseExternalLogins)
 		<div class="col-md-6">
 			<div class="card mb-3">
 				<div class="card-header">
@@ -53,5 +58,6 @@
 				</div>
 			</div>
 		</div>
+		#endif *@
 	</div>
 </div>

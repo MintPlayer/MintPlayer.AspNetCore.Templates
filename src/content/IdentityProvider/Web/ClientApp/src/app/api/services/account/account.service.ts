@@ -3,10 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { BaseUrlService } from '@mintplayer/ng-base-url';
 import { User } from '../../dtos/user';
 import { LoginResult } from '../../dtos/login-result';
-import { TwoFactorRegistrationInfo } from '../../dtos/two-factor-registration-info';
 import { RegisterResult } from '../../dtos/register-result';
+//#if (UseTwoFactorAuthentication)
+import { TwoFactorRegistrationInfo } from '../../dtos/two-factor-registration-info';
 import { TwoFactorCode } from '../../dtos/two-factor-code';
+//#endif
+//#if (UseExternalLogins)
 import { AuthenticationScheme } from '../../dtos/authentication-scheme';
+//#endif
 
 @Injectable({
 	providedIn: 'root'
