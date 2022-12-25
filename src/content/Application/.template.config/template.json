@@ -23,7 +23,7 @@
     },
     "Testje": {
       "type": "parameter",
-      "isEnabled": "!(UseServerSideRendering)",
+      "isEnabled": "UseServerSideRendering != true",
       "datatype": "bool",
       "defaultValue": "false",
       "displayName": "Test parameter",
