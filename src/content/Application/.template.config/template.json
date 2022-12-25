@@ -21,6 +21,12 @@
       "displayName": "Use server-side rendering",
       "description": "Use Angular Universal to render the requested pages through NodeJS on the server"
     },
+    "Testje": {
+      "type": "parameter",
+      "isEnabled": "!(UseServerSideRendering)",
+      "datatype": "bool",
+      "description": "This parameter should disappear if \"Use server-side rendering\" is checked"
+    },
     "UseHtmlMinification": {
       "type": "parameter",
       "datatype": "bool",
