@@ -18,6 +18,10 @@
     {
       "id": "UseXsrfProtection",
       "isVisible": true
+    },
+    {
+      "id": "Testje",
+      "isVisible": true
     }
   ]
 }
