@@ -2,13 +2,13 @@
 
 	<PropertyGroup>
 		<!-- <TargetFramework>${DefaultNetCoreTargetFramework}</TargetFramework> -->
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>6.2.31</PackageVersion>
+		<PackageVersion>7.0.0</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
