@@ -25,6 +25,8 @@
       "type": "parameter",
       "isEnabled": "!(UseServerSideRendering)",
       "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "Test parameter",
       "description": "This parameter should disappear if \"Use server-side rendering\" is checked"
     },
     "UseHtmlMinification": {
