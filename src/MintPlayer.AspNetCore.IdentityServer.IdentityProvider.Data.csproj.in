@@ -12,14 +12,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.1.2" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.1.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.2.0" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
 		<PackageReference Include="MintPlayer.AspNetCore.MustChangePassword" Version="6.0.1" />
 		<PackageReference Include="MintPlayer.Extensions.OrderBy" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.Random.Abstractions" Version="6.0.0" />

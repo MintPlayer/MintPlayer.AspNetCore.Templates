@@ -6,6 +6,7 @@ using MintPlayer.Random.Abstractions;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Abstractions.Access.Repositories;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Dtos.Dtos;
+using System.Security.Claims;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Access.Repositories;
 
@@ -128,8 +129,8 @@ internal class SetupRepository : ISetupRepository
 					ShowInDiscoveryDocument = true,
 					UserClaims = new List<Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim>
 					{
-						new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = "id" },
-						new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = "name" },
+						new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = ClaimTypes.NameIdentifier },
+						new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = ClaimTypes.Name },
 					}
 				},
 				new Duende.IdentityServer.EntityFramework.Entities.IdentityResource
@@ -154,7 +155,7 @@ internal class SetupRepository : ISetupRepository
 					ShowInDiscoveryDocument = true,
 					UserClaims = new List<Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim>
 					{
-						new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = "email" },
+						new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = ClaimTypes.Email },
 					}
 				},
 				new Duende.IdentityServer.EntityFramework.Entities.IdentityResource
@@ -167,7 +168,7 @@ internal class SetupRepository : ISetupRepository
 					ShowInDiscoveryDocument = true,
 					UserClaims = new List<Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim>
 					{
-						//new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = "mobilephone" },
+						//new Duende.IdentityServer.EntityFramework.Entities.IdentityResourceClaim { Type = ClaimTypes.MobilePhone },
 					}
 				}
 			);

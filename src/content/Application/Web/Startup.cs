@@ -58,6 +58,10 @@ public class Startup
 					options.UsePkce = true;
 					options.CallbackPath = new PathString("/signin-central");
 					options.Authority = central.Authority;
+				
+					options.Scope.Add("openid");
+					options.Scope.Add("profile");
+					options.Scope.Add("email");
 				});
 			}
 		}

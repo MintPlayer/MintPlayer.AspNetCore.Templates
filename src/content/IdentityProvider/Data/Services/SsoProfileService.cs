@@ -2,6 +2,7 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using MintPlayer.AspNetCore.IdentityServer.Provider.Data.Persistance.Entities;
+using System.Security.Claims;
 
 namespace MintPlayer.AspNetCore.IdentityServer.Provider.Data.Services;
 
@@ -24,15 +25,15 @@ internal class SsoProfileService : IProfileService
 			{
 				switch (ct)
 				{
-					case "name":
+					case ClaimTypes.Name:
 						if (string.IsNullOrEmpty(user.UserName)) return null;
-						else return new System.Security.Claims.Claim("name", user.UserName);
-					case "email":
+						else return new System.Security.Claims.Claim(ClaimTypes.Name, user.UserName);
+					case ClaimTypes.Email:
 						if (string.IsNullOrEmpty(user.Email)) return null;
-						else return new System.Security.Claims.Claim("email", user.Email);
-					case "mobilephone":
+						else return new System.Security.Claims.Claim(ClaimTypes.Email, user.Email);
+					case ClaimTypes.MobilePhone:
 						if (string.IsNullOrEmpty(user.PhoneNumber)) return null;
-						else return new System.Security.Claims.Claim("mobilephone", user.PhoneNumber);
+						else return new System.Security.Claims.Claim(ClaimTypes.MobilePhone, user.PhoneNumber);
 					default:
 						return allClaimsFromDatabase.FirstOrDefault(c => c.Type == ct);
 				}

@@ -8,9 +8,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Duende.IdentityServer" Version="6.1.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.7" />
-		<PackageReference Include="MintPlayer.Pagination" Version="6.0.0" />
+		<PackageReference Include="Duende.IdentityServer" Version="6.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.1" />
+		<PackageReference Include="MintPlayer.Pagination" Version="6.0.2" />
 	</ItemGroup>
 
 	<ItemGroup>
