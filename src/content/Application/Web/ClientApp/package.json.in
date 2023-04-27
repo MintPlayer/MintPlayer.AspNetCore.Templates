@@ -36,7 +36,7 @@
 //#if(UseServerSideRendering)
 		"@nguniversal/express-engine": "~15.2.0",
 //#endif
-		"@ngxs/store": "~3.7.6",
+		"@ngxs/store": "~3.8.0",
 //#if(UseServerSideRendering)
 		"aspnet-prerendering": "^3.0.1",
 		"express": "^4.15.2",

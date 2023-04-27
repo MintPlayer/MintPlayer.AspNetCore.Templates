@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsModule } from '@ngxs/store';
-import { BsNavbarModule } from '@mintplayer/ng-bootstrap';
+import { BsNavbarModule } from '@mintplayer/ng-bootstrap/navbar';
 import { AdvancedRouterModule } from '@mintplayer/ng-router';
 
 import { AppRoutingModule } from './app-routing.module';
