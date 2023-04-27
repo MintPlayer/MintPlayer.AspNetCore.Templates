@@ -4,15 +4,15 @@
 
 <p *ngIf="!forecasts"><em>Loading...</em></p>
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
-	<thead>
-		<tr>
-			<th>Date</th>
-			<th>Temp. (C)</th>
-			<th>Temp. (F)</th>
-			<th>Summary</th>
-		</tr>
-	</thead>
+<bs-table [isResponsive]="true" [striped]="true" *ngIf="forecasts">
+    <thead>
+        <tr bsRow>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+        </tr>
+    </thead>
 	<tbody>
 		<tr *ngFor="let forecast of forecasts">
 			<td>{{ forecast.date }}</td>
@@ -21,4 +21,4 @@
 			<td>{{ forecast.summary }}</td>
 		</tr>
 	</tbody>
-</table>
+</bs-table>

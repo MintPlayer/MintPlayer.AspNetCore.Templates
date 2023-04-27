@@ -22,6 +22,7 @@ import { ExternalLoginResult } from '../../../api/dtos/external-login-result';
 import { ELoginStatus } from '../../../api/enums/login-status';
 import { SetupService } from '../../../api/services/setup/setup.service';
 import { DeveloperPortalAppInformation } from '../../../api/dtos/developer-portal-app-information';
+import { Color } from '@mintplayer/ng-bootstrap';
 
 @Component({
 	selector: 'app-profile',
@@ -76,6 +77,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 	}
 
 	@Select(ApplicationManager.user) user$!: Observable<User>;
+	colors = Color;
 
 //#if (UseTwoFactorAuthentication)
 	twoFaRegistrationUrl$ = new BehaviorSubject<string | null>(null);

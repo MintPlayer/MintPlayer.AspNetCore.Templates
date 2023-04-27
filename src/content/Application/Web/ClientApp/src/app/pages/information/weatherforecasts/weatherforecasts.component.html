@@ -1,22 +1,22 @@
-<div class="container">
-	<div class="table table-responsive">
-		<table class="table table-striped table-hover">
-			<thead>
-				<tr>
-					<td>Date</td>
-					<td>Temp (&deg;C)</td>
-					<td>Temp (&deg;F)</td>
-					<td>Summary</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let weatherForecast of (weatherForecasts$ | async)">
-					<td>{{ weatherForecast.date | date:'dd/MM/yyyy' }}</td>
-					<td>{{ weatherForecast.temperatureC }}</td>
-					<td>{{ weatherForecast.temperatureF }}</td>
-					<td>{{ weatherForecast.summary }}</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
+<h1 id="tableLabel">Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<bs-table [isResponsive]="true" [striped]="true" *ngIf="(weatherForecasts$ | async) as forecasts">
+    <thead>
+        <tr bsRow>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+        </tr>
+    </thead>
+	<tbody>
+		<tr *ngFor="let forecast of forecasts">
+			<td>{{ forecast.date }}</td>
+			<td>{{ forecast.temperatureC }}</td>
+			<td>{{ forecast.temperatureF }}</td>
+			<td>{{ forecast.summary }}</td>
+		</tr>
+	</tbody>
+</bs-table>

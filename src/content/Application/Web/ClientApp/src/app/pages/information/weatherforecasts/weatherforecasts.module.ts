@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BsTableModule } from '@mintplayer/ng-bootstrap/table';
 
 import { WeatherforecastsRoutingModule } from './weatherforecasts-routing.module';
 import { WeatherforecastsComponent } from './weatherforecasts.component';
@@ -11,6 +12,7 @@ import { WeatherforecastsComponent } from './weatherforecasts.component';
 	],
 	imports: [
 		CommonModule,
+		BsTableModule,
 		WeatherforecastsRoutingModule
 	]
 })

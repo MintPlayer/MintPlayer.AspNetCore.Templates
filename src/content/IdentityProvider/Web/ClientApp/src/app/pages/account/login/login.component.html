@@ -1,81 +1,83 @@
 <body>
-	<form class="container" (submit)="login()">
-		<div class="row">
-			<div class="col-md-12">
-				<h1>Login</h1>
+	<bs-form (submitted)="login()">
+		<bs-grid>
+			<div bsRow>
+				<div [bsColumn]="{ md: 12 }">
+					<h1>Login</h1>
+				</div>
 			</div>
-		</div>
-		<div class="row mb-3" *ngIf="(errorMessages$ | async) as errorMessages">
-			<div class="col-md-12">
-				<bs-alert *ngFor="let errorMessage of errorMessages" [type]="errorMessage.color" (afterOpenedOrClosed)="removeErrorMessage(errorMessage, $event)">
-					{{ errorMessage.message }}
-					<bs-alert-close></bs-alert-close>
-				</bs-alert>
+			<div bsRow class="mb-3" *ngIf="(errorMessages$ | async) as errorMessages">
+				<div [bsColumn]="{ md: 12 }">
+					<bs-alert *ngFor="let errorMessage of errorMessages" [type]="errorMessage.color" (afterOpenedOrClosed)="removeErrorMessage(errorMessage, $event)">
+						{{ errorMessage.message }}
+						<bs-alert-close></bs-alert-close>
+					</bs-alert>
+				</div>
 			</div>
-		</div>
-		<div class="row mb-3">
-			<div class="col-md-3">
-				<label class="col-form-label" [bsFor]="txtemail">Email</label>
+			<div bsRow class="mb-3">
+				<div [bsColumn]="{ md: 3 }">
+					<label class="col-form-label" [bsFor]="txtemail">Email</label>
+				</div>
+				<div [bsColumn]="{ md: 9 }">
+					<input type="email" [(ngModel)]="email" name="email" #txtemail autofocus autocomplete="username" />
+				</div>
 			</div>
-			<div class="col-md-9">
-				<input type="email" [(ngModel)]="email" name="email" #txtemail autofocus autocomplete="username" class="form-control" />
+			<div bsRow class="mb-3">
+				<div [bsColumn]="{ md: 3 }">
+					<label bsColFormLabel [bsFor]="txtpassword">Password</label>
+				</div>
+				<div [bsColumn]="{ md: 9 }">
+					<input type="password" [(ngModel)]="password" name="password" #txtpassword autocomplete="current-password" />
+				</div>
 			</div>
-		</div>
-		<div class="row mb-3">
-			<div class="col-md-3">
-				<label class="col-form-label" [bsFor]="txtpassword">Password</label>
+			<div bsRow>
+				<div [bsColumn]="{ md: 12 }" class="text-center">
+					<button type="submit" class="btn btn-primary">Login</button>
+				</div>
 			</div>
-			<div class="col-md-9">
-				<input type="password" [(ngModel)]="password" name="password" #txtpassword autocomplete="current-password" class="form-control" />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<button type="submit" class="btn btn-primary">Login</button>
-			</div>
-		</div>
 <!--#if (UseExternalLogins) -->
-		<div class="row">
-			<div class="col-md-12">
-				<span class="h2">Or use an external login instead</span>
+			<div bsRow>
+				<div [bsColumn]="{ md: 12 }">
+					<span class="h2">Or use an external login instead</span>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<span>
-					<external-login-button *ngFor="let externalProvider of (externalProviders$ | async)" [provider]="externalProvider" [action]="'connect'" (loginSuccessOrFailed)="externalLoginSuccessOrFailed($event)"></external-login-button>
-				</span>
+			<div bsRow>
+				<div [bsColumn]="{ md: 12 }" class="text-center">
+					<span>
+						<external-login-button *ngFor="let externalProvider of (externalProviders$ | async)" [provider]="externalProvider" [action]="'connect'" (loginSuccessOrFailed)="externalLoginSuccessOrFailed($event)"></external-login-button>
+					</span>
+				</div>
 			</div>
-		</div>
 <!--#endif -->
-	</form>
+		</bs-grid>
+	</bs-form>
 	<bs-modal *ngIf="(changePasswordModal$ | async) as changePasswordModal" [(isOpen)]="changePasswordModal.isChangingPassword">
-		<form *bsModal cdkTrapFocus (submit)="updateAdminPassword()">
+		<bs-form *bsModal cdkTrapFocus (submitted)="updateAdminPassword()">
 			<div bsModalHeader>
 				<h5 class="modal-title">Change admin password</h5>
 			</div>
 			<div bsModalBody>
-				<div class="container">
-					<div class="form-group row mb-3">
-						<div [bsFor]="txtNewPassword" class="col-md-6 col-form-label">New password</div>
-						<div class="col-md-6">
-							<input type="password" [(ngModel)]="changePasswordModal.newPassword" name="newPassword" #txtNewPassword class="form-control" />
+				<bs-grid>
+					<div bsFormGroup bsRow class="mb-3">
+						<div [bsFor]="txtNewPassword" bsColFormLabel [bsColumn]="{ md: 6 }">New password</div>
+						<div [bsColumn]="{ md: 6 }">
+							<input type="password" [(ngModel)]="changePasswordModal.newPassword" name="newPassword" #txtNewPassword />
 						</div>
 					</div>
-					<div class="form-group row mb-3">
-						<div [bsFor]="txtNewPasswordConfirmation" class="col-md-6 col-form-label">Confirm new password</div>
-						<div class="col-md-6">
-							<input type="password" [(ngModel)]="changePasswordModal.newPasswordConfirmation" name="newPasswordConfirmation" #txtNewPasswordConfirmation class="form-control" />
+					<div bsFormGroup bsRow class="mb-3">
+						<div [bsFor]="txtNewPasswordConfirmation" bsColFormLabel [bsColumn]="{ md: 6 }">Confirm new password</div>
+						<div [bsColumn]="{ md: 6 }">
+							<input type="password" [(ngModel)]="changePasswordModal.newPasswordConfirmation" name="newPasswordConfirmation" #txtNewPasswordConfirmation />
 						</div>
 					</div>
-				</div>
+				</bs-grid>
 			</div>
 			<div bsModalFooter>
-				<div class="btn-group">
-					<button type="submit" class="btn btn-primary" aria-label="Update password">Update password</button>
-					<button type="button" bsModalClose class="btn btn-secondary" aria-label="Cancel">Cancel</button>
-				</div>
+				<bs-button-group>
+					<button type="submit" [color]="colors.primary" aria-label="Update password">Update password</button>
+					<button type="button" bsModalClose [color]="colors.secondary" aria-label="Cancel">Cancel</button>
+				</bs-button-group>
 			</div>
-		</form>
+		</bs-form>
 	</bs-modal>
 </body>

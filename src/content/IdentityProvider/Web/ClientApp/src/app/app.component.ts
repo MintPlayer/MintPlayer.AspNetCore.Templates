@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { concatMap, Observable } from 'rxjs';
+import { Color } from '@mintplayer/ng-bootstrap';
 import { User } from './api/dtos/user';
 import { AccountService } from './api/services/account/account.service';
 import { Logout } from './states/application/actions/logout';
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit {
 	constructor(private accountService: AccountService, private store: Store) { }
 
 	title = 'ClientApp';
+	colors = Color;
 
 	@Select(ApplicationManager.user) user$!: Observable<User>;
 

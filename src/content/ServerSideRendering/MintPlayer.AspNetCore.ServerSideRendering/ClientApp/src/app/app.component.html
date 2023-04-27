@@ -1,4 +1,4 @@
-<bs-navbar #nav>
+<bs-navbar [color]="colors.dark" #nav>
 	<bs-navbar-toggler *bsExpandButton="let state" [state]="state" [toggleOnClick]="false"></bs-navbar-toggler>
 	<bs-navbar-brand [routerLink]='["/"]'>
 		<span class="brand d-block px-3">
@@ -17,6 +17,6 @@
 		</bs-navbar-item>
 	</bs-navbar-nav>
 </bs-navbar>
-<div [bsNavbarContent]="nav" class="container" style="padding-top:10px">
+<div [bsNavbarContent]="nav" style="padding-top:10px">
 	<router-outlet></router-outlet>
 </div>

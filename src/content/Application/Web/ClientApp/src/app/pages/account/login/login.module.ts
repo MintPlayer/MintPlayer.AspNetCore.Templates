@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BsGridModule } from '@mintplayer/ng-bootstrap/grid';
 import { BsAlertModule } from '@mintplayer/ng-bootstrap/alert';
 
 import { LoginRoutingModule } from './login-routing.module';
@@ -13,6 +14,7 @@ import { ExternalLoginModule } from '../../../directives/external-login/external
 	],
 	imports: [
 		CommonModule,
+		BsGridModule,
 		BsAlertModule,
 		ExternalLoginModule,
 		LoginRoutingModule
