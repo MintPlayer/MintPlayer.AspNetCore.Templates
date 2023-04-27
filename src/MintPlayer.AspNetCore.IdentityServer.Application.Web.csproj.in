@@ -14,10 +14,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.5" />
 		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.AspNetCore.NoSniff" Version="6.0.2" />
 		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.1" />
@@ -26,7 +26,7 @@
 		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="7.0.2" />
 <!--#endif -->
 <!--#if (UseHtmlMinification) -->
-		<PackageReference Include="WebMarkupMin.AspNetCore6" Version="2.12.0" />
+		<PackageReference Include="WebMarkupMin.AspNetCore7" Version="2.13.9" />
 <!--#endif -->
 	</ItemGroup>
 

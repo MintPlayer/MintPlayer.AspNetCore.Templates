@@ -24,7 +24,7 @@
 		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="7.0.2" />
 		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.1" />
 <!--#if (UseHtmlMinification) -->
-		<PackageReference Include="WebMarkupMin.AspNetCore6" Version="2.12.0" />
+		<PackageReference Include="WebMarkupMin.AspNetCore7" Version="2.13.9" />
 <!--#endif -->
 	</ItemGroup>
 

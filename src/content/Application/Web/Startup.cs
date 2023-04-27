@@ -18,7 +18,7 @@ using MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.Access.
 using MintPlayer.AspNetCore.IdentityServer.Application.Data.Extensions;
 using MintPlayer.AspNetCore.IdentityServer.Application.Web.Extensions;
 #if (UseHtmlMinification)
-using WebMarkupMin.AspNetCore6;
+using WebMarkupMin.AspNetCore7;
 #endif
 
 namespace MintPlayer.AspNetCore.IdentityServer.Application.Web;

@@ -4,7 +4,7 @@ using MintPlayer.AspNetCore.SpaServices.Prerendering;
 using MintPlayer.AspNetCore.SpaServices.Routing;
 using MintPlayer.AspNetCore.SubDirectoryViews;
 #if (UseHtmlMinification)
-using WebMarkupMin.AspNetCore6;
+using WebMarkupMin.AspNetCore7;
 #endif
 
 var builder = WebApplication.CreateBuilder(args);
