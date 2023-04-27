@@ -1,5 +1,6 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Color } from '@mintplayer/ng-bootstrap';
 import { Select, Store } from '@ngxs/store';
 import { concatMap, Observable } from 'rxjs';
 import { User } from './api/dtos/user';
@@ -30,6 +31,7 @@ export class AppComponent implements OnInit {
 	}
 
 	title = 'ClientApp';
+	colors = Color;
 
 	@Select(ApplicationManager.user) user$!: Observable<User>;
 
