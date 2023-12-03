@@ -36,6 +36,10 @@
 //#if(UseServerSideRendering)
 		"@nguniversal/express-engine": "~15.2.0",
 //#endif
+//#if(UseNgxTranslate)
+		"@ngx-translate/core": "^14.0.0",
+		"@ngx-translate/http-loader": "^7.0.0",
+//#endif
 		"@ngxs/store": "~3.8.0",
 //#if(UseServerSideRendering)
 		"aspnet-prerendering": "^3.0.1",

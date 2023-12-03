@@ -21,13 +21,12 @@
       "displayName": "Use server-side rendering",
       "description": "Use Angular Universal to render the requested pages through NodeJS on the server"
     },
-    "Testje": {
+    "UseNgxTranslate": {
       "type": "parameter",
-      "isEnabled": "UseServerSideRendering != true",
       "datatype": "bool",
       "defaultValue": "false",
-      "displayName": "Test parameter",
-      "description": "This parameter should disappear if \"Use server-side rendering\" is checked"
+      "displayName": "Use @ngx-translate",
+      "description": "Localize your application using @ngx-translate"
     },
     "UseHtmlMinification": {
       "type": "parameter",
@@ -89,6 +88,14 @@
             "Web/ClientApp/ngsw-config.json",
             "Web/ClientApp/src/manifest.webmanifest",
             "Web/ClientApp/src/assets/icons"
+          ]
+        },
+        {
+          "condition": "(!UseNgxTranslate)",
+          "exclude": [
+            "Web/ClientApp/src/app/translate-loaders",
+            "Web/ClientApp/src/app/app.browser.module.ts",
+            "Web/ClientApp/src/assets/i18n"
           ]
         }
       ]

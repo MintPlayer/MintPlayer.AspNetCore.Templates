@@ -25,7 +25,9 @@ import { environment } from '../environments/environment';
 		BrowserModule,
 ////#endif
 		BrowserAnimationsModule,
+////#if (!UseNgxTranslate)
 		HttpClientModule,
+////#endif
 ////#if (UseXsrfProtection)
 		HttpClientXsrfModule.withOptions({
 			cookieName: 'XSRF-TOKEN',

@@ -1,7 +1,11 @@
 import { enableProdMode, StaticProvider } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
+////#if (UseNgxTranslate)
+import { AppBrowserModule } from './app/app.browser.module';
+////#else
 import { AppModule } from './app/app.module';
+////#endif
 ////#if (UseServerSideRendering)
 import { DATA_FROM_SERVER } from './app/providers/data-from-server';
 ////#endif
@@ -18,8 +22,13 @@ const providers: StaticProvider[] = [
 ];
 
 function bootstrap() {
+////#if (UseNgxTranslate)
+	platformBrowserDynamic(providers).bootstrapModule(AppBrowserModule)
+		.catch(err => console.error(err));
+////#else
 	platformBrowserDynamic(providers).bootstrapModule(AppModule)
 		.catch(err => console.error(err));
+////#endif
 };
 
 ////#if (UseServerSideRendering)
