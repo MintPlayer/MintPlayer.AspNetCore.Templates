@@ -12,7 +12,7 @@ builder.Services.AddSpaStaticFilesImproved(options =>
 {
 	options.RootPath = "ClientApp/dist/browser";
 });
-builder.Services.AddSpaPrerenderingService<WebApplication55.Services.SpaPrerenderingService>();
+builder.Services.AddSpaPrerenderingService<MintPlayer.AspNetCore.ServerSideRendering.Services.SpaPrerenderingService>();
 builder.Services.AddWebMarkupMin(options =>
 {
 	options.DisablePoweredByHttpHeaders = true;
@@ -34,7 +34,7 @@ builder.Services.AddWebMarkupMin(options =>
 	options.MinificationSettings.MinifyInlineCssCode = true;
 	options.MinificationSettings.WhitespaceMinificationMode = WebMarkupMin.Core.WhitespaceMinificationMode.Aggressive;
 });
-builder.Services.AddScoped<WebApplication55.Services.IWeatherForecastService, WebApplication55.Services.WeatherForecastService>();
+builder.Services.AddScoped<MintPlayer.AspNetCore.ServerSideRendering.Services.IWeatherForecastService, MintPlayer.AspNetCore.ServerSideRendering.Services.WeatherForecastService>();
 builder.Services.ConfigureViewsInSubfolder("Server");
 
 var app = builder.Build();
