@@ -2,13 +2,13 @@
 
 	<PropertyGroup>
 		<!-- <TargetFramework>${DefaultNetCoreTargetFramework}</TargetFramework> -->
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>7.1.4</PackageVersion>
+		<PackageVersion>8.0.0</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -75,17 +75,17 @@
 		<GeneratedContent Include="MintPlayer.AspNetCore.ServerSideRendering.csproj.in" OutputPath="content/ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering.csproj" />
 	</ItemGroup>
 	
-	<ItemGroup>
-		<PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="7.0.0" />
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.2.0" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="7.0.1" />
+	<!-- <ItemGroup>
+		<PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="8.0.0" />
+		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.0" />
+		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="7.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="7.0.1" />
@@ -98,6 +98,6 @@
 		<PackageReference Include="MintPlayer.Extensions.OrderBy" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.Pagination" Version="6.0.0" />
 		<PackageReference Include="MintPlayer.Random" Version="6.0.0" />
-	</ItemGroup>
+	</ItemGroup> -->
 
 </Project>

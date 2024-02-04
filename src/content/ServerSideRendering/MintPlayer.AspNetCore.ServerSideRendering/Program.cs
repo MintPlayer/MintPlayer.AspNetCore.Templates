@@ -1,20 +1,18 @@
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using MintPlayer.AspNetCore.Hsts;
+using MintPlayer.AspNetCore.SpaServices.Extensions;
 using MintPlayer.AspNetCore.SpaServices.Prerendering;
 using MintPlayer.AspNetCore.SpaServices.Routing;
 using MintPlayer.AspNetCore.SubDirectoryViews;
-#if (UseHtmlMinification)
-using WebMarkupMin.AspNetCore7;
-#endif
+using System.Text.RegularExpressions;
+using WebMarkupMin.AspNetCore8;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllersWithViews();
-builder.Services.AddSpaStaticFiles(options =>
+builder.Services.AddControllersWithViews().AddNewtonsoftJson();
+builder.Services.AddSpaStaticFilesImproved(options =>
 {
-	options.RootPath = "ClientApp/dist";
+	options.RootPath = "ClientApp/dist/browser";
 });
-builder.Services.AddSpaPrerenderingService<MintPlayer.AspNetCore.ServerSideRendering.Services.SpaPrerenderingService>();
-#if (UseHtmlMinification)
+builder.Services.AddSpaPrerenderingService<WebApplication55.Services.SpaPrerenderingService>();
 builder.Services.AddWebMarkupMin(options =>
 {
 	options.DisablePoweredByHttpHeaders = true;
@@ -32,10 +30,11 @@ builder.Services.AddWebMarkupMin(options =>
 	options.MinificationSettings.MinifyInlineJsCode = true;
 	options.MinificationSettings.MinifyEmbeddedJsCode = true;
 	options.MinificationSettings.MinifyEmbeddedJsonData = true;
+	options.MinificationSettings.MinifyEmbeddedCssCode = true;
+	options.MinificationSettings.MinifyInlineCssCode = true;
 	options.MinificationSettings.WhitespaceMinificationMode = WebMarkupMin.Core.WhitespaceMinificationMode.Aggressive;
 });
-#endif
-builder.Services.AddScoped<MintPlayer.AspNetCore.ServerSideRendering.Services.IWeatherForecastService, MintPlayer.AspNetCore.ServerSideRendering.Services.WeatherForecastService>();
+builder.Services.AddScoped<WebApplication55.Services.IWeatherForecastService, WebApplication55.Services.WeatherForecastService>();
 builder.Services.ConfigureViewsInSubfolder("Server");
 
 var app = builder.Build();
@@ -53,6 +52,7 @@ else
 app.UseImprovedHsts();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseWebMarkupMin();
 app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
@@ -63,24 +63,24 @@ app.UseEndpoints(endpoints =>
 
 if (!app.Environment.IsDevelopment())
 {
-	app.UseSpaStaticFiles();
+	app.UseSpaStaticFilesImproved();
 }
 
-app.UseSpa(spa =>
+app.UseSpaImproved(spa =>
 {
 	spa.Options.SourcePath = "ClientApp";
+	// For angular 17
+	spa.Options.CliRegexes = [new Regex(@"Local\:\s+(?<openbrowser>https?\:\/\/(.+))")];
 
 	spa.UseSpaPrerendering(options =>
 	{
 		// Disable below line, and run "npm run build:ssr" or "npm run dev:ssr" manually for faster development.
-		options.BootModuleBuilder = app.Environment.IsDevelopment() ? new AngularPrerendererBuilder(npmScript: "build:ssr") : null;
-		options.BootModulePath = $"{spa.Options.SourcePath}/dist/ClientApp/server/main.js";
+		options.BootModuleBuilder = app.Environment.IsDevelopment() ? new AngularPrerendererBuilder(npmScript: "build:ssr", @"Build at\:", 1) : null;
+		options.BootModulePath = $"{spa.Options.SourcePath}/dist/browser/server/main.js";
 		options.ExcludeUrls = new[] { "/sockjs-node" };
 	});
 
-#if (UseHtmlMinification)
 	app.UseWebMarkupMin();
-#endif
 
 	if (app.Environment.IsDevelopment())
 	{
