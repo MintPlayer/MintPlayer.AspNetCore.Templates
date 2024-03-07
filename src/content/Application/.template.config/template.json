@@ -42,21 +42,18 @@
       "displayName": "Use HTML minification",
       "description": "Use WebMarkupMin to minify the generated HTML"
     },
-    "UseServerSideRendering": {
-      "type": "parameter",
-      "datatype": "bool",
-      "defaultValue": "false",
-      "displayName": "Use server-side rendering",
-      "description": "Use Angular Universal to render the requested pages through NodeJS on the server"
-    },
     "ServerSideRenderingType": {
       "type": "parameter",
       "datatype": "choice",
       "isEnabled": "(UseServerSideRendering != false)",
       "displayName": "Server-side rendering type",
-      "description": "Choose whether you want to use angular hydration where webrequests are sent during SSR, or OnSupplyData where data is passed from .NET to angular",
+      "description": "Use Angular SSR to render the requested pages through NodeJS on the server. Choose whether you want to use angular hydration where webrequests are sent during SSR, or OnSupplyData where data is passed from .NET to angular",
       "defaultValue": "hydration",
       "choices": [{
+        "choice": "none",
+        "displayName": "None",
+        "description": "Don't setup server-side rendering"
+      }, {
         "choice": "hydration",
         "displayName": "Hydration (side-by-side hosted)",
         "description": "The angular app is hosted independently and uses hydration with request caching"
