@@ -45,7 +45,6 @@
     "ServerSideRenderingType": {
       "type": "parameter",
       "datatype": "choice",
-      "isEnabled": "(UseServerSideRendering != false)",
       "displayName": "Server-side rendering type",
       "description": "Use Angular SSR to render the requested pages through NodeJS on the server. Choose whether you want to use angular hydration where webrequests are sent during SSR, or OnSupplyData where data is passed from .NET to angular",
       "defaultValue": "hydration",
