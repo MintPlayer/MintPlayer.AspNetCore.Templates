@@ -4,11 +4,31 @@
   "icon": "music_note_64.png",
   "symbolInfo": [
     {
-      "id": "UseServerSideRendering",
+      "id": "UseNgBootstrap",
+      "isVisible": true
+    },
+    {
+      "id": "UseHttpsRedirection",
+      "isVisible": true
+    },
+    {
+      "id": "UseHsts",
       "isVisible": true
     },
     {
       "id": "UseHtmlMinification",
+      "isVisible": true
+    },
+    {
+      "id": "UseServerSideRendering",
+      "isVisible": true
+    },
+    {
+      "id": "ServerSideRenderingType",
+      "isVisible": true
+    },
+    {
+      "id": "SetupTranslations",
       "isVisible": true
     },
     {
@@ -20,7 +40,35 @@
       "isVisible": true
     },
     {
-      "id": "Testje",
+      "id": "TwoFactorAuthentication",
+      "isVisible": true
+    },
+    {
+      "id": "ConfigureIdentityProvider",
+      "isVisible": true
+    },
+    {
+      "id": "ExternalLogins",
+      "isVisible": true
+    },
+    {
+      "id": "EmailConfirmation",
+      "isVisible": true
+    },
+    {
+      "id": "ConcurrencyHandling",
+      "isVisible": false
+    },
+    {
+      "id": "SearchProvider",
+      "isVisible": true
+    },
+    {
+      "id": "Docker",
+      "isVisible": true
+    },
+    {
+      "id": "OpenSearch",
       "isVisible": true
     }
   ]
