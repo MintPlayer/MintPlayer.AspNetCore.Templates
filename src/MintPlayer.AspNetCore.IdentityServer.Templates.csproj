@@ -8,7 +8,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>8.0.6</PackageVersion>
+		<PackageVersion>8.1.0-preview1</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -59,6 +59,9 @@
 		<!-- Lists the versions of dependencies not built in this repo. Packages produced from this repo should be listed as a PackageVersionVariableReference.  -->
 		<GeneratedContentProperties>
 			DefaultNetCoreTargetFramework=$(DefaultNetCoreTargetFramework);
+			AngularVersion=^17.2.0;
+			NgBootstrapVersion=~17.0.0;
+			NgRouterVersion=~17.3.0;
 		</GeneratedContentProperties>
 	</PropertyGroup>
 
