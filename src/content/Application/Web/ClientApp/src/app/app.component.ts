@@ -1,6 +1,8 @@
 import { isPlatformServer } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { Color } from '@mintplayer/ng-bootstrap';
+import { BsNavbarModule } from '@mintplayer/ng-bootstrap/navbar';
 import { Select, Store } from '@ngxs/store';
 import { concatMap, Observable } from 'rxjs';
 import { User } from './api/dtos/user';
@@ -15,8 +17,13 @@ import { ApplicationManager } from './states/application/application.manager';
 
 @Component({
 	selector: 'app-root',
+	standalone: true,
+	imports: [
+		RouterOutlet,
+		BsNavbarModule
+	],
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss']
+	styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
 
