@@ -15,9 +15,9 @@
 			"prefix": "app",
 			"architect": {
 				"build": {
-					"builder": "@angular-devkit/build-angular:browser",
+					"builder": "@angular-devkit/build-angular:application",
 					"options": {
-						"outputPath": "dist",
+						"outputPath": "dist/ClientApp",
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"polyfills": "src/polyfills.ts",
@@ -27,18 +27,19 @@
 //#if(UsePwa)
 							"src/favicon.ico",
 							"src/assets",
-              "src/manifest.webmanifest"
+							"src/manifest.webmanifest"
 //#else
 							"src/favicon.ico",
 							"src/assets"
 //#endif
 						],
 //#if(UsePwa)
-            "serviceWorker": true,
-            "ngswConfigPath": "ngsw-config.json",
+						"serviceWorker": "ngsw-config.json",
 //#endif
 						"styles": [
+//#if(UseNgBootstrap)
 							"node_modules/@mintplayer/ng-bootstrap/_bootstrap.scss",
+//#endif
 							"src/styles.scss"
 						],
 						"scripts": []
@@ -64,7 +65,12 @@
 									"with": "src/environments/environment.prod.ts"
 								}
 							],
+//#if(UsePwa)
+							"outputHashing": "all",
+							"serviceWorker": "ngsw-config.json",
+//#else
 							"outputHashing": "all"
+//#endif
 						},
 						"development": {
 							"buildOptimizer": false,
@@ -107,7 +113,7 @@
 //#if(UsePwa)
 							"src/favicon.ico",
 							"src/assets",
-              "src/manifest.webmanifest"
+							"src/manifest.webmanifest"
 //#else
 							"src/favicon.ico",
 							"src/assets"
