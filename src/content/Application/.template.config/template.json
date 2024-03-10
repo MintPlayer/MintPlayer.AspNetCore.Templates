@@ -168,7 +168,7 @@
       ],
       "modifiers": [
         {
-          "condition": "(!UseServerSideRendering)",
+          "condition": "(ServerSideRenderingType === 'none')",
           "exclude": [
             "Web/ClientApp/src/app/app.server.module.ts",
             "Web/ClientApp/src/main.server.ts",
@@ -180,7 +180,7 @@
           ]
         },
         {
-          "condition": "(UseServerSideRendering)",
+          "condition": "(ServerSideRenderingType !== 'none')",
           "exclude": [
             "Web/ClientApp/src/app/pages/information/weatherforecasts/weatherforecasts.component.ts",
             "Web/ClientApp/src/app/guards/is-logged-in/is-logged-in.guard.ts"
