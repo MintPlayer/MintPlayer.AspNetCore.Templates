@@ -9,7 +9,7 @@ using MintPlayer.AspNetCore.Hsts;
 using MintPlayer.AspNetCore.NoSniff;
 using MintPlayer.AspNetCore.SubDirectoryViews;
 using MintPlayer.AspNetCore.XsrfForSpas;
-#if (UseServerSideRendering)
+#if (SsrOnSupplyData)
 using MintPlayer.AspNetCore.SpaServices.Prerendering;
 using MintPlayer.AspNetCore.SpaServices.Routing;
 #endif
@@ -76,7 +76,7 @@ public class Startup
 		services.AddDataProtection();
 		services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 #endif
-#if (UseServerSideRendering)
+#if (SsrOnSupplyData)
 		services.AddSpaPrerenderingService<MintPlayer.AspNetCore.IdentityServer.Application.Web.Services.SpaPrerenderingService>();
 #endif
 #if (UseHtmlMinification)
@@ -149,7 +149,7 @@ public class Startup
 		{
 			spa.Options.SourcePath = "ClientApp";
 
-#if (UseServerSideRendering)
+#if (SsrOnSupplyData)
 			spa.UseSpaPrerendering(options =>
 			{
 				// Disable below line, and run "npm run build:ssr" or "npm run dev:ssr" manually for faster development.

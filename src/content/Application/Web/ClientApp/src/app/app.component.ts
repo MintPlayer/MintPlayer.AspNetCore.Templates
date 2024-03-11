@@ -8,7 +8,7 @@ import { concatMap, Observable } from 'rxjs';
 import { User } from './api/dtos/user';
 import { AccountService } from './api/services/account/account.service';
 import { DataFromServer } from './interfaces/data-from-server';
-////#if (UseServerSideRendering)
+////#if (SsrOnSupplyData)
 import { DATA_FROM_SERVER } from './providers/data-from-server';
 ////#endif
 import { Logout } from './states/application/actions/logout';
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
 		@Inject(PLATFORM_ID) private platformId: Object,
 		private accountService: AccountService,
 		private store: Store,
-////#if (UseServerSideRendering)
+////#if (SsrOnSupplyData)
 		@Inject(DATA_FROM_SERVER) private dataFromServer: DataFromServer,
 ////#endif
 	) {
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit {
 	@Select(ApplicationManager.user) user$!: Observable<User>;
 
 	ngOnInit() {
-////#if (UseServerSideRendering)
+////#if (SsrOnSupplyData)
 		if (isPlatformServer(this.platformId)) {
 			this.store.dispatch([
 				new SetUser(this.dataFromServer.user)

@@ -20,10 +20,6 @@
       "isVisible": true
     },
     {
-      "id": "UseServerSideRendering",
-      "isVisible": true
-    },
-    {
       "id": "ServerSideRenderingType",
       "isVisible": true
     },

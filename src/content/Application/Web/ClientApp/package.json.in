@@ -6,7 +6,7 @@
 		"start": "ng serve",
 		"build": "ng build",
 		"watch": "ng build --watch --configuration development",
-//#if(UseServerSideRendering)
+//#if(SsrOnSupplyData)
 		"dev:ssr": "ng run ClientApp:serve-ssr",
 		"serve:ssr": "node dist/ClientApp/server/main.js",
 		"build:ssr": "ng build && ng run ClientApp:server:production",
@@ -22,7 +22,7 @@
 		"@angular/forms": "${AngularVersion}",
 		"@angular/platform-browser": "${AngularVersion}",
 		"@angular/platform-browser-dynamic": "${AngularVersion}",
-//#if(UseServerSideRendering)
+//#if(SsrOnSupplyData)
 		"@angular/platform-server": "${AngularVersion}",
 //#endif
 		"@angular/router": "${AngularVersion}",
@@ -32,7 +32,7 @@
 		"@mintplayer/ng-bootstrap": "${NgBootstrapVersion}",
 		"@mintplayer/ng-router": "${NgRouterVersion}",
 		"@ngxs/store": "~3.8.0",
-//#if(UseServerSideRendering)
+//#if(SsrOnSupplyData)
 		"aspnet-prerendering": "^3.0.1",
 //#endif
 		"guid-typescript": "^1.0.9",

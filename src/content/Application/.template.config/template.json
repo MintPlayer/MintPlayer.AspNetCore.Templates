@@ -62,6 +62,18 @@
         "description": "The angular app is hosted through the ASP.NET Core app. No requests are sent during SSR"
       }]
     },
+    "SsrNone": {
+      "type": "computed",
+      "value": "(ServerSideRenderingType == \"none\")"
+    },
+    "SsrHydration": {
+      "type": "computed",
+      "value": "(ServerSideRenderingType == \"hydration\")"
+    },
+    "SsrOnSupplyData": {
+      "type": "computed",
+      "value": "(ServerSideRenderingType == \"onSupplyData\")"
+    },
     "SetupTranslations": {
       "type": "parameter",
       "datatype": "bool",

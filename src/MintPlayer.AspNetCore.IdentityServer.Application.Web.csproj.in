@@ -8,7 +8,7 @@
 		<IsPackable>false</IsPackable>
 		<SpaRoot>ClientApp\</SpaRoot>
 		<TypeScriptToolsVersion>4.6</TypeScriptToolsVersion>
-<!--#if (UseServerSideRendering) -->
+<!--#if (ServerSideRenderingType !== 'none') -->
 		<BuildServerSideRenderer>true</BuildServerSideRenderer>
 <!--#endif -->
 	</PropertyGroup>
@@ -22,7 +22,7 @@
 		<PackageReference Include="MintPlayer.AspNetCore.NoSniff" Version="6.0.2" />
 		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.1" />
 		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />
-<!--#if (UseServerSideRendering) -->
+<!--#if (ServerSideRenderingType === 'onSupplyData') -->
 		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="7.0.2" />
 <!--#endif -->
 <!--#if (UseHtmlMinification) -->
@@ -53,7 +53,7 @@
 
 	<Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
 		<!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-<!--#if (UseServerSideRendering) -->
+<!--#if (ServerSideRenderingType === 'onSupplyData') -->
 		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" Condition=" '$(BuildServerSideRenderer)' == 'false' " />
 		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 <!--#else -->
