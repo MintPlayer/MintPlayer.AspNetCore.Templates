@@ -62,16 +62,14 @@
       "datatype": "bool",
       "defaultValue": "true",
       "displayName": "Use HTTPS redirection",
-      "description": "Redirects all http requests to https",
-      "isEnabled": false
+      "description": "Redirects all http requests to https"
     },
     "UseHsts": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "true",
       "displayName": "Configure for HSTS",
-      "description": "The app returns a Strict-Transport-Security response header to the client on each request",
-      "isEnabled": false
+      "description": "The app returns a Strict-Transport-Security response header to the client on each request"
     },
     "UiFramework": {
       "type": "parameter",
@@ -87,8 +85,7 @@
         "choice": "mintplayer-ng-bootstrap",
         "displayName": "@mintplayer/ng-bootstrap",
         "description": "Use @mintplayer/ng-bootstrap"
-      }],
-      "isEnabled": false
+      }]
     },
     "ServerSideRenderingType": {
       "type": "parameter",
@@ -108,8 +105,7 @@
         "choice": "onSupplyData",
         "displayName": "OnSupplyData (hosted)",
         "description": "The angular app is hosted through the ASP.NET Core app. No requests are sent during SSR"
-      }],
-      "isEnabled": false
+      }]
     },
     "SsrNone": {
       "type": "computed",
@@ -137,8 +133,7 @@
         "choice": "ngx-translate",
         "displayName": "@ngx-translate",
         "description": "Use @ngx-translate"
-      }],
-      "isEnabled": false
+      }]
     },
     "TranslationsNone": {
       "type": "computed",
@@ -153,32 +148,28 @@
       "datatype": "bool",
       "defaultValue": "true",
       "displayName": "Use HTML minification",
-      "description": "Use WebMarkupMin to minify the generated HTML",
-      "isEnabled": false
+      "description": "Use WebMarkupMin to minify the generated HTML"
     },
     "UsePwa": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "true",
       "displayName": "Make this app a PWA",
-      "description": "Progressive Web Apps offer the possibility to install the application on the device",
-      "isEnabled": false
+      "description": "Progressive Web Apps offer the possibility to install the application on the device"
     },
     "UseXsrfProtection": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "true",
       "displayName": "Use XSRF protection",
-      "description": "Adds code in both the ASP.NET Core and angular app to prevent XSRF attacks",
-      "isEnabled": false
+      "description": "Adds code in both the ASP.NET Core and angular app to prevent XSRF attacks"
     },
     "TwoFactorAuthentication": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false",
       "displayName": "Use 2-factor authentication",
-      "description": "Adds code in both the ASP.NET Core and angular app to implement 2FA",
-      "isEnabled": false
+      "description": "Adds code in both the ASP.NET Core and angular app to implement 2FA"
     },
     "ConfigureIdentityProvider": {
       "type": "parameter",
@@ -194,32 +185,28 @@
       }],
       "defaultValue": "none",
       "displayName": "Setup an identity provider",
-      "description": "Do you want to allow other websites to use your website to login into their site?",
-      "isEnabled": false
+      "description": "Do you want to allow other websites to use your website to login into their site?"
     },
     "ExternalLogins": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false",
       "displayName": "External logins",
-      "description": "Adds code in both the ASP.NET Core and angular app for other identity providers (Microsoft, Google, X, ...)",
-      "isEnabled": false
+      "description": "Adds code in both the ASP.NET Core and angular app for other identity providers (Microsoft, Google, X, ...)"
     },
     "EmailConfirmation": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false",
       "displayName": "Email confirmation",
-      "description": "Adds code to block new accounts until they clicked a link that was sent through email",
-      "isEnabled": false
+      "description": "Adds code to block new accounts until they clicked a link that was sent through email"
     },
     "ConcurrencyHandling": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false",
       "displayName": "Concurrency handling",
-      "description": "Adds code to ensure that an item cannot be overwritten by someone while someone else is working on it",
-      "isEnabled": false
+      "description": "Adds code to ensure that an item cannot be overwritten by someone while someone else is working on it"
     },
     "SearchProvider": {
       "type": "parameter",
@@ -235,24 +222,21 @@
       }],
       "defaultValue": "none",
       "displayName": "Search provider",
-      "description": "Choose whether you want to have a search engine set up",
-      "isEnabled": false
+      "description": "Choose whether you want to have a search engine set up"
     },
     "Docker": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false",
       "displayName": "Add Docker support",
-      "description": "Adds configuration files to run your application in Docker",
-      "isEnabled": false
+      "description": "Adds configuration files to run your application in Docker"
     },
     "OpenSearch": {
       "type": "parameter",
       "datatype": "bool",
       "defaultValue": "false",
       "displayName": "OpenSearch",
-      "description": "Adds tab-to-search functionality to your application",
-      "isEnabled": false
+      "description": "Adds tab-to-search functionality to your application"
     }
 
   }
