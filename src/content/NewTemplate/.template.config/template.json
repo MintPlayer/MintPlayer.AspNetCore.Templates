@@ -5,7 +5,7 @@
   "identity": "MintPlayer.AspNetCore.Templates.CSharp",
   "groupIdentity": "MintPlayer.AspNetCore",
   "shortName": "web-extended",
-  "name": "ASP.NET Core with Angular",
+  "name": "ASP.NET Core with Angular (New)",
   "description": "ASP.NET Core application with Angular (Server-side rendering, ng-bootstrap, translations, IdentityServer)",
   "sourceName": "MintPlayer.AspNetCore.Template",
   "defaultName": "WebApplication1",
