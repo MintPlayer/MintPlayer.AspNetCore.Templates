@@ -55,6 +55,188 @@
         "fallbackVariableName": "iisHttpsPortGenerated"
       },
       "replaces": "44300"
+    },
+
+    "useHttps": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Use HTTPS redirection",
+      "description": "Redirects all http requests to https"
+    },
+    "UseHsts": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Configure for HSTS",
+      "description": "The app returns a Strict-Transport-Security response header to the client on each request"
+    },
+    "UiFramework": {
+      "type": "parameter",
+      "datatype": "choice",
+      "displayName": "UI",
+      "description": "Choose which UI framework you want to use",
+      "defaultValue": "mintplayer-ng-bootstrap",
+      "choices": [{
+        "choice": "none",
+        "displayName": "None",
+        "description": "Don't use a default UI framework"
+      }, {
+        "choice": "mintplayer-ng-bootstrap",
+        "displayName": "@mintplayer/ng-bootstrap",
+        "description": "Use @mintplayer/ng-bootstrap"
+      }]
+    },
+    "ServerSideRenderingType": {
+      "type": "parameter",
+      "datatype": "choice",
+      "displayName": "Server-side rendering type",
+      "description": "Use Angular SSR to render the requested pages through NodeJS on the server. Choose whether you want to use angular hydration where webrequests are sent during SSR, or OnSupplyData where data is passed from .NET to angular",
+      "defaultValue": "hydration",
+      "choices": [{
+        "choice": "none",
+        "displayName": "None",
+        "description": "Don't setup server-side rendering"
+      }, {
+        "choice": "hydration",
+        "displayName": "Hydration (side-by-side hosted)",
+        "description": "The angular app is hosted independently and uses hydration with request caching"
+      }, {
+        "choice": "onSupplyData",
+        "displayName": "OnSupplyData (hosted)",
+        "description": "The angular app is hosted through the ASP.NET Core app. No requests are sent during SSR"
+      }]
+    },
+    "SsrNone": {
+      "type": "computed",
+      "value": "(ServerSideRenderingType == \"none\")"
+    },
+    "SsrHydration": {
+      "type": "computed",
+      "value": "(ServerSideRenderingType == \"hydration\")"
+    },
+    "SsrOnSupplyData": {
+      "type": "computed",
+      "value": "(ServerSideRenderingType == \"onSupplyData\")"
+    },
+    "TranslationsType": {
+      "type": "parameter",
+      "datatype": "choice",
+      "displayName": "Use translations",
+      "description": "Choose which tool you want to use to provide a localized application",
+      "defaultValue": "ngx-translate",
+      "choices": [{
+        "choice": "none",
+        "displayName": "None",
+        "description": "Don't setup translations"
+      }, {
+        "choice": "ngx-translate",
+        "displayName": "@ngx-translate",
+        "description": "Use @ngx-translate"
+      }]
+    },
+    "TranslationsNone": {
+      "type": "computed",
+      "value": "(TranslationsType == \"none\")"
+    },
+    "TranslationsNgxTranslate": {
+      "type": "computed",
+      "value": "(TranslationsType == \"ngx-translate\")"
+    },
+    "UseHtmlMinification": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Use HTML minification",
+      "description": "Use WebMarkupMin to minify the generated HTML"
+    },
+    "UsePwa": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Make this app a PWA",
+      "description": "Progressive Web Apps offer the possibility to install the application on the device"
+    },
+    "UseXsrfProtection": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "displayName": "Use XSRF protection",
+      "description": "Adds code in both the ASP.NET Core and angular app to prevent XSRF attacks"
+    },
+    "TwoFactorAuthentication": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "Use 2-factor authentication",
+      "description": "Adds code in both the ASP.NET Core and angular app to implement 2FA"
+    },
+    "ConfigureIdentityProvider": {
+      "type": "parameter",
+      "datatype": "choice",
+      "choices": [{
+        "choice": "none",
+        "displayName": "None",
+        "description": "Don't setup an identity provider"
+      }, {
+        "choice": "identityserver",
+        "displayName": "IdentityServer",
+        "description": "Add Duende.IdentityServer as identity provider"
+      }],
+      "defaultValue": "none",
+      "displayName": "Setup an identity provider",
+      "description": "Do you want to allow other websites to use your website to login into their site?"
+    },
+    "ExternalLogins": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "External logins",
+      "description": "Adds code in both the ASP.NET Core and angular app for other identity providers (Microsoft, Google, X, ...)"
+    },
+    "EmailConfirmation": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "Email confirmation",
+      "description": "Adds code to block new accounts until they clicked a link that was sent through email"
+    },
+    "ConcurrencyHandling": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "Concurrency handling",
+      "description": "Adds code to ensure that an item cannot be overwritten by someone while someone else is working on it"
+    },
+    "SearchProvider": {
+      "type": "parameter",
+      "datatype": "choice",
+      "choices": [{
+        "choice": "none",
+        "displayName": "None",
+        "description": "No search provider"
+      }, {
+        "choice": "elasticsearch",
+        "displayName": "ElasticSearch",
+        "description": "Configures ElasticSearch in your application"
+      }],
+      "defaultValue": "none",
+      "displayName": "Search provider",
+      "description": "Choose whether you want to have a search engine set up"
+    },
+    "Docker": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "Add Docker support",
+      "description": "Adds configuration files to run your application in Docker"
+    },
+    "OpenSearch": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "displayName": "OpenSearch",
+      "description": "Adds tab-to-search functionality to your application"
     }
 
   }
