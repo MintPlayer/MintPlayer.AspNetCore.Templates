@@ -7,7 +7,7 @@
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>8.1.0-preview5</PackageVersion>
+		<PackageVersion>8.1.0-preview6</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -58,6 +58,7 @@
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Dtos.csproj.in" OutputPath="content/IdentityProvider/Dtos/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Dtos.csproj" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Web.csproj.in" OutputPath="content/IdentityProvider/Web/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Web.csproj" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.ServerSideRendering.csproj.in" OutputPath="content/ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering.csproj" />
+		<GeneratedContent Include="MintPlayer.AspNetCore.Template.Web.csproj.in" OutputPath="content/NewTemplate/Web/MintPlayer.AspNetCore.Template.Web.csproj" />
 	</ItemGroup>
 
 </Project>
