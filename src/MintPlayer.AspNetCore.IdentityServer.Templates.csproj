@@ -1,14 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<!-- <TargetFramework>${DefaultNetCoreTargetFramework}</TargetFramework> -->
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
 		<PackageType>Template</PackageType>
 		<PackageId>MintPlayer.AspNetCore.IdentityServer.Templates</PackageId>
-		<PackageVersion>8.1.0-preview3</PackageVersion>
+		<PackageVersion>8.1.0-preview4</PackageVersion>
 		<Title>IdentityServer templates</Title>
 		<Authors>Pieterjan De Clippel</Authors>
 		<Company>MintPlayer</Company>
@@ -24,31 +23,6 @@
 	
         <NoDefaultExcludes>true</NoDefaultExcludes>
 	</PropertyGroup>
-
-	<!--
-	
-	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
-		<Compile Include="Templates\**\*.cs" Exclude="Templates\**\bin\**;Templates\**\obj\**;Templates\*\.template.config\**" />
-		<Content Include="Templates\**\*" Exclude="Templates\**\bin\**;Templates\**\obj\**;Templates\**\*.cs" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-		<Content Include="Templates\**\*" Exclude="Templates\**\bin\**;Templates\**\obj\**" />
-		<Compile Remove="**\*" />
-	</ItemGroup>
-	
-	-->
-	<!-- 
-	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
-		<Compile Include="content\**\*.cs" Exclude="content\**\bin\**;content\**\obj\**;content\*\.template.config\**" />
-		<Content Include="content\**\*" Exclude="content\**\bin\**;content\**\obj\**;content\**\*.cs" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(Configuration)' == 'Release' ">
-		<Content Include="content\**\*;content\**\.browserlistrc;content\**\.editorconfig;content\**\.gitignore" Exclude="content\**\node_modules\**\*;content\**\bin\**\*;content\**\obj\**\*" />
-		<None Remove="content\**\node_modules\**\*;content\**\bin\**\*;content\**\obj\**\*" />
-	</ItemGroup>
-	 -->
 
 	<ItemGroup>
 		<Content Include="content\**\*;content\**\.browserlistrc;content\**\.editorconfig;content\**\.gitignore" Exclude="content\**\node_modules\**\*;content\**\bin\**\*;content\**\obj\**\*" />
@@ -66,6 +40,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="content\NewTemplate\.template.config\angular.png" />
+	  <None Remove="content\NewTemplate\.template.config\ide.host.json" />
+	  <None Remove="content\NewTemplate\.template.config\template.json" />
+	  <None Remove="content\NewTemplate\Program.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj.in" OutputPath="content/Application/Data/MintPlayer.AspNetCore.IdentityServer.Application.Data.csproj" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.csproj.in" OutputPath="content/Application/Data.Abstractions/MintPlayer.AspNetCore.IdentityServer.Application.Data.Abstractions.csproj" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.Application.Dtos.csproj.in" OutputPath="content/Application/Dtos/MintPlayer.AspNetCore.IdentityServer.Application.Dtos.csproj" />
@@ -77,30 +58,5 @@
 		<GeneratedContent Include="MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Web.csproj.in" OutputPath="content/IdentityProvider/Web/MintPlayer.AspNetCore.IdentityServer.IdentityProvider.Web.csproj" />
 		<GeneratedContent Include="MintPlayer.AspNetCore.ServerSideRendering.csproj.in" OutputPath="content/ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering/MintPlayer.AspNetCore.ServerSideRendering.csproj" />
 	</ItemGroup>
-	
-	<!-- <ItemGroup>
-		<PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="8.0.0" />
-		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.0" />
-		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
-		<PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="7.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="7.0.1" />
-		<PackageReference Include="MintPlayer.AspNetCore.Hsts" Version="6.0.0" />
-		<PackageReference Include="MintPlayer.AspNetCore.MustChangePassword" Version="6.0.1" />
-		<PackageReference Include="MintPlayer.AspNetCore.NoSniff" Version="6.0.2" />
-		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="7.0.2" />
-		<PackageReference Include="MintPlayer.AspNetCore.SubDirectoryViews" Version="6.0.1" />
-		<PackageReference Include="MintPlayer.AspNetCore.XsrfForSpas" Version="6.0.0" />
-		<PackageReference Include="MintPlayer.Extensions.OrderBy" Version="6.0.0" />
-		<PackageReference Include="MintPlayer.Pagination" Version="6.0.0" />
-		<PackageReference Include="MintPlayer.Random" Version="6.0.0" />
-	</ItemGroup> -->
 
 </Project>
