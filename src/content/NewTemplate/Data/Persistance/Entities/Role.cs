@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace MintPlayer.AspNetCore.IdentityServer.Application.Data.Persistance.Entities;
+namespace MintPlayer.AspNetCore.Template.Data.Persistance.Entities;
 
 internal class Role : IdentityRole<Guid>
 {

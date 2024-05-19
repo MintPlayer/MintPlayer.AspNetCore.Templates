@@ -58,15 +58,6 @@
     },
 
     
-    "applicationNameReplacer": {
-      "type": "generated",
-      "generator": "coalesce",
-      "parameters": {
-        "sourceVariableName": "MSBuildProjectName",
-        "fallbackVariableName": "Application"
-      },
-      "replaces": "Application"
-    },
     "useHttps": {
       "type": "parameter",
       "datatype": "bool",
