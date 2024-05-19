@@ -27,10 +27,22 @@ jobs:
       run: dotnet restore
       env:
         NUGET_AUTH_TOKEN: ${{ github.token }}
-        
+      
     - name: Build
       run: dotnet build --configuration Release --no-restore
       
+    - name: Install templates
+      run: dotnet new install ./src/content/NewTemplate
+
+    - name: Create folder for test projects
+      run: mkdir tmp/TestProject
+
+    - name: Create project from template
+      run: |
+        dotnet new web-extended
+        dotnet build
+      working-directory: tmp/TestProject
+
     - name: Test
       run: dotnet test --no-restore --verbosity normal
       
