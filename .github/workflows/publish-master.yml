@@ -35,7 +35,7 @@ jobs:
       run: dotnet new install ./src/content/NewTemplate
 
     - name: Create folder for test projects
-      run: mkdir tmp/TestProject
+      run: mkdir tmp && mkdir tmp/TestProject
 
     - name: Create project from template
       run: |
