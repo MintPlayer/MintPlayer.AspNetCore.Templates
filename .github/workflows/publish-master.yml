@@ -39,6 +39,7 @@ jobs:
 
     - name: Create project from template
       run: |
+        dotnet new sln
         dotnet new web-extended
         dotnet build
       working-directory: tmp/TestProject
