@@ -10,9 +10,9 @@
   "sourceName": "MintPlayer.AspNetCore.Template",
   "defaultName": "WebApplication1",
   "primaryOutputs": [
+    { "path": "Web/MintPlayer.AspNetCore.Template.Web.csproj" },
     { "path": "Data/MintPlayer.AspNetCore.Template.Data.csproj" },
-    { "path": "Dtos/MintPlayer.AspNetCore.Template.Dtos.csproj" },
-    { "path": "Web/MintPlayer.AspNetCore.Template.csproj" }
+    { "path": "Dtos/MintPlayer.AspNetCore.Template.Dtos.csproj" }
   ],
   "tags": {
     "language": "C#",
