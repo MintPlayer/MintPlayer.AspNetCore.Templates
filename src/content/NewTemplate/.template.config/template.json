@@ -18,6 +18,16 @@
       "identifier": "replace",
       "pattern": "$",
       "replacement": "Context"
+    },
+    "appendOptions": {
+      "identifier": "replace",
+      "pattern": "$",
+      "replacement": "Options"
+    },
+    "prependAdd": {
+      "identifier": "replace",
+      "pattern": "^",
+      "replacement": "Add"
     }
   },
   "symbols": {
@@ -28,6 +38,19 @@
       "valueTransform": "appendContext",
       "replaces": "MeteoContext"
     },
+    "optionsName": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "appendOptions",
+      "replaces": "MeteoOptions"
+    },
+    "addName": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "prependAdd",
+      "replaces": "AddMeteo"
+    },
+
 
     "iisHttpPort": {
       "type": "parameter",
