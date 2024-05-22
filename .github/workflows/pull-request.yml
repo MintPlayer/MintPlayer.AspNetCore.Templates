@@ -47,7 +47,7 @@ jobs:
         dotnet new web-extended
         dotnet sln TestProject.sln add Dtos/TestProject.Dtos.csproj
         dotnet sln TestProject.sln add Data/TestProject.Data.csproj
-        dotnet sln TestProject.sln add Web/TestProject.csproj
+        dotnet sln TestProject.sln add Web/TestProject.Web.csproj
         dotnet build
       working-directory: tmp/TestProject
       env:
