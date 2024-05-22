@@ -8,4 +8,8 @@
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="MintPlayer.AspNetCore.SpaServices.Routing" Version="8.2.0" />
+	</ItemGroup>
+
 </Project>
