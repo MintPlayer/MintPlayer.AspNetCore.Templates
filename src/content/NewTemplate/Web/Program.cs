@@ -1,4 +1,6 @@
-﻿using MintPlayer.AspNetCore.SpaServices.Extensions;
+﻿using System.Text.RegularExpressions;
+using MintPlayer.AspNetCore.SpaServices.Extensions;
+using MintPlayer.AspNetCore.SpaServices.Routing;
 
 namespace MintPlayer.AspNetCore.Template.Services;
 
@@ -18,8 +20,8 @@ public class Program
 
         var app = builder.Build();
         app.UseStaticFiles();
-        if (!env.IsDevelopment()) {
-            app.Environment.UseSpaStaticFilesImproved();
+        if (!app.Environment.IsDevelopment()) {
+            app.UseSpaStaticFilesImproved();
         }
         app.UseAuthentication();
         app.UseRouting();
@@ -29,7 +31,7 @@ public class Program
             spa.Options.SourcePath = "ClientApp";
             // For angular 17
             spa.Options.CliRegexes = [new Regex(@"Local\:\s+(?<openbrowser>https?\:\/\/(.+))")];
-            if (env.IsDevelopment()) {
+            if (app.Environment.IsDevelopment()) {
                 spa.UseAngularCliServer(npmScript: "start");
             }
         });
