@@ -13,7 +13,21 @@
     "language": "C#",
     "type": "project"
   },
+  "forms": {
+    "appendContext": {
+      "identifier": "replace",
+      "pattern": "$",
+      "replacement": "Context"
+    }
+  },
   "symbols": {
+
+    "dbContextName": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "appendContext",
+      "replaces": "MeteoContext"
+    },
 
     "iisHttpPort": {
       "type": "parameter",
