@@ -50,6 +50,8 @@ jobs:
         dotnet sln TestProject.sln add Web/TestProject.Web.csproj
         dotnet build
       working-directory: tmp/TestProject
+      env:
+        NUGET_AUTH_TOKEN: ${{ github.token }}
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal
