@@ -1,0 +1,63 @@
+name: pull-request
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    name: pull-request
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        path: repository
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.202
+        # Authenticates packages to push to GPR
+        source-url: https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json
+      env:
+        NUGET_AUTH_TOKEN: '%NUGET_AUTH_TOKEN%'
+    
+    - name: Install dependencies
+      run: dotnet restore
+      working-directory: repository
+      env:
+        NUGET_AUTH_TOKEN: ${{ github.token }}
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      working-directory: repository
+      
+    - name: Install templates
+      run: dotnet new install ./repository/src/content/NewTemplate
+
+    - name: Create folder for test projects
+      run: mkdir tmp && mkdir tmp/TestProject
+
+    - name: Create project from template
+      run: |
+        dotnet new sln
+        dotnet new web-extended
+        dotnet sln TestProject.sln add Dtos/TestProject.Dtos.csproj
+        dotnet sln TestProject.sln add Data/TestProject.Data.csproj
+        dotnet sln TestProject.sln add Web/TestProject.Web.csproj
+        dotnet build
+      working-directory: tmp/TestProject
+      env:
+        NUGET_AUTH_TOKEN: ${{ github.token }}
+
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+      working-directory: repository
+      
+    - name: Pack
+      run: dotnet pack --no-build --configuration Release
+      working-directory: repository
+      
